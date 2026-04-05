@@ -71,14 +71,14 @@
             <div class="hero-orb hero-orb-two"></div>
             <div class="hero-orb hero-orb-three"></div>
 
-            <div class="relative z-10 mx-auto grid max-w-7xl gap-14 px-4 py-16 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-8 lg:py-24">
+            <div class="hero-content relative z-10 mx-auto grid max-w-7xl gap-14 px-4 py-16 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-8 lg:py-24">
                 <div>
                     <div class="eyebrow reveal" data-reveal>
                         <span class="eyebrow-dot"></span>
                         Trusted digital operations for savings groups
                     </div>
 
-                    <h1 class="reveal mt-8 max-w-4xl font-display text-5xl font-bold leading-[1.02] text-white sm:text-6xl xl:text-7xl" data-reveal data-delay="100">
+                    <h1 class="hero-title reveal mt-8 max-w-4xl font-display text-5xl font-bold leading-[1.02] text-white sm:text-6xl xl:text-7xl" data-reveal data-delay="100">
                         Keep every contribution, loan, and member update in one clear place.
                     </h1>
 
@@ -86,14 +86,29 @@
                         ChamaConnect helps your group move from notebooks and confusion to a calm digital workspace that shows balances, trust, members, reminders, and decisions clearly.
                     </p>
 
-                    <div class="reveal mt-10 flex flex-col gap-4 sm:flex-row" data-reveal data-delay="260">
+                    <div class="hero-actions reveal mt-10 flex flex-col gap-4 sm:flex-row" data-reveal data-delay="260">
                         <a href="auth.html" class="rounded-full bg-white px-7 py-4 text-center text-base font-extrabold text-slate-950 transition hover:-translate-y-0.5 hover:bg-slate-100">Create Your Group</a>
                         <a href="docummentation.html" class="rounded-full border border-white/15 bg-white/8 px-7 py-4 text-center text-base font-bold text-white transition hover:bg-white/12">Documentation</a>
                     </div>
 
                     <p id="install-app-feedback" class="mt-4 hidden text-sm font-semibold text-emerald-200"></p>
 
-                    <div class="mt-10 grid gap-4 sm:grid-cols-3">
+                    <div class="hero-proof mt-8">
+                        <div class="proof-pill">
+                            <strong>Members</strong>
+                            <span>Roles, approvals, and active status stay visible.</span>
+                        </div>
+                        <div class="proof-pill">
+                            <strong>Money</strong>
+                            <span>Contributions, balances, and loans stay readable.</span>
+                        </div>
+                        <div class="proof-pill">
+                            <strong>Trust</strong>
+                            <span>Leaders can act faster with clearer signals.</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-stats mt-10 grid gap-4 sm:grid-cols-3">
                         <div class="hero-stat-card reveal" data-reveal data-delay="320">
                             <p class="hero-stat-label">Contribution visibility</p>
                             <p class="hero-stat-value">100%</p>
@@ -112,7 +127,7 @@
                     </div>
                 </div>
 
-                <div class="relative">
+                <div class="hero-visual relative">
                     <div class="floating-badge floating-badge-left hidden lg:block">
                         <p class="text-xs font-extrabold uppercase tracking-[0.24em] text-emerald-700">Today</p>
                         <strong class="mt-2 block font-display text-2xl text-slate-950">KES 160,000</strong>
@@ -128,14 +143,14 @@
                     <div class="hero-device floating-card reveal" data-reveal data-delay="180">
                         <div class="hero-device-top">
                             <div>
-                                <span class="live-pill">Landing Preview</span>
-                                <h2 class="mt-4 font-display text-3xl font-bold text-white">ChamaConnect visual</h2>
-                                <p class="mt-3 max-w-md text-sm leading-7 text-slate-300">The artwork below is the landing-page image you asked to restore.</p>
+                                <span class="live-pill">Product Preview</span>
+                                <h2 class="mt-4 font-display text-3xl font-bold text-white">A calmer way to introduce the platform</h2>
+                                <p class="mt-3 max-w-md text-sm leading-7 text-slate-300">Community-first visuals, simple financial language, and a layout that helps visitors understand the product quickly.</p>
                             </div>
                             <div class="glass-tile min-w-[11rem]">
-                                <p class="metric-label">Status</p>
-                                <p class="metric-value">Restored</p>
-                                <p class="mt-2 text-sm leading-6 text-slate-300">If you can see the two phones below, the new landing page is loading.</p>
+                                <p class="metric-label">First impression</p>
+                                <p class="metric-value">Ready</p>
+                                <p class="mt-2 text-sm leading-6 text-slate-300">Built to feel trustworthy when someone lands on the site for the first time.</p>
                             </div>
                         </div>
 
@@ -317,6 +332,27 @@
             </div>
         </section>
     </main>
+
+    <footer class="border-t border-white/10 bg-[#06101a]/90 px-4 py-10 sm:px-6 lg:px-8">
+        <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+            <div>
+                <div class="flex items-center gap-3">
+                    <img src="favicon.ico?v=20260405a" alt="ChamaConnect logo" class="h-11 w-11 rounded-2xl object-cover">
+                    <div>
+                        <p class="font-display text-lg font-bold text-white">ChamaConnect</p>
+                        <p class="text-sm text-slate-400">A clearer finance workspace for savings groups.</p>
+                    </div>
+                </div>
+                <p class="mt-5 max-w-2xl text-sm leading-7 text-slate-400">Built for chamas that want better visibility, calmer meetings, and more trust around contributions, loans, and member records.</p>
+            </div>
+
+            <div class="grid gap-3 sm:grid-cols-3">
+                <a href="auth.html" class="footer-link">Start Free</a>
+                <a href="docummentation.html" class="footer-link">User Guide</a>
+                <a href="onboarding.html" class="footer-link">Group Setup</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="assets/landing.js?v=20260405a"></script>
 </body>
