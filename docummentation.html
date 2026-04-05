@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChamaConnect Documentation</title>
+    <meta name="description" content="Documentation for ChamaConnect explaining how to set up the platform, manage members, use the dashboard, and operate the website confidently.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: "#050510",
+                        panel: "rgba(255,255,255,0.08)",
+                        line: "rgba(255,255,255,0.12)",
+                        ink: "#f8fafc",
+                        muted: "#a5b4c8",
+                        blueglow: "#4f7cff",
+                        emeraldglow: "#10b981",
+                        forestglow: "#22c55e"
+                    },
+                    fontFamily: {
+                        display: ["Space Grotesk", "sans-serif"],
+                        body: ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --ease-premium: cubic-bezier(.22, 1, .36, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 10% 12%, rgba(79, 124, 255, 0.18), transparent 20%),
+                radial-gradient(circle at 85% 10%, rgba(16, 185, 129, 0.16), transparent 24%),
+                radial-gradient(circle at 50% 100%, rgba(34, 197, 94, 0.12), transparent 28%),
+                #050510;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .doc-card {
+            background: rgba(6, 14, 25, 0.84);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .doc-link {
+            transition: color 180ms ease, transform 180ms ease;
+        }
+
+        .doc-link:hover {
+            color: #fff;
+            transform: translateX(2px);
+        }
+
+        .step-chip {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 9999px;
+            border: 1px solid rgba(16, 185, 129, 0.22);
+            background: rgba(16, 185, 129, 0.1);
+            padding: 0.45rem 0.8rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #d1fae5;
+        }
+    </style>
+</head>
+<body class="font-body text-ink antialiased selection:bg-emerald-500/30">
+    <header class="sticky top-0 z-50">
+        <div class="mx-auto mt-4 flex max-w-7xl items-center justify-between rounded-full border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-xl sm:px-6">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="images/chama-icon.png" alt="ChamaConnect logo" class="h-11 w-11 rounded-2xl">
+                <div>
+                    <p class="font-display text-lg font-bold text-white">ChamaConnect</p>
+                    <p class="text-xs uppercase tracking-[0.28em] text-slate-300">Documentation</p>
+                </div>
+            </a>
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10">Back Home</a>
+                <a href="auth.html" class="rounded-full bg-gradient-to-r from-blue-500 via-emerald-500 to-green-400 px-5 py-3 text-sm font-bold text-white">Start Free</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 pb-16 pt-14 sm:px-6 lg:px-8">
+        <section class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+            <div>
+                <div class="glass inline-flex items-center gap-3 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.28em] text-slate-200">
+                    <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.75)]"></span>
+                    User guide
+                </div>
+                <h1 class="mt-8 max-w-4xl font-display text-5xl font-bold leading-tight text-white sm:text-6xl">
+                    Documentation for using the full ChamaConnect website.
+                </h1>
+                <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+                    This page explains how a new user signs up, sets up a group, adds a profile, opens the dashboard, manages members, uses chat, reviews join requests, and understands the important areas of the platform.
+                </p>
+                <div class="mt-8 flex flex-wrap gap-3">
+                    <span class="step-chip">Landing page</span>
+                    <span class="step-chip">Authentication</span>
+                    <span class="step-chip">Onboarding</span>
+                    <span class="step-chip">Profile setup</span>
+                    <span class="step-chip">Dashboard</span>
+                    <span class="step-chip">Members and join flow</span>
+                    <span class="step-chip">Chat</span>
+                </div>
+            </div>
+            <aside class="doc-card rounded-[2rem] p-6">
+                <p class="text-sm font-bold uppercase tracking-[0.25em] text-emerald-300">Quick Navigation</p>
+                <div class="mt-5 grid gap-3 text-sm text-slate-300">
+                    <a href="#overview" class="doc-link">1. Website overview</a>
+                    <a href="#start" class="doc-link">2. How a new user starts</a>
+                    <a href="#auth" class="doc-link">3. Sign up and sign in</a>
+                    <a href="#setup" class="doc-link">4. Group setup and profile setup</a>
+                    <a href="#dashboard" class="doc-link">5. Dashboard guide</a>
+                    <a href="#members" class="doc-link">6. Members and join requests</a>
+                    <a href="#chat" class="doc-link">7. Chat and bot controls</a>
+                    <a href="#tips" class="doc-link">8. Tips for daily operation</a>
+                </div>
+            </aside>
+        </section>
+
+        <section id="overview" class="doc-card mt-10 rounded-[2rem] p-6 sm:p-8">
+            <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Website Overview</p>
+            <h2 class="mt-3 font-display text-3xl font-bold text-white">What this website is for</h2>
+            <p class="mt-4 text-base leading-8 text-slate-300">
+                ChamaConnect helps a savings group manage contributions, active loans, available balance, members, trust scores, financial education, and group communication from one dashboard.
+            </p>
+            <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                <div class="glass rounded-3xl p-5">
+                    <h3 class="text-lg font-bold text-white">Landing Page</h3>
+                    <p class="mt-2 text-sm leading-7 text-slate-300">Introduces the platform and helps the user begin.</p>
+                </div>
+                <div class="glass rounded-3xl p-5">
+                    <h3 class="text-lg font-bold text-white">Auth</h3>
+                    <p class="mt-2 text-sm leading-7 text-slate-300">Lets the user create an account or sign in.</p>
+                </div>
+                <div class="glass rounded-3xl p-5">
+                    <h3 class="text-lg font-bold text-white">Onboarding</h3>
+                    <p class="mt-2 text-sm leading-7 text-slate-300">Selects group type and organisation name.</p>
+                </div>
+                <div class="glass rounded-3xl p-5">
+                    <h3 class="text-lg font-bold text-white">Chama OS Dashboard</h3>
+                    <p class="mt-2 text-sm leading-7 text-slate-300">Daily working area for leaders and members.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="start" class="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <article class="doc-card rounded-[2rem] p-6 sm:p-8">
+                <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">How To Start</p>
+                <h2 class="mt-3 font-display text-3xl font-bold text-white">If you are completely new</h2>
+                <ol class="mt-6 space-y-4 text-sm leading-7 text-slate-300">
+                    <li>1. Open the website and click `Start Free` or `Create Your Group`.</li>
+                    <li>2. Create your account or sign in if you already have one.</li>
+                    <li>3. Choose whether you want to create a new group or join an existing one.</li>
+                    <li>4. Enter the required group details and continue.</li>
+                    <li>5. Fill in your full name, role, and phone number.</li>
+                    <li>6. Open the dashboard and begin using the members, chat, activity, and tips sections.</li>
+                </ol>
+            </article>
+            <article class="doc-card rounded-[2rem] p-6 sm:p-8">
+                <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">What You Will See</p>
+                <div class="mt-5 grid gap-3">
+                    <div class="glass rounded-3xl p-4">
+                        <p class="font-bold text-white">Landing area</p>
+                        <p class="mt-1 text-sm text-slate-300">This is where a new user first learns what the platform does and chooses to start.</p>
+                    </div>
+                    <div class="glass rounded-3xl p-4">
+                        <p class="font-bold text-white">Login and sign up area</p>
+                        <p class="mt-1 text-sm text-slate-300">This is where a user creates an account or signs in to continue.</p>
+                    </div>
+                    <div class="glass rounded-3xl p-4">
+                        <p class="font-bold text-white">Group setup area</p>
+                        <p class="mt-1 text-sm text-slate-300">This is where a user creates a new group or asks to join an existing one.</p>
+                    </div>
+                    <div class="glass rounded-3xl p-4">
+                        <p class="font-bold text-white">Profile setup area</p>
+                        <p class="mt-1 text-sm text-slate-300">This is where the user adds personal details like name, role, and phone number.</p>
+                    </div>
+                    <div class="glass rounded-3xl p-4">
+                        <p class="font-bold text-white">Dashboard</p>
+                        <p class="mt-1 text-sm text-slate-300">This is the main working area for money tracking, members, communication, and records.</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section id="auth" class="doc-card mt-10 rounded-[2rem] p-6 sm:p-8">
+            <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Authentication</p>
+            <h2 class="mt-3 font-display text-3xl font-bold text-white">How sign up and sign in work</h2>
+            <div class="mt-6 grid gap-6 lg:grid-cols-2">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Sign up</h3>
+                    <p class="mt-3 text-sm leading-7 text-slate-300">
+                        A new user enters first name, last name, email, group name, and password. After registration, the site stores the user identity and uses it in later setup steps.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Sign in</h3>
+                    <p class="mt-3 text-sm leading-7 text-slate-300">
+                        A returning user enters email and password to open the platform again and continue from their existing group and profile setup.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="setup" class="mt-10 grid gap-6 lg:grid-cols-2">
+            <article class="doc-card rounded-[2rem] p-6 sm:p-8">
+                <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Onboarding</p>
+                <h2 class="mt-3 font-display text-3xl font-bold text-white">Group setup</h2>
+                <p class="mt-4 text-sm leading-7 text-slate-300">
+                    The user selects the type of group being created. This helps the platform choose the best workflow. The organisation name is also stored so the dashboard shows the real group identity.
+                </p>
+                <ul class="mt-5 space-y-3 text-sm leading-7 text-slate-300">
+                    <li>SACCO</li>
+                    <li>Rotating savings (ROSCA)</li>
+                    <li>Table Banking</li>
+                    <li>Women-led Group</li>
+                </ul>
+            </article>
+            <article class="doc-card rounded-[2rem] p-6 sm:p-8">
+                <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Profile Setup</p>
+                <h2 class="mt-3 font-display text-3xl font-bold text-white">User identity setup</h2>
+                <p class="mt-4 text-sm leading-7 text-slate-300">
+                    The user provides full name, role in the group, and phone number. These values help the dashboard display the person properly in the members list and group operations.
+                </p>
+            </article>
+        </section>
+
+        <section id="dashboard" class="doc-card mt-10 rounded-[2rem] p-6 sm:p-8">
+            <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Dashboard Guide</p>
+            <h2 class="mt-3 font-display text-3xl font-bold text-white">How to operate Chama OS</h2>
+            <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                <div class="glass rounded-3xl p-5">
+                    <h3 class="text-lg font-bold text-white">Summary cards</h3>
+                    <p class="mt-2 text-sm leading-7 text-slate-300">Show contributions, loans, available balance, and recent activity count.</p>
+                </div>
+                <div class="glass rounded-3xl p-5">
+                    <h3 class="text-lg font-bold text-white">Recent activity</h3>
+                    <p class="mt-2 text-sm leading-7 text-slate-300">Shows readable updates like contributions, reminders, and loan actions.</p>
+                </div>
+                <div class="glass rounded-3xl p-5">
+                    <h3 class="text-lg font-bold text-white">Quick actions</h3>
+                    <p class="mt-2 text-sm leading-7 text-slate-300">Lets the user record contributions, request loans, and open money tips.</p>
+                </div>
+                <div class="glass rounded-3xl p-5">
+                    <h3 class="text-lg font-bold text-white">Members area</h3>
+                    <p class="mt-2 text-sm leading-7 text-slate-300">Shows names, total members, active status, role, and join requests.</p>
+                </div>
+                <div class="glass rounded-3xl p-5">
+                    <h3 class="text-lg font-bold text-white">Trust scores</h3>
+                    <p class="mt-2 text-sm leading-7 text-slate-300">Helps leaders understand reputation and repayment history.</p>
+                </div>
+                <div class="glass rounded-3xl p-5">
+                    <h3 class="text-lg font-bold text-white">Financial education</h3>
+                    <p class="mt-2 text-sm leading-7 text-slate-300">Provides simple learning content in everyday language.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="members" class="mt-10 grid gap-6 lg:grid-cols-2">
+            <article class="doc-card rounded-[2rem] p-6 sm:p-8">
+                <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Members</p>
+                <h2 class="mt-3 font-display text-3xl font-bold text-white">How members join the group</h2>
+                <ol class="mt-5 space-y-4 text-sm leading-7 text-slate-300">
+                    <li>1. A new user clicks `Request to join` in the members section.</li>
+                    <li>2. They enter full name, phone number, role, and referral.</li>
+                    <li>3. The request goes into the pending join requests list.</li>
+                    <li>4. The chairman reviews the request and chooses approve or reject.</li>
+                    <li>5. When approved, the member moves into the main roster and member count updates.</li>
+                </ol>
+            </article>
+            <article class="doc-card rounded-[2rem] p-6 sm:p-8">
+                <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Roles</p>
+                <h2 class="mt-3 font-display text-3xl font-bold text-white">How roles affect the group</h2>
+                <ul class="mt-5 space-y-4 text-sm leading-7 text-slate-300">
+                    <li>`Chairman`: reviews join requests and oversees group actions.</li>
+                    <li>`Treasurer`: focuses on contributions, funds, and balances.</li>
+                    <li>`Secretary`: helps with records, organisation, and communication.</li>
+                    <li>`Member`: participates in savings, loans, and group chat.</li>
+                </ul>
+            </article>
+        </section>
+
+        <section id="chat" class="doc-card mt-10 rounded-[2rem] p-6 sm:p-8">
+            <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Chat</p>
+            <h2 class="mt-3 font-display text-3xl font-bold text-white">How the chat and bot work</h2>
+            <div class="mt-6 grid gap-6 lg:grid-cols-2">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Group communication</h3>
+                    <p class="mt-3 text-sm leading-7 text-slate-300">
+                        Members can communicate inside the chat area. Messages stay in chat history so users can come back and continue the conversation.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Bot control</h3>
+                    <p class="mt-3 text-sm leading-7 text-slate-300">
+                        The bot can be turned on or off. If on, it replies to balance, reminder, loan, and member questions. If off, members can still chat with each other.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tips" class="doc-card mt-10 rounded-[2rem] p-6 sm:p-8">
+            <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Best Practice</p>
+            <h2 class="mt-3 font-display text-3xl font-bold text-white">Tips for operating the website well</h2>
+            <ul class="mt-6 space-y-4 text-sm leading-7 text-slate-300">
+                <li>Always finish onboarding and profile setup before expecting your personal name to show in the group roster.</li>
+                <li>Use the members section often so leadership and join activity stays current.</li>
+                <li>Review pending join requests before adding new financial access to a user.</li>
+                <li>Use chat history to keep group communication visible and organised.</li>
+                <li>Use the financial education section to train members who are new to the group.</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

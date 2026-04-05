@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chama OS - Features</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-gray-900">Chama OS</a>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a class="text-sm font-medium text-gray-600 hover:text-primary" href="index.html">Home</a>
+                    <a class="text-sm font-semibold text-green-600" href="features">Features</a>
+                    <a class="text-sm font-medium text-gray-600 hover:text-primary" href="pricing">Pricing</a>
+                    <a class="text-sm font-medium text-gray-600 hover:text-primary" href="about">About</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Hero Section -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Powerful Features for Your Savings Group</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Chama OS provides comprehensive tools to manage your group's finances, track contributions, and build wealth together.</p>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <!-- Group Management -->
+            <div class="bg-white p-8 rounded-lg shadow-sm border">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-users text-green-600 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Group Management</h3>
+                <p class="text-gray-600 mb-4">Effortlessly register and manage members in your Chama. Set up roles, permissions, and group rules easily.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>• Manage member profiles and roles</li>
+                    <li>• Set group rules and policies</li>
+                    <li>• Track participation records</li>
+                </ul>
+            </div>
+
+            <!-- Financial Tracking -->
+            <div class="bg-white p-8 rounded-lg shadow-sm border">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Financial Tracking</h3>
+                <p class="text-gray-600 mb-4">Track contributions and group savings in real-time with intuitive dashboards and automatic calculations.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>• Real-time contribution tracking</li>
+                    <li>• Automatic savings calculations</li>
+                    <li>• Financial goal monitoring</li>
+                </ul>
+            </div>
+
+            <!-- Loan Management -->
+            <div class="bg-white p-8 rounded-lg shadow-sm border">
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-hand-holding-usd text-purple-600 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Loan Management</h3>
+                <p class="text-gray-600 mb-4">Apply for loans instantly, define repayment terms, and track loan status with automated interest calculations.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>• Instant loan applications</li>
+                    <li>• Automated interest tracking</li>
+                    <li>• Repayment scheduling</li>
+                </ul>
+            </div>
+
+            <!-- Reporting -->
+            <div class="bg-white p-8 rounded-lg shadow-sm border">
+                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-file-alt text-orange-600 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Financial Reports</h3>
+                <p class="text-gray-600 mb-4">Generate detailed reports on savings, loans, and expenses with professional accounting tools.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>• Comprehensive financial reports</li>
+                    <li>• Member contribution summaries</li>
+                    <li>• Loan performance analytics</li>
+                </ul>
+            </div>
+
+            <!-- Reminders -->
+            <div class="bg-white p-8 rounded-lg shadow-sm border">
+                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-bell text-red-600 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Automated Reminders</h3>
+                <p class="text-gray-600 mb-4">Set up automatic reminders for timely payments and important group activities.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>• Payment due reminders</li>
+                    <li>• Meeting notifications</li>
+                    <li>• Custom alert scheduling</li>
+                </ul>
+            </div>
+
+            <!-- Mobile Access -->
+            <div class="bg-white p-8 rounded-lg shadow-sm border">
+                <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-mobile-alt text-teal-600 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Mobile Access</h3>
+                <p class="text-gray-600 mb-4">Access your Chama information anytime, anywhere with our mobile-friendly platform.</p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>• Mobile-responsive design</li>
+                    <li>• Offline functionality</li>
+                    <li>• Quick access to key features</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Trust & Security Section -->
+        <div class="bg-white rounded-lg shadow-sm border p-8 mb-16">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">Trust & Security</h2>
+                <p class="text-gray-600">Your financial data is protected with enterprise-grade security measures.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Data Protection</h3>
+                    <p class="text-gray-600">Your personal and financial information is securely encrypted and protected.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-lock text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Privacy First</h3>
+                    <p class="text-gray-600">We never share your data with third parties without your explicit consent.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check-circle text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Transparency</h3>
+                    <p class="text-gray-600">All transactions and activities are clearly recorded and easily accessible.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+            <p class="text-xl text-gray-600 mb-8">Join thousands of Chamas already using Chama OS to manage their finances.</p>
+            <a href="index.html" class="inline-block bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 font-semibold">
+                Go to Dashboard
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-gray-400">© 2025 Chama OS. Empowering savings groups across Kenya.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

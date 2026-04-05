@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChamaConnect | Login & Sign Up</title>
+    <meta name="description" content="Secure login and sign up experience for ChamaConnect, built for modern savings groups and community finance teams.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: "#ecfdf2",
+                            100: "#d4f7df",
+                            300: "#5bd48c",
+                            500: "#179c52",
+                            600: "#0f7a40",
+                            700: "#0a5c30"
+                        },
+                        accent: "#ffb84d",
+                        ink: "#09111d",
+                        mist: "#f5f7f3",
+                        deep: "#07131f"
+                    },
+                    fontFamily: {
+                        display: ["Space Grotesk", "sans-serif"],
+                        body: ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    boxShadow: {
+                        soft: "0 24px 60px rgba(7, 19, 31, 0.08)",
+                        glow: "0 30px 80px rgba(23, 156, 82, 0.22)",
+                        panel: "0 30px 80px rgba(7, 19, 31, 0.18)"
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="font-body text-ink">
+    <div class="journey-particle journey-particle-one"></div>
+    <div class="journey-particle journey-particle-two"></div>
+    <div class="journey-particle journey-particle-three"></div>
+
+    <main class="journey-shell">
+        <section class="auth-shell mx-auto max-w-7xl">
+            <div class="journey-topbar reveal is-visible">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="images/chama-icon.png" alt="ChamaConnect icon" class="h-12 w-12 rounded-2xl shadow-soft">
+                    <div>
+                        <p class="font-display text-xl font-bold text-white">ChamaConnect</p>
+                        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-300">Community Finance OS</p>
+                    </div>
+                </a>
+                <a href="contact" class="journey-button hidden text-sm font-semibold sm:inline-flex">Need help?</a>
+            </div>
+
+            <div class="mx-auto mt-10 grid max-w-7xl gap-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+                <section class="auth-hero-panel reveal is-visible">
+                    <div class="auth-hero-glow"></div>
+                    <p class="eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        Trusted digital group finance
+                    </p>
+                    <h1 class="mt-8 max-w-xl font-display text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                        Welcome back to the place where your chama stays organized.
+                    </h1>
+                    <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+                        Sign in with Google or use your password to manage member contributions, approve loans, and keep every meeting aligned. New here? Create an account and start your group in minutes.
+                    </p>
+
+                    <div class="mt-10 grid gap-4 sm:grid-cols-3">
+                        <article class="auth-metric-card">
+                            <p class="auth-metric-value">24/7</p>
+                            <p class="auth-metric-label">Access records, balances, and reminders anytime.</p>
+                        </article>
+                        <article class="auth-metric-card">
+                            <p class="auth-metric-value">Secure</p>
+                            <p class="auth-metric-label">Role-aware access for admins, treasurers, and members.</p>
+                        </article>
+                        <article class="auth-metric-card">
+                            <p class="auth-metric-value">Fast</p>
+                            <p class="auth-metric-label">Start meetings with ready-to-share financial snapshots.</p>
+                        </article>
+                    </div>
+
+                    <div class="mt-10 grid gap-4 sm:grid-cols-2">
+                        <div class="auth-mini-card">
+                            <p class="auth-mini-title">What you can do after login</p>
+                            <ul class="auth-mini-list">
+                                <li>Track member contributions</li>
+                                <li>Review active loan requests</li>
+                                <li>Send reminders before meetings</li>
+                            </ul>
+                        </div>
+                        <div class="auth-mini-card auth-mini-card-accent">
+                            <p class="auth-mini-title">Why members choose ChamaConnect</p>
+                            <p class="mt-3 text-sm leading-7 text-slate-100">Clean records, clearer accountability, and a product experience that feels serious enough for real money movement.</p>
+                        </div>
+                    </div>
+
+                    <div class="journey-showcase mt-10 reveal" style="--reveal-delay: 180ms;">
+                        <img src="images/chama_phones.png" alt="ChamaConnect mobile experience preview">
+                        <div class="journey-showcase-badge left-4 top-4">
+                            <p>Live visibility</p>
+                            <strong>24/7 Access</strong>
+                            <span>Balances, loans, and reminders all available in one place.</span>
+                        </div>
+                        <div class="journey-showcase-badge bottom-4 right-4">
+                            <p>Member trust</p>
+                            <strong>Clear records</strong>
+                            <span>Modern workflows that reduce friction before meetings begin.</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="auth-card reveal is-visible" aria-labelledby="auth-title">
+                    <div class="auth-card-top">
+                        <div>
+                            <p class="text-sm font-bold uppercase tracking-[0.22em] text-brand-700">Secure access</p>
+                            <h2 id="auth-title" class="mt-3 font-display text-3xl font-bold text-ink">Login or create your account</h2>
+                        </div>
+                        <p class="max-w-md text-sm leading-7 text-slate-500">Use Google for the fastest sign-in, or switch tabs to log in and create your workspace with email and password.</p>
+                    </div>
+
+                    <div class="auth-tabs" role="tablist" aria-label="Authentication forms">
+                        <button type="button" class="auth-tab is-active" data-tab-button="login" role="tab" aria-selected="true" aria-controls="login-panel" id="login-tab">Login</button>
+                        <button type="button" class="auth-tab" data-tab-button="signup" role="tab" aria-selected="false" aria-controls="signup-panel" id="signup-tab">Sign Up</button>
+                    </div>
+
+                    <div id="login-panel" class="auth-panel" data-tab-panel="login" role="tabpanel" aria-labelledby="login-tab">
+                        <form id="login-form" class="space-y-5">
+                            <div>
+                                <label for="login-email" class="auth-label">Email address</label>
+                                <input id="login-email" name="email" type="email" placeholder="name@groupmail.com" class="auth-input" required>
+                            </div>
+                            <div>
+                                <div class="mb-2 flex items-center justify-between gap-4">
+                                    <label for="login-password" class="auth-label mb-0">Password</label>
+                                    <a href="forgot-password" class="text-sm font-semibold text-brand-700 transition hover:text-brand-600">Forgot password?</a>
+                                </div>
+                                <input id="login-password" name="password" type="password" placeholder="Enter your password" class="auth-input" required>
+                            </div>
+                            <div class="flex items-center justify-between gap-4">
+                                <label class="inline-flex items-center gap-3 text-sm text-slate-600">
+                                    <input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+                                    Keep me signed in
+                                </label>
+                                <span class="rounded-full bg-brand-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">Encrypted</span>
+                            </div>
+                            <button id="login-submit" type="submit" class="auth-submit">Login to dashboard</button>
+                        </form>
+                    </div>
+
+                    <div id="signup-panel" class="auth-panel hidden" data-tab-panel="signup" role="tabpanel" aria-labelledby="signup-tab">
+                        <form id="signup-form" class="space-y-5">
+                            <div class="grid gap-5 sm:grid-cols-2">
+                                <div>
+                                    <label for="first-name" class="auth-label">First name</label>
+                                    <input id="first-name" name="firstName" type="text" placeholder="Amina" class="auth-input" required>
+                                </div>
+                                <div>
+                                    <label for="last-name" class="auth-label">Last name</label>
+                                    <input id="last-name" name="lastName" type="text" placeholder="Njeri" class="auth-input" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="signup-email" class="auth-label">Email address</label>
+                                <input id="signup-email" name="email" type="email" placeholder="admin@yourchama.org" class="auth-input" required>
+                            </div>
+                            <div>
+                                <label for="group-name" class="auth-label">Group name</label>
+                                <input id="group-name" name="groupName" type="text" placeholder="Umoja Women Group" class="auth-input" required>
+                            </div>
+                            <div class="grid gap-5 sm:grid-cols-2">
+                                <div>
+                                    <label for="signup-password" class="auth-label">Password</label>
+                                    <input id="signup-password" name="password" type="password" placeholder="Create password" class="auth-input" minlength="6" required>
+                                </div>
+                                <div>
+                                    <label for="confirm-password" class="auth-label">Confirm password</label>
+                                    <input id="confirm-password" name="confirmPassword" type="password" placeholder="Repeat password" class="auth-input" minlength="6" required>
+                                </div>
+                            </div>
+                            <label class="inline-flex items-start gap-3 text-sm leading-6 text-slate-600">
+                                <input id="terms-agreement" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500" required>
+                                I agree to the Terms and Privacy Policy and want to receive setup guidance for my group.
+                            </label>
+                            <button id="signup-submit" type="submit" class="auth-submit">Create new account</button>
+                        </form>
+                    </div>
+
+                    <div id="auth-feedback" class="auth-feedback" role="status" aria-live="polite">
+                        Add your Supabase project URL and anon key in the script below to activate authentication.
+                    </div>
+
+                    <div class="auth-divider">
+                        <span>quick sign-in</span>
+                    </div>
+
+                    <div class="grid gap-3">
+                        <button id="google-auth" type="button" class="auth-secondary-button auth-provider-button">
+                            <svg aria-hidden="true" viewBox="0 0 24 24" class="auth-provider-icon">
+                                <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.25-.96 2.3-2.04 3l3.3 2.56c1.92-1.77 3.03-4.37 3.03-7.46 0-.72-.06-1.42-.18-2.1H12z"></path>
+                                <path fill="#34A853" d="M12 21.75c2.7 0 4.97-.9 6.63-2.43l-3.3-2.56c-.92.62-2.1.99-3.33.99-2.56 0-4.73-1.73-5.5-4.05H3.08v2.64A9.99 9.99 0 0 0 12 21.75z"></path>
+                                <path fill="#4A90E2" d="M6.5 13.7A5.98 5.98 0 0 1 6.2 12c0-.59.1-1.16.3-1.7V7.66H3.08A9.95 9.95 0 0 0 2 12c0 1.6.38 3.12 1.08 4.34l3.42-2.64z"></path>
+                                <path fill="#FBBC05" d="M12 6.25c1.47 0 2.79.5 3.83 1.47l2.87-2.87C16.97 3.23 14.7 2.25 12 2.25a9.99 9.99 0 0 0-8.92 5.41L6.5 10.3c.77-2.32 2.94-4.05 5.5-4.05z"></path>
+                            </svg>
+                            <span>Continue with Google</span>
+                        </button>
+                    </div>
+
+                    <p class="mt-6 text-center text-sm leading-7 text-slate-500">
+                        Protected by secure Google and password authentication flows built for modern community finance platforms.
+                    </p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const tabButtons = document.querySelectorAll("[data-tab-button]");
+        const tabPanels = document.querySelectorAll("[data-tab-panel]");
+        const reveals = document.querySelectorAll(".reveal");
+
+        function activateTab(target) {
+            tabButtons.forEach((button) => {
+                const isActive = button.dataset.tabButton === target;
+                button.classList.toggle("is-active", isActive);
+                button.setAttribute("aria-selected", String(isActive));
+            });
+
+            tabPanels.forEach((panel) => {
+                panel.classList.toggle("hidden", panel.dataset.tabPanel !== target);
+            });
+        }
+
+        tabButtons.forEach((button) => {
+            button.addEventListener("click", () => activateTab(button.dataset.tabButton));
+        });
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.14 });
+
+        reveals.forEach((element) => revealObserver.observe(element));
+    </script>
+    <script type="module">
+        import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+        const SUPABASE_URL = "https://dzhdwbjmilmbnqobzvwx.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6aGR3YmptaWxtYm5xb2J6dnd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDk4MjYsImV4cCI6MjA5MDg4NTgyNn0.jEfvXIANWXDMgcbY2nk6kKiGPYJcvs7H0XPVi4z2pRU";
+        const AUTH_PAGE_PATH = "/auth.html";
+        const DASHBOARD_PAGE_PATH = "/onboarding.html";
+
+        const feedback = document.getElementById("auth-feedback");
+        const loginForm = document.getElementById("login-form");
+        const signupForm = document.getElementById("signup-form");
+        const loginSubmit = document.getElementById("login-submit");
+        const signupSubmit = document.getElementById("signup-submit");
+        const googleButton = document.getElementById("google-auth");
+
+        function readStoredConfig() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            return {
+                url:
+                    window.CHAMA_SUPABASE_URL ||
+                    localStorage.getItem("chama_supabase_url") ||
+                    urlParams.get("supabase_url") ||
+                    SUPABASE_URL,
+                anonKey:
+                    window.CHAMA_SUPABASE_ANON_KEY ||
+                    localStorage.getItem("chama_supabase_anon_key") ||
+                    urlParams.get("supabase_anon_key") ||
+                    SUPABASE_ANON_KEY
+            };
+        }
+
+        const supabaseConfig = readStoredConfig();
+        const buttons = [loginSubmit, signupSubmit, googleButton];
+        const hasSupabaseConfig =
+            supabaseConfig.url &&
+            supabaseConfig.anonKey &&
+            supabaseConfig.url !== "YOUR_SUPABASE_URL" &&
+            supabaseConfig.anonKey !== "YOUR_SUPABASE_ANON_KEY";
+        const isFileProtocol = window.location.protocol === "file:";
+        const authPageUrl = new URL(AUTH_PAGE_PATH, window.location.origin);
+        const dashboardUrl = new URL(DASHBOARD_PAGE_PATH, window.location.origin);
+
+        let supabase = null;
+        let redirectingToDashboard = false;
+
+        function setFeedback(message, variant = "info") {
+            feedback.textContent = message;
+            feedback.dataset.variant = variant;
+        }
+
+        function setButtonsDisabled(disabled) {
+            buttons.forEach((button) => {
+                button.disabled = disabled;
+            });
+        }
+
+        function setButtonBusy(button, label, busy) {
+            button.disabled = busy;
+            button.textContent = busy ? label : button.dataset.defaultLabel;
+        }
+
+        function redirectToDashboard(message) {
+            if (redirectingToDashboard) {
+                return;
+            }
+
+            redirectingToDashboard = true;
+            setFeedback(message, "success");
+            window.location.href = dashboardUrl.toString();
+        }
+
+        buttons.forEach((button) => {
+            button.dataset.defaultLabel = button.textContent;
+        });
+
+        if (isFileProtocol) {
+            setButtonsDisabled(true);
+            setFeedback("Serve the site through http://localhost or your real domain. Supabase auth redirects do not work from file:// pages.", "warning");
+        } else if (!hasSupabaseConfig) {
+            setButtonsDisabled(true);
+            setFeedback("Add your Supabase project URL and anon key, or save them in localStorage as chama_supabase_url and chama_supabase_anon_key, to activate authentication.", "warning");
+        } else {
+            localStorage.setItem("chama_supabase_url", supabaseConfig.url);
+            localStorage.setItem("chama_supabase_anon_key", supabaseConfig.anonKey);
+
+            supabase = createClient(supabaseConfig.url, supabaseConfig.anonKey, {
+                auth: {
+                    persistSession: true,
+                    autoRefreshToken: true,
+                    detectSessionInUrl: true
+                }
+            });
+
+            setFeedback("Supabase is connected. You can log in, sign up, or continue with Google.", "success");
+
+            supabase.auth.onAuthStateChange((event, session) => {
+                if (!session) {
+                    return;
+                }
+
+                if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
+                    redirectToDashboard("Login successful. Redirecting to your dashboard...");
+                }
+            });
+
+            const {
+                data: { session }
+            } = await supabase.auth.getSession();
+
+            if (session) {
+                redirectToDashboard("Session detected. Redirecting to your dashboard...");
+            }
+        }
+
+        loginForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            if (!supabase) {
+                return;
+            }
+
+            const formData = new FormData(loginForm);
+            const email = String(formData.get("email") || "").trim();
+            const password = String(formData.get("password") || "");
+
+            setButtonBusy(loginSubmit, "Logging in...", true);
+            setFeedback("Signing you in...", "info");
+
+            const { error } = await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
+
+            setButtonBusy(loginSubmit, "Logging in...", false);
+
+            if (error) {
+                setFeedback(error.message, "error");
+                return;
+            }
+
+            redirectToDashboard("Login successful. Redirecting to your dashboard...");
+        });
+
+        signupForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            if (!supabase) {
+                return;
+            }
+
+            const formData = new FormData(signupForm);
+            const password = String(formData.get("password") || "");
+            const confirmPassword = String(formData.get("confirmPassword") || "");
+            const firstName = String(formData.get("firstName") || "").trim();
+            const lastName = String(formData.get("lastName") || "").trim();
+            const email = String(formData.get("email") || "").trim();
+            const groupName = String(formData.get("groupName") || "").trim();
+
+            if (password !== confirmPassword) {
+                setFeedback("Passwords do not match. Please check and try again.", "error");
+                return;
+            }
+
+            setButtonBusy(signupSubmit, "Creating account...", true);
+            setFeedback("Creating your account...", "info");
+
+            const { data, error } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    emailRedirectTo: authPageUrl.toString(),
+                    data: {
+                        first_name: firstName,
+                        last_name: lastName,
+                        full_name: `${firstName} ${lastName}`.trim(),
+                        group_name: groupName
+                    }
+                }
+            });
+
+            setButtonBusy(signupSubmit, "Creating account...", false);
+
+            if (error) {
+                setFeedback(error.message, "error");
+                return;
+            }
+
+            if (data.session) {
+                redirectToDashboard("Account created successfully. Redirecting to your dashboard...");
+                return;
+            }
+
+            setFeedback("Account created. Check your email to confirm your address before signing in.", "success");
+            signupForm.reset();
+        });
+
+        googleButton.addEventListener("click", async () => {
+            if (!supabase) {
+                return;
+            }
+
+            setButtonBusy(googleButton, "Redirecting...", true);
+            setFeedback("Redirecting to Google sign-in...", "info");
+
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: "google",
+                options: {
+                    redirectTo: authPageUrl.toString()
+                }
+            });
+
+            if (error) {
+                setButtonBusy(googleButton, "Redirecting...", false);
+                setFeedback(error.message, "error");
+            }
+        });
+    </script>
+</body>
+</html>

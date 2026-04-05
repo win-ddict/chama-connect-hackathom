@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - Chama OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="images/chama-icon.png">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <-pn Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-gray-900">Chama OS</a>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-green-600">Home</a>
+                    <a href="features" class="text-gray-600 hover:text-green-600">Features</a>
+                    <a href="pricing" class="text-gray-600 hover:text-green-600">Pricing</a>
+                    <a href="about" class="text-gray-600 hover:text-green-600">About</a>
+                    <a href="community" class="text-green-600 font-semibold">Community</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <-pn Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <-pn Hero Section -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Join Our Community</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Connect with thousands of chama members across Kenya. Share experiences, get advice, and grow together.</p>
+        </div>
+
+        <-pn Community Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+            <div class="bg-white p-6 rounded-lg shadow-sm border text-center">
+                <div class="text-3xl font-bold text-green-600 mb-2">50K+</div>
+                <div class="text-gray-600">Active Members</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border text-center">
+                <div class="text-3xl font-bold text-blue-600 mb-2">10K+</div>
+                <div class="text-gray-600">Chamas Created</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border text-center">
+                <div class="text-3xl font-bold text-purple-600 mb-2">500M+</div>
+                <div class="text-gray-600">KES Managed</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border text-center">
+                <div class="text-3xl font-bold text-orange-600 mb-2">98%</div>
+                <div class="text-gray-600">Satisfaction Rate</div>
+            </div>
+        </div>
+
+        <-pn Community Features -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            <-pn Discussion Forums -->
+            <div class="bg-white p-8 rounded-lg shadow-sm border">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-comments text-blue-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Discussion Forums</h3>
+                        <p class="text-gray-600">Connect with other chama members</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-6">Share experiences, ask questions, and learn from successful chamas across Kenya. Our moderated forums cover topics from investment strategies to member management.</p>
+                <div class="space-y-3">
+                    <div class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        Investment strategies
+                    </div>
+                    <div class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        Member recruitment tips
+                    </div>
+                    <div class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        Loan management advice
+                    </div>
+                </div>
+            </div>
+
+            <-pn Success Stories -->
+            <div class="bg-white p-8 rounded-lg shadow-sm border">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-trophy text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Success Stories</h3>
+                        <p class="text-gray-600">Learn from successful chamas</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-6">Read inspiring stories from chamas that have achieved remarkable growth and success. Get insights into what works and how they did it.</p>
+                <div class="space-y-3">
+                    <div class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-star text-yellow-500 mr-2"></i>
+                        Real case studies
+                    </div>
+                    <div class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-star text-yellow-500 mr-2"></i>
+                        Growth strategies
+                    </div>
+                    <div class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-star text-yellow-500 mr-2"></i>
+                        Best practices
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <-pn Recent Discussions -->
+        <div class="bg-white rounded-lg shadow-sm border mb-16">
+            <div class="p-6 border-b">
+                <h2 class="text-2xl font-bold text-gray-900">Recent Discussions</h2>
+            </div>
+            <div class="divide-y">
+                <div class="p-6 hover:bg-gray-50 cursor-pointer">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Best practices for chama investments in 2025</h3>
+                            <p class="text-gray-600 mb-3">What investment strategies have worked well for your chama this year? Looking for ideas for property, stocks, and business ventures.</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span class="mr-4">Posted by <span class="font-medium">Sarah Wanjiku</span></span>
+                                <span class="mr-4">2 hours ago</span>
+                                <span>23 replies</span>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                Investment
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 hover:bg-gray-50 cursor-pointer">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Managing member contributions during economic uncertainty</h3>
+                            <p class="text-gray-600 mb-3">How has your chama adapted to the current economic climate? Any strategies for maintaining steady contributions?</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span class="mr-4">Posted by <span class="font-medium">David Kiprop</span></span>
+                                <span class="mr-4">5 hours ago</span>
+                                <span>18 replies</span>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                Management
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 hover:bg-gray-50 cursor-pointer">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Digital tools for chama accounting - recommendations?</h3>
+                            <p class="text-gray-600 mb-3">What digital tools are you using for chama accounting and financial management? Pros and cons of different platforms.</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span class="mr-4">Posted by <span class="font-medium">Grace Achieng</span></span>
+                                <span class="mr-4">1 day ago</span>
+                                <span>31 replies</span>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                Technology
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <-pn Join Community CTA -->
+        <div class="bg-gradient-to-r from-green-600 to-blue-600 rounded-lg p-8 text-center text-white">
+            <h3 class="text-3xl font-bold mb-4">Ready to Join the Community?</h3>
+            <p class="text-xl mb-8 opacity-90">Connect with thousands of chama members, share your experiences, and grow your financial knowledge.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="register" class="bg-white text-green-600 px-8 py-4 rounded-lg hover:bg-gray-100 transition-colors font-semibold text-lg">
+                    Join Chama OS
+                </a>
+                <a href="get-started" class="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-green-600 transition-colors font-semibold text-lg">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <-pn Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Chama OS</h3>
+                    <p class="text-gray-300">Empowering Kenyan savings groups with modern financial management tools.</p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="features" class="hover:text-white">Features</a></li>
+                        <li><a href="pricing" class="hover:text-white">Pricing</a></li>
+                        <li><a href="faqs" class="hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="about" class="hover:text-white">About</a></li>
+                        <li><a href="contact" class="hover:text-white">Contact</a></li>
+                        <li><a href="privacy" class="hover:text-white">Privacy</a></li>
+                        <li><a href="terms" class="hover:text-white">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold mb-4">Community</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="community" class="hover:text-white">Discussion Forums</a></li>
+                        <li><a href="faqs" class="hover:text-white">Help Center</a></li>
+                        <li><a href="mailto:support@chamaos.com" class="hover:text-white">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-300">
+                <p>&copy; 2025 Chama OS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
