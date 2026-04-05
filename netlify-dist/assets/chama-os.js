@@ -208,22 +208,6 @@
         return String(left || "").trim().toLowerCase() === String(right || "").trim().toLowerCase();
     }
 
-    function sameGroupType(left, right) {
-        return String(left || "").trim().toLowerCase() === String(right || "").trim().toLowerCase();
-    }
-
-    function sameGroupContext(leftName, leftType, rightName, rightType) {
-        if (!sameGroupName(leftName, rightName)) {
-            return false;
-        }
-
-        if (!leftType || !rightType) {
-            return true;
-        }
-
-        return sameGroupType(leftType, rightType);
-    }
-
     function formatRequestDate(value) {
         return new Intl.DateTimeFormat("en-KE", {
             month: "short",
@@ -347,9 +331,8 @@
         const profileRole = (localStorage.getItem("chama_profile_role") || "").trim() || "Member";
         const profilePhone = (localStorage.getItem("chama_profile_phone") || "").trim() || "Not provided";
         const groupName = (localStorage.getItem("chama_group_name") || "").trim();
-        const groupType = (localStorage.getItem("chama_group_type") || "").trim();
         const approvedMembers = loadApprovedMembers().filter(function (member) {
-            return !member.groupName || sameGroupContext(member.groupName, member.groupType, groupName, groupType);
+            return !member.groupName || sameGroupName(member.groupName, groupName);
         });
         let members = data.members.slice();
 
@@ -535,12 +518,11 @@
 
     function buildDashboard(root) {
         const organizationName = localStorage.getItem("chama_group_name") || "My Chama";
-        const organizationType = localStorage.getItem("chama_group_type") || "";
         const profileRole = (localStorage.getItem("chama_profile_role") || "").toLowerCase();
         const isChairman = profileRole === "chairman";
         const members = getMembersWithCurrentProfile();
         const joinRequests = loadJoinRequests().filter(function (request) {
-            return !request.groupName || sameGroupContext(request.groupName, request.groupType, organizationName, organizationType);
+            return !request.groupName || sameGroupName(request.groupName, organizationName);
         });
         const trustedMembers = members.filter(function (member) {
             return averageScore(member) >= 80;
@@ -883,7 +865,6 @@
                                     <div>
                                         <label for="join-role" class="sr-only">Role</label>
                                         <select id="join-role" class="join-input" required>
-                                            <option value="Chairman">Chairman</option>
                                             <option value="Member">Member</option>
                                             <option value="Secretary">Secretary</option>
                                             <option value="Treasurer">Treasurer</option>
@@ -1387,8 +1368,7 @@
             contributionsConsistency: 72,
             repaymentHistory: 70,
             badges: ["New Member"],
-            groupName: request.groupName || localStorage.getItem("chama_group_name") || "My Chama",
-            groupType: request.groupType || localStorage.getItem("chama_group_type") || ""
+            groupName: request.groupName || localStorage.getItem("chama_group_name") || "My Chama"
         });
         saveApprovedMembers(approvedMembers);
         saveJoinRequests(requests.filter(function (item) {

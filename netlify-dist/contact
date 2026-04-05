@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Chama OS - Get in Touch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="images/chama-icon.png">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <-pn Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-gray-900">Chama OS</a>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-green-600">Home</a>
+                    <a href="features" class="text-gray-600 hover:text-green-600">Features</a>
+                    <a href="pricing" class="text-gray-600 hover:text-green-600">Pricing</a>
+                    <a href="about" class="text-gray-600 hover:text-green-600">About</a>
+                    <a href="contact" class="text-green-600 font-semibold">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <-pn Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <-pn Hero Section -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Get in Touch</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">We'd love to hear from you. Reach out with any questions or feedback about Chama OS.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <-pn Contact Form -->
+            <div class="bg-white p-8 rounded-lg shadow-sm border">
+                <h2 class="text-2xl font-bold mb-6">Send us a Message</h2>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Your first name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Your last name">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="your@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone (Optional)</label>
+                        <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="+254 XXX XXX XXX">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <option>General Inquiry</option>
+                            <option>Technical Support</option>
+                            <option>Partnership</option>
+                            <option>Billing Question</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                        <textarea rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="How can we help you?"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+
+            <-pn Contact Information -->
+            <div class="space-y-8">
+                <-pn Contact Cards -->
+                <div class="grid grid-cols-1 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Email Us</h3>
+                                <p class="text-gray-600">Get in touch via email</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-800 font-medium">support@chamaos.com</p>
+                        <p class="text-sm text-gray-600 mt-1">We respond within 24 hours</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-phone text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Call Us</h3>
+                                <p class="text-gray-600">Speak with our team</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-800 font-medium">+254 723 655 011</p>
+                        <p class="text-sm text-gray-600 mt-1">Mon-Fri, 9AM-6PM EAT</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-purple-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Visit Us</h3>
+                                <p class="text-gray-600">Our office location</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-800 font-medium">57610 00200</p>
+                        <p class="text-gray-800 font-medium">City Square, Nairobi, Kenya</p>
+                    </div>
+                </div>
+
+                <-pn FAQ Section -->
+                <div class="bg-white p-6 rounded-lg shadow-sm border">
+                    <h3 class="text-lg font-semibold mb-4">Quick Answers</h3>
+                    <div class="space-y-3">
+                        <a href="faqs" class="block text-green-600 hover:text-green-700">
+                            <i class="fas fa-question-circle mr-2"></i>Check our FAQ
+                        </a>
+                        <a href="features" class="block text-green-600 hover:text-green-700">
+                            <i class="fas fa-cog mr-2"></i>Learn about features
+                        </a>
+                        <a href="pricing" class="block text-green-600 hover:text-green-700">
+                            <i class="fas fa-tags mr-2"></i>View pricing plans
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <-pn Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Chama OS</h3>
+                    <p class="text-gray-300">Empowering Kenyan savings groups with modern financial management tools.</p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="features" class="hover:text-white">Features</a></li>
+                        <li><a href="pricing" class="hover:text-white">Pricing</a></li>
+                        <li><a href="faqs" class="hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="about" class="hover:text-white">About</a></li>
+                        <li><a href="contact" class="hover:text-white">Contact</a></li>
+                        <li><a href="privacy" class="hover:text-white">Privacy</a></li>
+                        <li><a href="terms" class="hover:text-white">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="mailto:support@chamaos.com" class="hover:text-white">Email Support</a></li>
+                        <li><a href="tel:+254723655011" class="hover:text-white">Phone Support</a></li>
+                        <li><a href="faqs" class="hover:text-white">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-300">
+                <p>&copy; 2025 Chama OS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

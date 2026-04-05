@@ -1,0 +1,225 @@
+:root {
+    color-scheme: light;
+    --app-bg: #f4f7f4;
+    --panel: rgba(255, 255, 255, 0.92);
+    --panel-border: rgba(223, 229, 224, 0.95);
+    --ink: #10261b;
+    --muted: #5f6f65;
+    --brand: #14a44d;
+    --brand-deep: #0b6f33;
+    --navy: #0f172a;
+    --gold: #ffb000;
+    --soft-shadow: 0 18px 50px rgba(16, 38, 27, 0.10);
+}
+
+body {
+    font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-image:
+        radial-gradient(circle at top right, rgba(20, 164, 77, 0.08), transparent 24%),
+        linear-gradient(180deg, #fafcfb 0%, #f3f7f4 100%);
+    color: var(--ink);
+}
+
+h1,
+h2,
+h3,
+.font-black,
+.font-semibold {
+    font-family: "Manrope", "DM Sans", sans-serif;
+}
+
+.app-header,
+.surface-card {
+    border: 1px solid var(--panel-border);
+}
+
+.surface-card {
+    background: var(--panel);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.05);
+}
+
+.hero-panel {
+    position: relative;
+    background:
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 30%),
+        linear-gradient(135deg, #111827 0%, #0f172a 38%, #0f5132 100%);
+}
+
+.hero-stat,
+.hero-wallet {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(14px);
+}
+
+.hero-panel::after {
+    content: "";
+    position: absolute;
+    inset: auto -32px -44px auto;
+    width: 220px;
+    height: 220px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 176, 0, 0.22));
+    filter: blur(6px);
+    pointer-events: none;
+}
+
+.tap-btn {
+    min-height: 48px;
+    transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.tap-btn:hover {
+    transform: translateY(-1px);
+}
+
+.tap-btn:active {
+    transform: scale(0.98);
+}
+
+.offline-pill {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: linear-gradient(90deg, #b91c1c, #dc2626);
+    color: #fff;
+    box-shadow: 0 10px 26px rgba(185, 28, 28, 0.24);
+}
+
+.status-dot {
+    display: inline-block;
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+}
+
+.summary-card {
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(249, 251, 250, 0.98));
+    border: 1px solid rgba(223, 229, 224, 0.95);
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.05);
+}
+
+.summary-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 4px;
+    background: var(--card-accent, #1f8f5f);
+}
+
+.summary-card::after {
+    content: "";
+    position: absolute;
+    inset: auto -40px -60px auto;
+    width: 150px;
+    height: 150px;
+    border-radius: 999px;
+    background: radial-gradient(circle, color-mix(in srgb, var(--card-accent, #1f8f5f) 16%, transparent), transparent 70%);
+}
+
+.activity-item,
+.member-item,
+.chat-bubble,
+.trust-pill {
+    border-radius: 22px;
+}
+
+.activity-item,
+.member-item,
+.queue-item,
+.tip-card {
+    border: 1px solid rgba(223, 229, 224, 0.95);
+    background: linear-gradient(180deg, #ffffff, #fbfcfb);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+.metric-icon {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.metric-chip {
+    border: 1px solid rgba(20, 164, 77, 0.12);
+}
+
+.member-avatar {
+    background: linear-gradient(180deg, #ffffff, #f1f7f3);
+}
+
+.trust-pill {
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.chat-bubble {
+    max-width: 84%;
+    padding: 0.85rem 1rem;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+.chat-bubble.bot {
+    background: #f7faf8;
+    color: #203528;
+    border: 1px solid rgba(223, 229, 224, 0.9);
+}
+
+.chat-bubble.user {
+    margin-left: auto;
+    background: linear-gradient(135deg, #0f8a3f, #14a44d);
+    color: #fff;
+}
+
+.modal-shell {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: grid;
+    padding: 1rem;
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 18, 12, 0.58);
+}
+
+.modal-panel {
+    position: relative;
+    z-index: 1;
+    margin: auto;
+}
+
+.icon-wrap svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+#toast-region > div {
+    box-shadow: var(--soft-shadow);
+}
+
+@media (max-width: 640px) {
+    .chat-bubble {
+        max-width: 92%;
+    }
+
+    .offline-pill {
+        flex-wrap: wrap;
+        text-align: center;
+    }
+
+    .hero-panel::after {
+        width: 140px;
+        height: 140px;
+    }
+}

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chama OS - Simple Pricing for Every Chama</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="images/chama-icon.png">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="images/chamaconnect.svg" alt="Chama OS" class="h-8 w-auto hidden md:block">
+                        <img src="images/chama-icon.png" alt="Chama OS" class="h-8 w-8 block md:hidden">
+                    </a>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-green-600">Home</a>
+                    <a href="features" class="text-gray-600 dark:text-gray-300 hover:text-green-600">Features</a>
+                    <a href="pricing" class="text-green-600 font-semibold">Pricing</a>
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-green-600">
+                            Company <i class="fas fa-chevron-down text-sm"></i>
+                        </button>
+                        <div class="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <a href="about" class="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-600">
+                                <i class="fas fa-building text-green-600 mt-0.5"></i>
+                                <div>
+                                    <div class="font-medium text-sm">About Us</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Learn more about our mission</div>
+                                </div>
+                            </a>
+                            <a href="community" class="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-600">
+                                <i class="fas fa-users text-green-600 mt-0.5"></i>
+                                <div>
+                                    <div class="font-medium text-sm">Community</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Join our growing community</div>
+                                </div>
+                            </a>
+                            <a href="contact" class="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                <i class="fas fa-envelope text-green-600 mt-0.5"></i>
+                                <div>
+                                    <div class="font-medium text-sm">Contact Us</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Get in touch with us</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                    <a href="get-started" class="hidden md:inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Get Started</a>
+                    <button class="md:hidden p-2 rounded-md text-gray-600 dark:text-gray-300" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="px-4 py-4 space-y-4">
+            <a href="index.html" class="block text-gray-600 dark:text-gray-300 hover:text-green-600">Home</a>
+            <a href="features" class="block text-gray-600 dark:text-gray-300 hover:text-green-600">Features</a>
+            <a href="pricing" class="block text-green-600 font-semibold">Pricing</a>
+            <a href="about" class="block text-gray-600 dark:text-gray-300 hover:text-green-600">About Us</a>
+            <a href="community" class="block text-gray-600 dark:text-gray-300 hover:text-green-600">Community</a>
+            <a href="contact" class="block text-gray-600 dark:text-gray-300 hover:text-green-600">Contact Us</a>
+            <a href="get-started" class="block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 text-center">Get Started</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24 bg-white dark:bg-gray-800">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <div class="mb-4">
+                <span class="text-green-600 font-semibold">Simple Pricing</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                Pricing for Every Chama
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
+                Start free and scale as your savings group grows. No hidden fees, just simple, transparent pricing.
+            </p>
+            <div class="flex items-center justify-center gap-4 mb-12">
+                <button id="monthly-btn" class="px-6 py-2 rounded-md font-semibold bg-green-600 text-white">Monthly</button>
+                <button id="yearly-btn" class="px-6 py-2 rounded-md font-semibold bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600">Yearly</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section class="py-16 md:py-24 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Starter Plan -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8">
+                    <h3 class="text-2xl font-bold mb-2">Starter</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-6">Perfect for small savings groups getting started</p>
+                    <div class="mb-6">
+                        <div class="text-4xl font-bold" id="starter-price">Free</div>
+                        <div class="text-gray-500 dark:text-gray-400 text-sm" id="starter-period"></div>
+                    </div>
+                    <a href="register" class="block w-full py-3 rounded-md font-semibold text-center transition-colors mb-8 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                        Get Started Free
+                    </a>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Up to 15 members</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Basic financial tracking</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Group notifications</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Mobile app access</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Email support</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Data export</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>5 monthly reports</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Plan -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg border-2 border-green-600 p-6 md:p-8 relative md:scale-105">
+                    <div class="bg-green-600 text-white px-4 py-1 rounded-full text-center font-semibold text-sm absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        Most Popular
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Professional</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-6">Ideal for established groups and growing communities</p>
+                    <div class="mb-6">
+                        <div class="text-4xl font-bold" id="pro-price">KSh 2,500</div>
+                        <div class="text-gray-500 dark:text-gray-400 text-sm" id="pro-period">/month</div>
+                    </div>
+                    <a href="register" class="block w-full py-3 rounded-md font-semibold text-center transition-colors mb-8 bg-green-600 text-white hover:bg-green-700">
+                        Start Free Trial
+                    </a>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Up to 100 members</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Advanced financial tracking</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Automated loan management</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Custom branding</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Priority support</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Unlimited reports</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Analytics dashboard</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Multi-currency support</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8">
+                    <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-6">For large SACCOs and financial institutions</p>
+                    <div class="mb-6">
+                        <div class="text-4xl font-bold">Custom</div>
+                    </div>
+                    <a href="contact" class="block w-full py-3 rounded-md font-semibold text-center transition-colors mb-8 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                        Contact Sales
+                    </a>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Unlimited members</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Advanced financial tools</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Custom integrations</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>White-label solution</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Dedicated support</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Advanced analytics</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Regulatory compliance</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Custom development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Comparison -->
+    <section class="py-16 md:py-24 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">Feature Comparison</h2>
+            <p class="text-center text-gray-600 dark:text-gray-300 mb-12">Compare features across all plans to find what works best for your group.</p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="border-b-2 border-green-600">
+                            <th class="text-left py-3 px-4 font-semibold">Features</th>
+                            <th class="text-center py-3 px-4 font-semibold">Starter</th>
+                            <th class="text-center py-3 px-4 font-semibold">Professional</th>
+                            <th class="text-center py-3 px-4 font-semibold">Enterprise</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td class="py-4 px-4 font-medium">Maximum Members</td>
+                            <td class="text-center py-4 px-4">15</td>
+                            <td class="text-center py-4 px-4">100</td>
+                            <td class="text-center py-4 px-4">Unlimited</td>
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td class="py-4 px-4 font-medium">Financial Tracking</td>
+                            <td class="text-center py-4 px-4">Basic</td>
+                            <td class="text-center py-4 px-4">Advanced</td>
+                            <td class="text-center py-4 px-4">Advanced</td>
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td class="py-4 px-4 font-medium">Loan Management</td>
+                            <td class="text-center py-4 px-4">Basic</td>
+                            <td class="text-center py-4 px-4">Advanced</td>
+                            <td class="text-center py-4 px-4">Full Suite</td>
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td class="py-4 px-4 font-medium">Reports</td>
+                            <td class="text-center py-4 px-4">5/month</td>
+                            <td class="text-center py-4 px-4">Unlimited</td>
+                            <td class="text-center py-4 px-4">Unlimited</td>
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td class="py-4 px-4 font-medium">Support</td>
+                            <td class="text-center py-4 px-4">Email</td>
+                            <td class="text-center py-4 px-4">Priority</td>
+                            <td class="text-center py-4 px-4">Dedicated</td>
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td class="py-4 px-4 font-medium">Custom Branding</td>
+                            <td class="text-center py-4 px-4">✗</td>
+                            <td class="text-center py-4 px-4">✓</td>
+                            <td class="text-center py-4 px-4">✓</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td class="py-4 px-4 font-medium">API Access</td>
+                            <td class="text-center py-4 px-4">✗</td>
+                            <td class="text-center py-4 px-4">✗</td>
+                            <td class="text-center py-4 px-4">✓</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 md:py-24 bg-green-600">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+                Ready to Transform Your Chama Management?
+            </h2>
+            <p class="text-lg text-green-100 mb-8">
+                Join thousands of groups already using Chama OS to manage their finances with confidence and transparency.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="register" class="px-8 py-3 bg-white text-green-600 rounded-md hover:bg-gray-100 font-semibold">
+                    Start Your Free Trial
+                </a>
+                <a href="contact" class="px-8 py-3 bg-green-700 text-white rounded-md hover:bg-green-800 font-semibold">
+                    Contact Sales
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <img src="images/chamaconnect.svg" alt="Chama OS" class="h-8 w-auto">
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Chama OS is a simple, accessible platform designed to help Kenyan savings groups manage their finances with ease and transparency.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="about" class="hover:text-white">About Us</a></li>
+                        <li><a href="features" class="hover:text-white">Features</a></li>
+                        <li><a href="pricing" class="hover:text-white">Pricing</a></li>
+                        <li><a href="contact" class="hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="faqs" class="hover:text-white">FAQ's</a></li>
+                        <li><a href="community" class="hover:text-white">Community</a></li>
+                        <li><a href="terms" class="hover:text-white">Terms</a></li>
+                        <li><a href="privacy" class="hover:text-white">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Chama OS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                html.classList.add('dark');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Pricing toggle
+        const monthlyBtn = document.getElementById('monthly-btn');
+        const yearlyBtn = document.getElementById('yearly-btn');
+        const proPrice = document.getElementById('pro-price');
+        const proPeriod = document.getElementById('pro-period');
+
+        monthlyBtn.addEventListener('click', () => {
+            monthlyBtn.className = 'px-6 py-2 rounded-md font-semibold bg-green-600 text-white';
+            yearlyBtn.className = 'px-6 py-2 rounded-md font-semibold bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600';
+            proPrice.textContent = 'KSh 2,500';
+            proPeriod.textContent = '/month';
+        });
+
+        yearlyBtn.addEventListener('click', () => {
+            yearlyBtn.className = 'px-6 py-2 rounded-md font-semibold bg-green-600 text-white';
+            monthlyBtn.className = 'px-6 py-2 rounded-md font-semibold bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600';
+            proPrice.textContent = 'KSh 27,000';
+            proPeriod.textContent = '/year';
+        });
+    </script>
+</body>
+</html></content>
+<parameter name="filePath">/home/roba/Documents/websec/chamaconnect.io/pricing_new

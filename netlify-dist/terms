@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Chama OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="images/chama-icon.png">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <-pn Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-gray-900">Chama OS</a>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-green-600">Home</a>
+                    <a href="features" class="text-gray-600 hover:text-green-600">Features</a>
+                    <a href="pricing" class="text-gray-600 hover:text-green-600">Pricing</a>
+                    <a href="about" class="text-gray-600 hover:text-green-600">About</a>
+                    <a href="terms" class="text-green-600 font-semibold">Terms</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <-pn Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <-pn Hero Section -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Terms of Service</h1>
+            <p class="text-xl text-gray-600">Last updated: January 2025</p>
+        </div>
+
+        <-pn Terms Content -->
+        <div class="bg-white rounded-lg shadow-sm border p-8 space-y-8">
+            <-pn Acceptance of Terms -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">1. Acceptance of Terms</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    By accessing and using Chama OS ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
+                </p>
+            </section>
+
+            <-pn Description of Service -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">2. Description of Service</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Chama OS is a financial management platform designed for Kenyan savings groups (chamas). The service provides:
+                </p>
+                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4">
+                    <li>Member management and contribution tracking</li>
+                    <li>Loan management and repayment tracking</li>
+                    <li>Financial reporting and analytics</li>
+                    <li>Mobile money integration (M-Pesa)</li>
+                    <li>Communication tools for group coordination</li>
+                </ul>
+            </section>
+
+            <-pn User Accounts -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">3. User Accounts</h2>
+                <div class="space-y-4">
+                    <p class="text-gray-600 leading-relaxed">
+                        To use Chama OS, you must create an account. You are responsible for:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4">
+                        <li>Maintaining the confidentiality of your account credentials</li>
+                        <li>All activities that occur under your account</li>
+                        <li>Notifying us immediately of any unauthorized use</li>
+                        <li>Providing accurate and complete information</li>
+                    </ul>
+                    <p class="text-gray-600 leading-relaxed">
+                        We reserve the right to terminate accounts that violate these terms or engage in fraudulent activities.
+                    </p>
+                </div>
+            </section>
+
+            <-pn Acceptable Use -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">4. Acceptable Use</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    You agree to use the Service only for lawful purposes and in accordance with these terms. You shall not:
+                </p>
+                <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4">
+                    <li>Use the service for any illegal activities</li>
+                    <li>Attempt to gain unauthorized access to our systems</li>
+                    <li>Transmit harmful code or interfere with service operations</li>
+                    <li>Share account credentials with unauthorized users</li>
+                    <li>Use the service to harass, abuse, or harm others</li>
+                    <li>Violate any applicable laws or regulations</li>
+                </ul>
+            </section>
+
+            <-pn Financial Responsibilities -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">5. Financial Responsibilities</h2>
+                <div class="space-y-4">
+                    <p class="text-gray-600 leading-relaxed">
+                        Chama OS facilitates financial transactions but does not hold or manage funds directly. Users are responsible for:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4">
+                        <li>Accurate recording of all financial transactions</li>
+                        <li>Compliance with Kenyan financial regulations</li>
+                        <li>Proper management of chama funds</li>
+                        <li>Tax obligations related to chama activities</li>
+                    </ul>
+                    <p class="text-gray-600 leading-relaxed">
+                        We are not liable for financial losses resulting from user error, fraud, or mismanagement.
+                    </p>
+                </div>
+            </section>
+
+            <-pn Privacy and Data Protection -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">6. Privacy and Data Protection</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    Your privacy is important to us. Please review our Privacy Policy, which also governs your use of the Service, to understand our practices regarding the collection and use of your personal information.
+                </p>
+            </section>
+
+            <-pn Service Availability -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">7. Service Availability</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    While we strive to provide continuous service, we do not guarantee uninterrupted access. The service may be temporarily unavailable due to maintenance, technical issues, or circumstances beyond our control.
+                </p>
+            </section>
+
+            <-pn Termination -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">8. Termination</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    We may terminate or suspend your account and access to the Service immediately, without prior notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties.
+                </p>
+            </section>
+
+            <-pn Limitation of Liability -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">9. Limitation of Liability</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    Chama OS shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the service. Our total liability shall not exceed the amount paid by you for the service in the 12 months preceding the claim.
+                </p>
+            </section>
+
+            <-pn Governing Law -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">10. Governing Law</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    These Terms shall be governed by and construed in accordance with the laws of Kenya. Any disputes arising from these terms shall be resolved in the courts of Kenya.
+                </p>
+            </section>
+
+            <-pn Changes to Terms -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">11. Changes to Terms</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    We reserve the right to modify these terms at any time. We will notify users of significant changes via email or through the service. Continued use of the service after changes constitutes acceptance of the new terms.
+                </p>
+            </section>
+
+            <-pn Contact Information -->
+            <section>
+                <h2 class="text-2xl font-bold mb-4">12. Contact Information</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    If you have any questions about these Terms, please contact us at:
+                </p>
+                <div class="bg-gray-50 p-4 rounded-lg mt-4">
+                    <p class="text-gray-800"><strong>Email:</strong> legal@chamaos.com</p>
+                    <p class="text-gray-800"><strong>Phone:</strong> +254 723 655 011</p>
+                    <p class="text-gray-800"><strong>Address:</strong> 57610 00200, City Square, Nairobi, Kenya</p>
+                </div>
+            </section>
+        </div>
+
+        <-pn Agreement Acknowledgment -->
+        <div class="mt-8 bg-green-50 rounded-lg p-6 text-center">
+            <p class="text-gray-600">
+                By using Chama OS, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
+            </p>
+        </div>
+    </main>
+
+    <-pn Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Chama OS</h3>
+                    <p class="text-gray-300">Empowering Kenyan savings groups with modern financial management tools.</p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="features" class="hover:text-white">Features</a></li>
+                        <li><a href="pricing" class="hover:text-white">Pricing</a></li>
+                        <li><a href="faqs" class="hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="about" class="hover:text-white">About</a></li>
+                        <li><a href="contact" class="hover:text-white">Contact</a></li>
+                        <li><a href="privacy" class="hover:text-white">Privacy</a></li>
+                        <li><a href="terms" class="hover:text-white">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="mailto:support@chamaos.com" class="hover:text-white">Email Support</a></li>
+                        <li><a href="tel:+254723655011" class="hover:text-white">Phone Support</a></li>
+                        <li><a href="faqs" class="hover:text-white">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-300">
+                <p>&copy; 2025 Chama OS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
