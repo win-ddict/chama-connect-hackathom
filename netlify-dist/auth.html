@@ -40,7 +40,7 @@
             }
         };
     </script>
-    <link rel="stylesheet" href="assets/site.css">
+    <link rel="stylesheet" href="assets/site.css?v=20260406e">
 </head>
 <body class="font-body text-ink">
     <div class="journey-particle journey-particle-one"></div>
@@ -68,24 +68,24 @@
                         Trusted digital group finance
                     </p>
                     <h1 class="mt-8 max-w-xl font-display text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-                        Welcome back to the place where your chama stays organized.
+                        Sign in and run your chama.
                     </h1>
                     <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-                        Sign in with Google or use your password to manage member contributions, approve loans, and keep every meeting aligned. New here? Create an account and start your group in minutes.
+                        Log in fast. See records, loans, and reminders.
                     </p>
 
                     <div class="mt-10 grid gap-4 sm:grid-cols-3">
                         <article class="auth-metric-card">
                             <p class="auth-metric-value">24/7</p>
-                            <p class="auth-metric-label">Access records, balances, and reminders anytime.</p>
+                            <p class="auth-metric-label">Records anytime.</p>
                         </article>
                         <article class="auth-metric-card">
                             <p class="auth-metric-value">Secure</p>
-                            <p class="auth-metric-label">Role-aware access for admins, treasurers, and members.</p>
+                            <p class="auth-metric-label">Secure access.</p>
                         </article>
                         <article class="auth-metric-card">
                             <p class="auth-metric-value">Fast</p>
-                            <p class="auth-metric-label">Start meetings with ready-to-share financial snapshots.</p>
+                            <p class="auth-metric-label">Start faster.</p>
                         </article>
                     </div>
 
@@ -100,7 +100,7 @@
                         </div>
                         <div class="auth-mini-card auth-mini-card-accent">
                             <p class="auth-mini-title">Why members choose ChamaConnect</p>
-                            <p class="mt-3 text-sm leading-7 text-slate-100">Clean records, clearer accountability, and a product experience that feels serious enough for real money movement.</p>
+                            <p class="mt-3 text-sm leading-7 text-slate-100">Clear records. Less confusion.</p>
                         </div>
                     </div>
 
@@ -109,12 +109,12 @@
                         <div class="journey-showcase-badge left-4 top-4">
                             <p>Live visibility</p>
                             <strong>24/7 Access</strong>
-                            <span>Balances, loans, and reminders all available in one place.</span>
+                            <span>Everything in one place.</span>
                         </div>
                         <div class="journey-showcase-badge bottom-4 right-4">
                             <p>Member trust</p>
                             <strong>Clear records</strong>
-                            <span>Modern workflows that reduce friction before meetings begin.</span>
+                            <span>Clear records for every member.</span>
                         </div>
                     </div>
                 </section>
@@ -125,7 +125,7 @@
                             <p class="text-sm font-bold uppercase tracking-[0.22em] text-brand-700">Secure access</p>
                             <h2 id="auth-title" class="mt-3 font-display text-3xl font-bold text-ink">Login or create your account</h2>
                         </div>
-                        <p class="max-w-md text-sm leading-7 text-slate-500">Use Google for the fastest sign-in, or switch tabs to log in and create your workspace with email and password.</p>
+                        <p class="max-w-md text-sm leading-7 text-slate-500">Use Google or email to continue.</p>
                     </div>
 
                     <div class="auth-tabs" role="tablist" aria-label="Authentication forms">
@@ -144,7 +144,21 @@
                                     <label for="login-password" class="auth-label mb-0">Password</label>
                                     <a href="forgot-password" class="text-sm font-semibold text-brand-700 transition hover:text-brand-600">Forgot password?</a>
                                 </div>
-                                <input id="login-password" name="password" type="password" placeholder="Enter your password" class="auth-input" required>
+                                <div class="password-field">
+                                    <input id="login-password" name="password" type="password" placeholder="Enter your password" class="auth-input" required>
+                                    <button type="button" class="password-toggle" data-password-toggle="login-password" aria-label="Show password" aria-pressed="false">
+                                        <svg class="password-toggle-icon password-toggle-icon-show" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M2.04 12.32a1.01 1.01 0 0 1 0-.64C3.42 7.51 7.36 4.5 12 4.5s8.58 3.01 9.96 7.18c.07.21.07.43 0 .64C20.58 16.49 16.64 19.5 12 19.5S3.42 16.49 2.04 12.32Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                        </svg>
+                                        <svg class="password-toggle-icon password-toggle-icon-hide" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M3 3l18 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                            <path d="M10.58 10.58A3 3 0 0 0 12 15a2.99 2.99 0 0 0 2.42-1.22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                            <path d="M9.88 5.09A10.94 10.94 0 0 1 12 4.5c4.64 0 8.58 3.01 9.96 7.18.07.21.07.43 0 .64a11.8 11.8 0 0 1-4.27 5.57" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                            <path d="M6.61 6.61A11.83 11.83 0 0 0 2.04 11.68a1.01 1.01 0 0 0 0 .64C3.42 16.49 7.36 19.5 12 19.5c1.38 0 2.69-.27 3.88-.76" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
                             <div class="flex items-center justify-between gap-4">
                                 <label class="inline-flex items-center gap-3 text-sm text-slate-600">
@@ -180,11 +194,39 @@
                             <div class="grid gap-5 sm:grid-cols-2">
                                 <div>
                                     <label for="signup-password" class="auth-label">Password</label>
-                                    <input id="signup-password" name="password" type="password" placeholder="Create password" class="auth-input" minlength="6" required>
+                                    <div class="password-field">
+                                        <input id="signup-password" name="password" type="password" placeholder="Create password" class="auth-input" minlength="6" required>
+                                        <button type="button" class="password-toggle" data-password-toggle="signup-password" aria-label="Show password" aria-pressed="false">
+                                            <svg class="password-toggle-icon password-toggle-icon-show" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M2.04 12.32a1.01 1.01 0 0 1 0-.64C3.42 7.51 7.36 4.5 12 4.5s8.58 3.01 9.96 7.18c.07.21.07.43 0 .64C20.58 16.49 16.64 19.5 12 19.5S3.42 16.49 2.04 12.32Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                            </svg>
+                                            <svg class="password-toggle-icon password-toggle-icon-hide" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M3 3l18 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                <path d="M10.58 10.58A3 3 0 0 0 12 15a2.99 2.99 0 0 0 2.42-1.22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                <path d="M9.88 5.09A10.94 10.94 0 0 1 12 4.5c4.64 0 8.58 3.01 9.96 7.18.07.21.07.43 0 .64a11.8 11.8 0 0 1-4.27 5.57" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                <path d="M6.61 6.61A11.83 11.83 0 0 0 2.04 11.68a1.01 1.01 0 0 0 0 .64C3.42 16.49 7.36 19.5 12 19.5c1.38 0 2.69-.27 3.88-.76" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div>
                                     <label for="confirm-password" class="auth-label">Confirm password</label>
-                                    <input id="confirm-password" name="confirmPassword" type="password" placeholder="Repeat password" class="auth-input" minlength="6" required>
+                                    <div class="password-field">
+                                        <input id="confirm-password" name="confirmPassword" type="password" placeholder="Repeat password" class="auth-input" minlength="6" required>
+                                        <button type="button" class="password-toggle" data-password-toggle="confirm-password" aria-label="Show password" aria-pressed="false">
+                                            <svg class="password-toggle-icon password-toggle-icon-show" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M2.04 12.32a1.01 1.01 0 0 1 0-.64C3.42 7.51 7.36 4.5 12 4.5s8.58 3.01 9.96 7.18c.07.21.07.43 0 .64C20.58 16.49 16.64 19.5 12 19.5S3.42 16.49 2.04 12.32Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                            </svg>
+                                            <svg class="password-toggle-icon password-toggle-icon-hide" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M3 3l18 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                <path d="M10.58 10.58A3 3 0 0 0 12 15a2.99 2.99 0 0 0 2.42-1.22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                <path d="M9.88 5.09A10.94 10.94 0 0 1 12 4.5c4.64 0 8.58 3.01 9.96 7.18.07.21.07.43 0 .64a11.8 11.8 0 0 1-4.27 5.57" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                <path d="M6.61 6.61A11.83 11.83 0 0 0 2.04 11.68a1.01 1.01 0 0 0 0 .64C3.42 16.49 7.36 19.5 12 19.5c1.38 0 2.69-.27 3.88-.76" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <label class="inline-flex items-start gap-3 text-sm leading-6 text-slate-600">
@@ -216,7 +258,7 @@
                     </div>
 
                     <p class="mt-6 text-center text-sm leading-7 text-slate-500">
-                        Protected by secure Google and password authentication flows built for modern community finance platforms.
+                        Secure Google and password sign-in.
                     </p>
                 </section>
             </div>
@@ -240,6 +282,37 @@
             });
         }
 
+        function initializePasswordToggles(scope = document) {
+            scope.querySelectorAll("[data-password-toggle]").forEach((button) => {
+                if (button.dataset.passwordToggleReady === "true") {
+                    return;
+                }
+
+                const input = document.getElementById(button.dataset.passwordToggle);
+
+                if (!input) {
+                    return;
+                }
+
+                const syncPasswordToggle = () => {
+                    const isVisible = input.type === "text";
+                    button.classList.toggle("is-active", isVisible);
+                    button.setAttribute("aria-pressed", String(isVisible));
+                    button.setAttribute("aria-label", isVisible ? "Hide password" : "Show password");
+                };
+
+                button.addEventListener("click", () => {
+                    const isVisible = input.type === "text";
+                    input.type = isVisible ? "password" : "text";
+                    syncPasswordToggle();
+                    input.focus({ preventScroll: true });
+                });
+
+                button.dataset.passwordToggleReady = "true";
+                syncPasswordToggle();
+            });
+        }
+
         tabButtons.forEach((button) => {
             button.addEventListener("click", () => activateTab(button.dataset.tabButton));
         });
@@ -254,6 +327,7 @@
         }, { threshold: 0.14 });
 
         reveals.forEach((element) => revealObserver.observe(element));
+        initializePasswordToggles();
     </script>
     <script type="module">
         import { createClient } from "https://esm.sh/@supabase/supabase-js@2";

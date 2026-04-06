@@ -5,12 +5,12 @@
 -- Authentication -> URL Configuration -> Site URL
 --   Local example: http://127.0.0.1:5500
 --   Local example: http://localhost:5500
---   Production example: https://yourdomain.com
+--   Production example: https://chamaconnect-roba-vercel-20260406.vercel.app
 --
 -- Authentication -> URL Configuration -> Redirect URLs
 --   http://127.0.0.1:5500/auth.html
 --   http://localhost:5500/auth.html
---   https://yourdomain.com/auth.html
+--   https://chamaconnect-roba-vercel-20260406.vercel.app/auth.html
 --
 -- This schema is intended for email/password and Google OAuth authentication.
 -- Magic link auth is not part of this setup.
@@ -63,6 +63,12 @@ alter table public.profiles
   add column if not exists created_at timestamptz not null default timezone('utc', now()),
   add column if not exists updated_at timestamptz not null default timezone('utc', now());
 
+alter table public.profiles
+drop constraint if exists profiles_group_type_check;
+
+alter table public.profiles
+drop constraint if exists profiles_role_check;
+
 update public.profiles
 set group_type = case group_type
   when 'SACCOs' then 'sacco'
@@ -89,8 +95,14 @@ set group_type = null
 where group_type is not null
   and group_type not in ('sacco', 'rosca', 'table_banking', 'women_group');
 
-alter table public.profiles
-drop constraint if exists profiles_group_type_check;
+update public.profiles
+set role = case lower(trim(coalesce(role, '')))
+  when 'chairman' then 'chairman'
+  when 'treasurer' then 'treasurer'
+  when 'member' then 'member'
+  when 'secretary' then 'secretary'
+  else null
+end;
 
 alter table public.profiles
 add constraint profiles_group_type_check check (group_type in (
@@ -99,6 +111,12 @@ add constraint profiles_group_type_check check (group_type in (
   'table_banking',
   'women_group'
 ));
+
+alter table public.profiles
+add constraint profiles_role_check check (
+  role is null
+  or lower(role) in ('chairman', 'treasurer', 'member', 'secretary')
+);
 
 create table if not exists public.chamas (
   id uuid primary key default gen_random_uuid(),
@@ -326,7 +344,7 @@ begin
     new.raw_user_meta_data ->> 'first_name',
     new.raw_user_meta_data ->> 'last_name',
     new.raw_user_meta_data ->> 'full_name',
-    new.raw_user_meta_data ->> 'role',
+    nullif(lower(trim(coalesce(new.raw_user_meta_data ->> 'role', ''))), ''),
     new.raw_user_meta_data ->> 'phone_number',
     new.raw_user_meta_data ->> 'group_name',
     new.raw_user_meta_data ->> 'group_type'

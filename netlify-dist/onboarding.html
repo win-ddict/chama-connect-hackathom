@@ -35,7 +35,7 @@
             }
         };
     </script>
-    <link rel="stylesheet" href="assets/site.css">
+    <link rel="stylesheet" href="assets/site.css?v=20260406f">
 </head>
 <body class="font-body text-ink">
     <div class="journey-particle journey-particle-one"></div>
@@ -67,10 +67,10 @@
                         Choose your path
                     </p>
                     <h1 class="mt-8 max-w-4xl font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">
-                        Pick the type of group you want, then create it or join it on the next page.
+                        Pick a group type. Then create or join.
                     </h1>
                     <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
-                        Each group type now opens its own styled setup page. Choose the one that matches your real workflow and we will take you to the page where you can either register a new group or join one that already exists in that same type.
+                        Tap the card you want and continue.
                     </p>
                 </div>
 
@@ -81,34 +81,50 @@
                                 <p class="text-sm font-bold uppercase tracking-[0.22em] text-brand-700">Step 1</p>
                                 <h2 class="mt-3 font-display text-3xl font-bold text-white">Select your group type</h2>
                             </div>
-                            <p class="text-sm leading-7 text-slate-300">Click a card below. The next page will let you create a new group of that type or join an existing one in that same category.</p>
+                            <p class="text-sm leading-7 text-slate-300">Choose a type and continue.</p>
                         </div>
 
                         <div class="onboarding-grid" id="group-type-grid">
-                            <button type="button" class="group-type-card" data-group-type="sacco" data-group-label="SACCO" style="background:linear-gradient(180deg, rgba(13, 148, 136, 0.18), rgba(15, 23, 42, 0.72));">
+                            <article class="group-type-card" data-group-type="sacco" data-group-label="SACCO" tabindex="0" role="button" aria-label="Choose SACCO" style="background:linear-gradient(180deg, rgba(13, 148, 136, 0.18), rgba(15, 23, 42, 0.72));">
                                 <span class="group-type-badge">Governance</span>
                                 <strong class="group-type-title">SACCO</strong>
-                                <span class="group-type-copy">Strong records, clear leadership, recurring contributions, and a more formal savings structure.</span>
-                            </button>
-                            <button type="button" class="group-type-card" data-group-type="rosca" data-group-label="Rotating Savings (Merry-go-round)" style="background:linear-gradient(180deg, rgba(249, 115, 22, 0.16), rgba(15, 23, 42, 0.72));">
+                                <span class="group-type-copy">Formal savings with clear records.</span>
+                                <div class="group-type-card-actions">
+                                    <button type="button" class="group-type-card-action" data-group-action="create">Create group</button>
+                                    <button type="button" class="group-type-card-action group-type-card-action-secondary" data-group-action="join">Join group</button>
+                                </div>
+                            </article>
+                            <article class="group-type-card" data-group-type="rosca" data-group-label="Rotating Savings (Merry-go-round)" tabindex="0" role="button" aria-label="Choose Rotating Savings Merry-go-round" style="background:linear-gradient(180deg, rgba(249, 115, 22, 0.16), rgba(15, 23, 42, 0.72));">
                                 <span class="group-type-badge">Cycle</span>
                                 <strong class="group-type-title">Rotating Savings (Merry-go-round)</strong>
-                                <span class="group-type-copy">Perfect for merry-go-round groups where members contribute in turns and pooled payouts rotate around the circle.</span>
-                            </button>
-                            <button type="button" class="group-type-card" data-group-type="table_banking" data-group-label="Table Banking" style="background:linear-gradient(180deg, rgba(234, 179, 8, 0.16), rgba(15, 23, 42, 0.72));">
+                                <span class="group-type-copy">For rotating turns and pooled payouts.</span>
+                                <div class="group-type-card-actions">
+                                    <button type="button" class="group-type-card-action" data-group-action="create">Create group</button>
+                                    <button type="button" class="group-type-card-action group-type-card-action-secondary" data-group-action="join">Join group</button>
+                                </div>
+                            </article>
+                            <article class="group-type-card" data-group-type="table_banking" data-group-label="Table Banking" tabindex="0" role="button" aria-label="Choose Table Banking" style="background:linear-gradient(180deg, rgba(234, 179, 8, 0.16), rgba(15, 23, 42, 0.72));">
                                 <span class="group-type-badge">Meetings</span>
                                 <strong class="group-type-title">Table Banking</strong>
-                                <span class="group-type-copy">Built for meeting-day collection, on-the-table lending, and fast reconciliation after every session.</span>
-                            </button>
-                            <button type="button" class="group-type-card" data-group-type="women_group" data-group-label="Women-led Group" style="background:linear-gradient(180deg, rgba(244, 114, 182, 0.18), rgba(15, 23, 42, 0.72));">
+                                <span class="group-type-copy">For meetings, lending, and quick reconciliation.</span>
+                                <div class="group-type-card-actions">
+                                    <button type="button" class="group-type-card-action" data-group-action="create">Create group</button>
+                                    <button type="button" class="group-type-card-action group-type-card-action-secondary" data-group-action="join">Join group</button>
+                                </div>
+                            </article>
+                            <article class="group-type-card" data-group-type="women_group" data-group-label="Women-led Group" tabindex="0" role="button" aria-label="Choose Women-led Group" style="background:linear-gradient(180deg, rgba(244, 114, 182, 0.18), rgba(15, 23, 42, 0.72));">
                                 <span class="group-type-badge">Community</span>
                                 <strong class="group-type-title">Women-led Group</strong>
-                                <span class="group-type-copy">Designed for women-led circles that need trusted records, participation visibility, and a warmer community-first feel.</span>
-                            </button>
+                                <span class="group-type-copy">Warm, trusted, community-first records.</span>
+                                <div class="group-type-card-actions">
+                                    <button type="button" class="group-type-card-action" data-group-action="create">Create group</button>
+                                    <button type="button" class="group-type-card-action group-type-card-action-secondary" data-group-action="join">Join group</button>
+                                </div>
+                            </article>
                         </div>
 
                         <div id="onboarding-feedback" class="auth-feedback mt-6" role="status" aria-live="polite">
-                            Select a group type to continue to its own create-or-join page.
+                            Pick a card to continue.
                         </div>
                     </div>
 
@@ -118,17 +134,17 @@
                             <div class="journey-showcase-badge left-4 top-4">
                                 <p>Next step</p>
                                 <strong>Create or join</strong>
-                                <span>You will choose whether to register a new group or join an existing group after picking the type.</span>
+                                <span>Create new or join existing.</span>
                             </div>
                         </div>
                         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
                             <div class="auth-mini-card">
                                 <p class="auth-mini-title">Why this matters</p>
-                                <p class="mt-3 text-sm leading-7 text-slate-200">The selected group type now controls the look, copy, and matching rules for the next page.</p>
+                                <p class="mt-3 text-sm leading-7 text-slate-200">The next page matches this type.</p>
                             </div>
                             <div class="auth-mini-card auth-mini-card-accent">
                                 <p class="auth-mini-title">Name rule</p>
-                                <p class="mt-3 text-sm leading-7 text-slate-100">A name can repeat in another type, but not inside the same type. That means <strong>John</strong> can exist in two different categories without clashing.</p>
+                                <p class="mt-3 text-sm leading-7 text-slate-100">A name can repeat in another type, not in the same one.</p>
                             </div>
                         </div>
                     </aside>
@@ -144,6 +160,7 @@
         const reveals = document.querySelectorAll(".reveal");
         const PENDING_GROUP_TYPE_KEY = "chama_pending_group_type";
         const PENDING_GROUP_LABEL_KEY = "chama_pending_group_type_label";
+        const PENDING_GROUP_MODE_KEY = "chama_pending_group_mode";
         const USER_GROUP_LINKS_KEY = "chama_user_group_links";
         const PROFILE_SETUP_PAGE_PATH = "profile-setup.html";
 
@@ -164,6 +181,22 @@
             return String(value || "").trim().toLowerCase();
         }
 
+        function normalizeGroupType(groupType = "") {
+            const aliases = {
+                "SACCOs": "sacco",
+                "SACCO": "sacco",
+                "Rotating savings (ROSCA)": "rosca",
+                "Rotating Savings (ROSCA)": "rosca",
+                "Rotating Savings (Merry-go-round)": "rosca",
+                "Rotating savings (Merry-go-round)": "rosca",
+                "Table Banking": "table_banking",
+                "Women-led chamas": "women_group",
+                "Women-led Group": "women_group"
+            };
+
+            return aliases[groupType] || groupType;
+        }
+
         function sameGroupContext(leftName, leftType, rightName, rightType) {
             if (normalizeName(leftName) !== normalizeName(rightName)) {
                 return false;
@@ -173,12 +206,12 @@
                 return true;
             }
 
-            return normalizeName(leftType) === normalizeName(rightType);
+            return normalizeGroupType(leftType) === normalizeGroupType(rightType);
         }
 
         function bootstrapCurrentGroupLink() {
             const currentGroupName = (localStorage.getItem("chama_group_name") || "").trim();
-            const currentGroupType = (localStorage.getItem("chama_group_type") || "").trim();
+            const currentGroupType = normalizeGroupType(localStorage.getItem("chama_group_type") || "");
             const currentGroupLabel = (localStorage.getItem("chama_group_type_label") || "").trim();
             const currentRole = (localStorage.getItem("chama_profile_role") || "").trim();
 
@@ -215,30 +248,62 @@
             statusButton.textContent = `Status: ${registeredCount} registered • ${memberCount} member`;
         }
 
-        function savePendingGroupSelection(groupType, groupLabel) {
+        function savePendingGroupSelection(groupType, groupLabel, mode) {
             localStorage.setItem(PENDING_GROUP_TYPE_KEY, groupType);
             localStorage.setItem(PENDING_GROUP_LABEL_KEY, groupLabel || groupType);
+            localStorage.setItem(PENDING_GROUP_MODE_KEY, mode || "create");
+        }
+
+        function openGroupSetup(card, mode = "create") {
+            const selectedGroupType = card.dataset.groupType;
+            const selectedGroupLabel = card.dataset.groupLabel || selectedGroupType;
+            const normalizedMode = mode === "join" ? "join" : "create";
+
+            groupTypeCards.forEach((item) => {
+                item.classList.toggle("is-selected", item === card);
+            });
+
+            savePendingGroupSelection(selectedGroupType, selectedGroupLabel, normalizedMode);
+            setFeedback(
+                `${selectedGroupLabel} selected. Opening the ${normalizedMode === "join" ? "join" : "create"} page for this group type...`,
+                "success"
+            );
+
+            const profileSetupUrl = new URL(PROFILE_SETUP_PAGE_PATH, window.location.href);
+            profileSetupUrl.searchParams.set("groupType", selectedGroupType);
+            profileSetupUrl.searchParams.set("groupLabel", selectedGroupLabel);
+            profileSetupUrl.searchParams.set("mode", normalizedMode);
+
+            window.setTimeout(() => {
+                window.location.href = profileSetupUrl.toString();
+            }, 180);
         }
 
         groupTypeCards.forEach((card) => {
-            card.addEventListener("click", () => {
-                const selectedGroupType = card.dataset.groupType;
-                const selectedGroupLabel = card.dataset.groupLabel || selectedGroupType;
+            card.addEventListener("click", (event) => {
+                if (event.target.closest("[data-group-action]")) {
+                    return;
+                }
 
-                groupTypeCards.forEach((item) => {
-                    item.classList.toggle("is-selected", item === card);
+                openGroupSetup(card, "create");
+            });
+
+            card.addEventListener("keydown", (event) => {
+                if (event.target.closest("[data-group-action]")) {
+                    return;
+                }
+
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    openGroupSetup(card, "create");
+                }
+            });
+
+            card.querySelectorAll("[data-group-action]").forEach((button) => {
+                button.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    openGroupSetup(card, button.dataset.groupAction || "create");
                 });
-
-                savePendingGroupSelection(selectedGroupType, selectedGroupLabel);
-                setFeedback(`${selectedGroupLabel} selected. Opening its setup page...`, "success");
-
-                const profileSetupUrl = new URL(PROFILE_SETUP_PAGE_PATH, window.location.href);
-                profileSetupUrl.searchParams.set("groupType", selectedGroupType);
-                profileSetupUrl.searchParams.set("groupLabel", selectedGroupLabel);
-
-                window.setTimeout(() => {
-                    window.location.href = profileSetupUrl.toString();
-                }, 180);
             });
         });
 

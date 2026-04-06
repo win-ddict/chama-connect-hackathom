@@ -1,14 +1,14 @@
-const CACHE_NAME = "chamaconnect-shell-v3";
+const CACHE_NAME = "chamaconnect-shell-v6";
 const CORE_ASSETS = [
     "./",
     "./index.html",
-    "./assets/site.css?v=20260405b",
-    "./assets/landing.js?v=20260405b",
-    "./install.js?v=20260405e",
+    "./assets/site.css?v=20260406e",
+    "./assets/landing.js?v=20260406e",
+    "./install.js?v=20260406e",
     "./images/chama_phones.png",
     "./images/chama-icon.png",
-    "./favicon.ico?v=20260405b",
-    "./manifest.json?v=20260405b",
+    "./favicon.ico?v=20260406e",
+    "./manifest.json?v=20260406e",
     "./icons/icon-192.png",
     "./icons/icon-512.png"
 ];

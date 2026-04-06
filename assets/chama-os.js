@@ -91,8 +91,13 @@
         chatHistory: "chamaChatHistory",
         botEnabled: "chamaBotEnabled",
         joinRequests: "chamaJoinRequests",
-        approvedMembers: "chamaApprovedMembers"
+        approvedMembers: "chamaApprovedMembers",
+        chairmanPasswordStates: "chama_chairman_password_states"
     };
+
+    const SUPABASE_URL = "https://dzhdwbjmilmbnqobzvwx.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmxtaWxtYm5xb2J6dnd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDk4MjYsImV4cCI6MjA5MDg4NTgyNn0.jEfvXIANWXDMgcbY2nk6kKiGPYJcvs7H0XPVi4z2pRU";
+    let supabaseClientPromise = null;
 
     function formatCurrency(amount) {
         return new Intl.NumberFormat("en-KE", {
@@ -100,6 +105,64 @@
             currency: "KES",
             maximumFractionDigits: 0
         }).format(amount);
+    }
+
+    function humanizeRoleLabel(role) {
+        const labels = {
+            chairman: "Chairman",
+            treasurer: "Treasurer",
+            member: "Member",
+            secretary: "Secretary"
+        };
+        const normalizedRole = String(role || "").trim().toLowerCase();
+        return labels[normalizedRole] || String(role || "").trim();
+    }
+
+    function getPasswordToggleIconMarkup() {
+        return `
+            <svg class="password-toggle-icon password-toggle-icon-show" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2.04 12.32a1.01 1.01 0 0 1 0-.64C3.42 7.51 7.36 4.5 12 4.5s8.58 3.01 9.96 7.18c.07.21.07.43 0 .64C20.58 16.49 16.64 19.5 12 19.5S3.42 16.49 2.04 12.32Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path>
+                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path>
+            </svg>
+            <svg class="password-toggle-icon password-toggle-icon-hide" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 3l18 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path>
+                <path d="M10.58 10.58A3 3 0 0 0 12 15a2.99 2.99 0 0 0 2.42-1.22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path>
+                <path d="M9.88 5.09A10.94 10.94 0 0 1 12 4.5c4.64 0 8.58 3.01 9.96 7.18.07.21.07.43 0 .64a11.8 11.8 0 0 1-4.27 5.57" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path>
+                <path d="M6.61 6.61A11.83 11.83 0 0 0 2.04 11.68a1.01 1.01 0 0 0 0 .64C3.42 16.49 7.36 19.5 12 19.5c1.38 0 2.69-.27 3.88-.76" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path>
+            </svg>
+        `;
+    }
+
+    function enhancePasswordToggles(scope) {
+        const root = scope || document;
+
+        root.querySelectorAll("[data-password-toggle]").forEach(function (button) {
+            if (button.dataset.passwordToggleReady === "true") {
+                return;
+            }
+
+            const input = document.getElementById(button.getAttribute("data-password-toggle"));
+
+            if (!input) {
+                return;
+            }
+
+            const syncPasswordToggle = function () {
+                const isVisible = input.type === "text";
+                button.classList.toggle("is-active", isVisible);
+                button.setAttribute("aria-pressed", String(isVisible));
+                button.setAttribute("aria-label", isVisible ? "Hide password" : "Show password");
+            };
+
+            button.addEventListener("click", function () {
+                input.type = input.type === "text" ? "password" : "text";
+                syncPasswordToggle();
+                input.focus({ preventScroll: true });
+            });
+
+            button.dataset.passwordToggleReady = "true";
+            syncPasswordToggle();
+        });
     }
 
     function getTrustMeta(score) {
@@ -204,12 +267,41 @@
         localStorage.setItem(STORAGE_KEYS.approvedMembers, JSON.stringify(members));
     }
 
+    function loadStoredObject(key) {
+        try {
+            const parsed = JSON.parse(localStorage.getItem(key) || "{}");
+            return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+        } catch (error) {
+            return {};
+        }
+    }
+
+    function saveStoredObject(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+    }
+
     function sameGroupName(left, right) {
         return String(left || "").trim().toLowerCase() === String(right || "").trim().toLowerCase();
     }
 
+    function normalizeGroupType(groupType) {
+        const aliases = {
+            "SACCOs": "sacco",
+            "SACCO": "sacco",
+            "Rotating savings (ROSCA)": "rosca",
+            "Rotating Savings (ROSCA)": "rosca",
+            "Rotating Savings (Merry-go-round)": "rosca",
+            "Rotating savings (Merry-go-round)": "rosca",
+            "Table Banking": "table_banking",
+            "Women-led chamas": "women_group",
+            "Women-led Group": "women_group"
+        };
+
+        return aliases[groupType] || String(groupType || "").trim().toLowerCase();
+    }
+
     function sameGroupType(left, right) {
-        return String(left || "").trim().toLowerCase() === String(right || "").trim().toLowerCase();
+        return normalizeGroupType(left) === normalizeGroupType(right);
     }
 
     function sameGroupContext(leftName, leftType, rightName, rightType) {
@@ -222,6 +314,89 @@
         }
 
         return sameGroupType(leftType, rightType);
+    }
+
+    function getCurrentGroupContext() {
+        return {
+            id: String(localStorage.getItem("chama_group_id") || "").trim(),
+            name: String(localStorage.getItem("chama_group_name") || "").trim(),
+            groupType: normalizeGroupType(localStorage.getItem("chama_group_type") || "")
+        };
+    }
+
+    function getGroupContextKey(groupContext) {
+        return `${normalizeGroupType(groupContext.groupType)}::${String(groupContext.name || "").trim().toLowerCase()}`;
+    }
+
+    function loadChairmanPasswordStates() {
+        return loadStoredObject(STORAGE_KEYS.chairmanPasswordStates);
+    }
+
+    function saveChairmanPasswordState(groupContext, nextState) {
+        if (!groupContext?.name || !groupContext?.groupType) {
+            return;
+        }
+
+        const states = loadChairmanPasswordStates();
+        const stateKey = getGroupContextKey(groupContext);
+        states[stateKey] = {
+            groupId: groupContext.id || "",
+            groupName: groupContext.name,
+            groupType: normalizeGroupType(groupContext.groupType),
+            changedAt: nextState?.changedAt || null
+        };
+        saveStoredObject(STORAGE_KEYS.chairmanPasswordStates, states);
+    }
+
+    function readStoredConfig() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return {
+            url:
+                window.CHAMA_SUPABASE_URL ||
+                localStorage.getItem("chama_supabase_url") ||
+                urlParams.get("supabase_url") ||
+                SUPABASE_URL,
+            anonKey:
+                window.CHAMA_SUPABASE_ANON_KEY ||
+                localStorage.getItem("chama_supabase_anon_key") ||
+                urlParams.get("supabase_anon_key") ||
+                SUPABASE_ANON_KEY
+        };
+    }
+
+    async function getSupabaseClient() {
+        if (supabaseClientPromise) {
+            return supabaseClientPromise;
+        }
+
+        supabaseClientPromise = (async function () {
+            const config = readStoredConfig();
+            const hasSupabaseConfig =
+                config.url &&
+                config.anonKey &&
+                config.url !== "YOUR_SUPABASE_URL" &&
+                config.anonKey !== "YOUR_SUPABASE_ANON_KEY" &&
+                window.location.protocol !== "file:";
+
+            if (!hasSupabaseConfig) {
+                return null;
+            }
+
+            try {
+                const module = await import("https://esm.sh/@supabase/supabase-js@2");
+                return module.createClient(config.url, config.anonKey, {
+                    auth: {
+                        persistSession: true,
+                        autoRefreshToken: true,
+                        detectSessionInUrl: true
+                    }
+                });
+            } catch (error) {
+                return null;
+            }
+        }());
+
+        return supabaseClientPromise;
     }
 
     function formatRequestDate(value) {
@@ -344,7 +519,7 @@
 
     function getMembersWithCurrentProfile() {
         const profileName = (localStorage.getItem("chama_profile_name") || "").trim();
-        const profileRole = (localStorage.getItem("chama_profile_role") || "").trim() || "Member";
+        const profileRole = humanizeRoleLabel(localStorage.getItem("chama_profile_role") || "") || "Member";
         const profilePhone = (localStorage.getItem("chama_profile_phone") || "").trim() || "Not provided";
         const groupName = (localStorage.getItem("chama_group_name") || "").trim();
         const groupType = (localStorage.getItem("chama_group_type") || "").trim();
@@ -619,6 +794,40 @@
                         </div>
                     </section>
 
+                    ${isChairman
+                        ? `
+                            <section id="chairman-password-prompt" class="chairman-password-card reveal mb-6 hidden overflow-hidden rounded-[1.75rem] border border-amber-300/25 bg-amber-500/12 p-5 sm:p-6">
+                                <div class="chairman-password-card__layout flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+                                    <div class="max-w-2xl">
+                                        <p class="text-xs font-extrabold uppercase tracking-[0.24em] text-amber-200">Chairman action required</p>
+                                        <h2 class="mt-3 text-2xl font-black tracking-tight text-white">Change the chairman password now</h2>
+                                        <p class="mt-3 text-sm leading-7 text-amber-50">This prompt stays here until the chairman password is changed. Use a private password so the default access is no longer used for this group.</p>
+                                    </div>
+                                    <form id="chairman-password-form" class="chairman-password-form grid gap-3">
+                                        <div class="grid gap-3 sm:grid-cols-2">
+                                            <div class="password-field">
+                                                <input id="chairman-new-password" type="password" placeholder="New chairman password" class="chairman-password-input" autocomplete="new-password">
+                                                <button type="button" class="password-toggle password-toggle-amber" data-password-toggle="chairman-new-password" aria-label="Show password" aria-pressed="false">
+                                                    ${getPasswordToggleIconMarkup()}
+                                                </button>
+                                            </div>
+                                            <div class="password-field">
+                                                <input id="chairman-confirm-password" type="password" placeholder="Confirm chairman password" class="chairman-password-input" autocomplete="new-password">
+                                                <button type="button" class="password-toggle password-toggle-amber" data-password-toggle="chairman-confirm-password" aria-label="Show password" aria-pressed="false">
+                                                    ${getPasswordToggleIconMarkup()}
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                                            <button id="chairman-password-submit" type="submit" class="tap-target rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 px-4 py-3 text-sm font-bold text-slate-950 transition hover:-translate-y-0.5">Change chairman password</button>
+                                            <p id="chairman-password-feedback" class="chairman-password-feedback text-sm text-amber-50">Use at least 4 characters. This prompt disappears once the password is updated.</p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+                        `
+                        : ""}
+
                     <section aria-label="Dashboard summary" class="reveal grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                         ${renderSummaryCards(data.summary)}
                     </section>
@@ -820,11 +1029,11 @@
                     </section>
                 </main>
 
-                <div id="chat-modal" class="fixed inset-0 z-50 hidden bg-slate-950/45 px-4 py-6">
-                    <div class="mx-auto flex h-full max-w-md items-end sm:items-center">
-                        <section class="flex h-[min(85vh,42rem)] w-full flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#091320] shadow-2xl">
-                            <header class="flex items-center justify-between bg-gradient-to-r from-blue-500 to-emerald-500 px-4 py-4 text-white">
-                                <div class="flex items-center gap-3">
+                <div id="chat-modal" class="chat-modal fixed inset-0 z-50 hidden bg-slate-950/45 px-4 py-6">
+                    <div class="chat-modal-shell mx-auto flex h-full w-full max-w-3xl items-end sm:items-center">
+                        <section class="chat-modal-card flex w-full flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#091320] shadow-2xl">
+                            <header class="chat-modal-header flex items-center justify-between bg-gradient-to-r from-blue-500 to-emerald-500 px-4 py-4 text-white">
+                                <div class="chat-modal-heading flex items-center gap-3">
                                     <div class="rounded-2xl bg-white/15 p-2">
                                         ${icon("chat", "h-5 w-5")}
                                     </div>
@@ -833,22 +1042,22 @@
                                         <p id="chat-mode-label" class="text-xs text-emerald-50">Bot is on and group chat history is saved</p>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-2">
+                                <div class="chat-modal-controls flex items-center gap-2">
                                     <button id="toggle-bot" class="tap-target rounded-2xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/15">Turn bot off</button>
                                     <button id="close-chat" class="tap-target rounded-2xl px-3 py-2 text-sm font-semibold text-white/90 transition hover:bg-white/10">Close</button>
                                 </div>
                             </header>
-                            <div id="chat-log" class="chat-log flex-1 overflow-y-auto px-4 py-4"></div>
-                            <div class="border-t border-white/10 bg-[#091320] p-4">
-                                <div class="mb-3 flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300">
+                            <div id="chat-log" class="chat-log chat-log-panel flex-1 overflow-y-auto px-4 py-4"></div>
+                            <div class="chat-modal-footer border-t border-white/10 bg-[#091320] p-4">
+                                <div class="chat-status-bar mb-3 flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300">
                                     <span>Members can communicate here in the group chat.</span>
                                     <span id="chat-history-count" class="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-white">0 messages</span>
                                 </div>
-                                <div class="grid grid-cols-2 gap-2">
+                                <div class="chat-quick-grid grid grid-cols-2 gap-2">
                                     <button data-chat-quick="balance" class="chat-quick tap-target rounded-2xl bg-emerald-600 px-3 py-3 text-sm font-semibold text-white">Check Balance</button>
                                     <button data-chat-quick="reminder" class="chat-quick tap-target rounded-2xl bg-sky-600 px-3 py-3 text-sm font-semibold text-white">Reminder</button>
                                 </div>
-                                <div class="mt-3 flex gap-2">
+                                <div class="chat-compose-row mt-3 flex gap-2">
                                     <label for="chat-input" class="sr-only">Type a message</label>
                                     <input id="chat-input" type="text" placeholder="Write a group message or ask the bot something" class="tap-target min-w-0 flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
                                     <button id="send-chat" class="tap-target rounded-2xl bg-slate-900 px-4 py-3 text-white transition hover:bg-slate-800">
@@ -1036,6 +1245,143 @@
         };
     }
 
+    async function fetchChairmanPasswordPromptState(groupContext) {
+        if (!groupContext?.name || !groupContext?.groupType) {
+            return {
+                needsChange: false,
+                changedAt: null
+            };
+        }
+
+        const savedStates = loadChairmanPasswordStates();
+        const savedState = savedStates[getGroupContextKey(groupContext)] || null;
+        const localFallback = {
+            needsChange: !(savedState && savedState.changedAt),
+            changedAt: savedState?.changedAt || null
+        };
+
+        const supabase = await getSupabaseClient();
+        if (!supabase || !groupContext.name || !groupContext.groupType) {
+            return localFallback;
+        }
+
+        let query = supabase
+            .from("chamas")
+            .select("id, chairman_password_changed_at, name, group_type")
+            .eq("group_type", normalizeGroupType(groupContext.groupType))
+            .ilike("name", groupContext.name)
+            .limit(1);
+
+        if (groupContext.id) {
+            query = supabase
+                .from("chamas")
+                .select("id, chairman_password_changed_at, name, group_type")
+                .eq("id", groupContext.id)
+                .limit(1);
+        }
+
+        const { data, error } = await query.maybeSingle();
+
+        if (error || !data) {
+            return localFallback;
+        }
+
+        const resolvedContext = {
+            id: data.id || groupContext.id,
+            name: data.name || groupContext.name,
+            groupType: normalizeGroupType(data.group_type || groupContext.groupType)
+        };
+        const changedAt = data.chairman_password_changed_at || null;
+
+        saveChairmanPasswordState(resolvedContext, { changedAt: changedAt });
+
+        if (resolvedContext.id && String(localStorage.getItem("chama_group_id") || "").trim() !== String(resolvedContext.id)) {
+            localStorage.setItem("chama_group_id", String(resolvedContext.id));
+        }
+
+        return {
+            needsChange: !changedAt,
+            changedAt: changedAt
+        };
+    }
+
+    async function setupChairmanPasswordPrompt() {
+        const promptCard = document.getElementById("chairman-password-prompt");
+        const form = document.getElementById("chairman-password-form");
+        const newPasswordInput = document.getElementById("chairman-new-password");
+        const confirmPasswordInput = document.getElementById("chairman-confirm-password");
+        const submitButton = document.getElementById("chairman-password-submit");
+        const feedback = document.getElementById("chairman-password-feedback");
+
+        if (!promptCard || !form || !newPasswordInput || !confirmPasswordInput || !submitButton || !feedback) {
+            return;
+        }
+
+        enhancePasswordToggles(promptCard);
+
+        const groupContext = getCurrentGroupContext();
+        const applyPromptState = async function () {
+            const promptState = await fetchChairmanPasswordPromptState(groupContext);
+            promptCard.classList.toggle("hidden", !promptState.needsChange);
+        };
+
+        await applyPromptState();
+
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const newPassword = newPasswordInput.value.trim();
+            const confirmPassword = confirmPasswordInput.value.trim();
+
+            if (!newPassword || newPassword.length < 4) {
+                feedback.textContent = "Use at least 4 characters for the new chairman password.";
+                newPasswordInput.focus();
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                feedback.textContent = "The chairman passwords do not match yet.";
+                confirmPasswordInput.focus();
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Changing...";
+            feedback.textContent = "Saving the new chairman password...";
+
+            const supabase = await getSupabaseClient();
+
+            try {
+                if (supabase) {
+                    const { error } = await supabase.rpc("change_chairman_password", {
+                        target_group_name: groupContext.name,
+                        target_group_type: normalizeGroupType(groupContext.groupType),
+                        new_password: newPassword
+                    });
+
+                    if (error) {
+                        throw error;
+                    }
+                }
+
+                saveChairmanPasswordState(groupContext, {
+                    changedAt: new Date().toISOString()
+                });
+
+                feedback.textContent = "Chairman password updated successfully.";
+                newPasswordInput.value = "";
+                confirmPasswordInput.value = "";
+                promptCard.classList.add("hidden");
+                createToast("Chairman password updated.", "success");
+            } catch (error) {
+                feedback.textContent = error?.message || "We could not change the chairman password right now.";
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = "Change chairman password";
+            }
+        });
+    }
+
     function ChatUI(summary, members) {
         const modal = document.getElementById("chat-modal");
         const log = document.getElementById("chat-log");
@@ -1219,6 +1565,7 @@
     function wireInteractions() {
         const offlineManager = OnlineQueueManager();
         ChatUI(data.summary, getMembersWithCurrentProfile());
+        setupChairmanPasswordPrompt();
         const joinRequestModal = document.getElementById("join-request-modal");
         const openJoinRequestButton = document.getElementById("open-join-request");
         const closeJoinRequestButton = document.getElementById("close-join-request");

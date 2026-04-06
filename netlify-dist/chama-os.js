@@ -1,1440 +1,1346 @@
 (function () {
-    const data = {
-        summary: {
-            totalContributions: 245000,
+    const STORAGE_KEY = "chama-os-demo-state-v2";
+    const QUEUE_KEY = "chama-os-offline-queue-v2";
+    const GROUP_STORAGE_KEY = "chama_group_type";
+    const GROUP_LABEL_STORAGE_KEY = "chama_group_type_label";
+
+    const GROUPS = {
+        sacco: {
+            label: "SACCO",
+            eyebrow: "Structured finance",
+            description: "Track savings, loans, repayments, and available funds in one clear dashboard.",
+            summary: "Built for disciplined savings groups with stronger governance and recurring contributions."
+        },
+        rosca: {
+            label: "Rotating Savings (ROSCA)",
+            eyebrow: "Rotation flow",
+            description: "Follow the pot, see who receives next, and keep the cycle visible for every member.",
+            summary: "Ideal for fixed contribution groups where one member receives the full pot each round."
+        },
+        table_banking: {
+            label: "Table Banking",
+            eyebrow: "Meeting-first workflow",
+            description: "Record attendance, contributions, and meeting loans in a simple session-based view.",
+            summary: "Designed for groups that collect and approve funds during scheduled meetings."
+        },
+        women_group: {
+            label: "Women-led Group",
+            eyebrow: "Simple and trust-first",
+            description: "Use a calmer dashboard with trust score, financial tips, and friendly language.",
+            summary: "Focused on clarity, trust, participation, and confidence for every member."
+        }
+    };
+
+    const MEMBER_DIRECTORY = {
+        john: "John Kamau",
+        mary: "Mary Wanjiku",
+        peter: "Peter Otieno",
+        lucy: "Lucy Achieng",
+        faith: "Faith Njeri"
+    };
+
+    const initialState = {
+        groupName: "My Chama",
+        totals: {
+            contributions: 245000,
             activeLoans: 85000,
-            availableBalance: 160000
+            availableBalance: 160000,
+            repayments: 32000,
+            dividendsReserve: 24000
         },
         members: [
             {
-                id: 1,
-                name: "John Doe",
+                id: "john",
+                name: "John Kamau",
                 role: "Treasurer",
                 status: "Active",
-                joined: "Jan 2026",
-                phone: "+254 712 345 678",
-                contributionsConsistency: 96,
-                repaymentHistory: 92,
-                badges: ["Trusted Member", "Reliable Borrower"]
+                reputationScore: 94,
+                loanReliabilityScore: 91,
+                contributionConsistency: "Pays on time every month",
+                repaymentHistory: "All loans cleared on time"
             },
             {
-                id: 2,
+                id: "mary",
                 name: "Mary Wanjiku",
                 role: "Secretary",
                 status: "Active",
-                joined: "Feb 2026",
-                phone: "+254 723 678 220",
-                contributionsConsistency: 78,
-                repaymentHistory: 84,
-                badges: ["Reliable Borrower"]
+                reputationScore: 76,
+                loanReliabilityScore: 82,
+                contributionConsistency: "Missed one contribution this quarter",
+                repaymentHistory: "Usually pays on time"
             },
             {
-                id: 3,
-                name: "Peter Kamau",
+                id: "peter",
+                name: "Peter Otieno",
                 role: "Member",
                 status: "Not active",
-                joined: "Nov 2025",
-                phone: "+254 701 998 001",
-                contributionsConsistency: 58,
-                repaymentHistory: 49,
-                badges: []
+                reputationScore: 49,
+                loanReliabilityScore: 41,
+                contributionConsistency: "Often pays late",
+                repaymentHistory: "Two repayments are overdue"
             },
             {
-                id: 4,
-                name: "Faith Achieng",
-                role: "Member",
+                id: "lucy",
+                name: "Lucy Achieng",
+                role: "Chairlady",
                 status: "Active",
-                joined: "Mar 2026",
-                phone: "+254 745 300 122",
-                contributionsConsistency: 89,
-                repaymentHistory: 76,
-                badges: ["Trusted Member"]
+                reputationScore: 88,
+                loanReliabilityScore: 85,
+                contributionConsistency: "Encourages timely saving",
+                repaymentHistory: "Maintains clear follow-up notes"
             }
         ],
-        activity: [
-            { text: "John Doe paid KES 5,000 contribution", time: "2 hours ago", tone: "trusted" },
-            { text: "Mary Wanjiku repaid KES 4,500 loan instalment", time: "Yesterday", tone: "moderate" },
-            { text: "Reminder prepared for Peter Kamau", time: "2 days ago", tone: "risky" },
-            { text: "Faith Achieng joined the savings pot", time: "3 days ago", tone: "trusted" }
-        ],
-        tips: [
+        activities: [
             {
-                title: "How to run a chama",
-                body: "Agree on one contribution day, write down every payment, and confirm the amount before everyone leaves the meeting."
+                id: "act-1",
+                type: "contribution",
+                member: "John Kamau",
+                amount: 5000,
+                note: "Monthly contribution received",
+                status: "trusted",
+                time: "2 hours ago"
             },
             {
-                title: "Loan tips",
-                body: "Before approving a KES 10,000 loan, agree on the repayment date and what the member will pay back in total."
+                id: "act-2",
+                type: "loan",
+                member: "Mary Wanjiku",
+                amount: 15000,
+                note: "Loan approved for school fees",
+                status: "moderate",
+                time: "Yesterday"
             },
             {
-                title: "Saving strategies",
-                body: "If each member saves KES 500 every week, a 20-member chama can raise KES 40,000 in one month."
-            },
-            {
-                title: "Emergency reserve",
-                body: "Keep a small cash cushion for sickness, school needs, or urgent travel so the group is not forced into panic borrowing."
-            },
-            {
-                title: "Meeting discipline",
-                body: "Start meetings on time, keep them short, and read the balances aloud so every member feels informed and included."
-            },
-            {
-                title: "Healthy borrowing",
-                body: "Borrow for stock, school fees, or clear needs first. Avoid taking a loan when you do not yet know how you will repay it."
+                id: "act-3",
+                type: "reminder",
+                member: "System",
+                amount: 0,
+                note: "Repayment reminder sent to late members",
+                status: "risky",
+                time: "2 days ago"
             }
-        ]
+        ],
+        rosca: {
+            fixedContribution: 2000,
+            rotationOrder: ["mary", "john", "lucy", "peter"],
+            currentCycleIndex: 1,
+            cyclesCompleted: 5,
+            totalCycles: 12,
+            nextPayoutDate: "12 Apr 2026"
+        },
+        tableBanking: {
+            nextMeetingDate: "09 Apr 2026",
+            loansIssuedThisMonth: 32000,
+            meetingContributionTotal: 54000,
+            attendanceRate: 84,
+            meetings: [
+                {
+                    id: "meeting-1",
+                    meetingDate: "02 Apr 2026",
+                    attendanceText: "18 / 20 members",
+                    contributionAmount: 18000,
+                    loansIssued: 12000
+                },
+                {
+                    id: "meeting-2",
+                    meetingDate: "26 Mar 2026",
+                    attendanceText: "19 / 20 members",
+                    contributionAmount: 20000,
+                    loansIssued: 8000
+                },
+                {
+                    id: "meeting-3",
+                    meetingDate: "19 Mar 2026",
+                    attendanceText: "17 / 20 members",
+                    contributionAmount: 16000,
+                    loansIssued: 12000
+                }
+            ]
+        },
+        womenGroup: {
+            trustScore: 88,
+            trustNote: "Members understand where funds are, who borrowed, and what happens next.",
+            largeActions: [
+                "Record contribution",
+                "Check trust score",
+                "Read today’s tip"
+            ]
+        }
     };
 
-    const STORAGE_KEYS = {
-        queue: "chamaOfflineQueue",
-        activity: "chamaRecentActivity",
-        chatHistory: "chamaChatHistory",
-        botEnabled: "chamaBotEnabled",
-        joinRequests: "chamaJoinRequests",
-        approvedMembers: "chamaApprovedMembers"
-    };
+    function cloneInitialState() {
+        return JSON.parse(JSON.stringify(initialState));
+    }
 
-    function formatCurrency(amount) {
+    function mergeState(stored) {
+        return {
+            ...cloneInitialState(),
+            ...stored,
+            totals: {
+                ...cloneInitialState().totals,
+                ...(stored?.totals || {})
+            },
+            rosca: {
+                ...cloneInitialState().rosca,
+                ...(stored?.rosca || {})
+            },
+            tableBanking: {
+                ...cloneInitialState().tableBanking,
+                ...(stored?.tableBanking || {})
+            },
+            womenGroup: {
+                ...cloneInitialState().womenGroup,
+                ...(stored?.womenGroup || {})
+            },
+            activities: Array.isArray(stored?.activities) && stored.activities.length ? stored.activities : cloneInitialState().activities,
+            members: Array.isArray(stored?.members) && stored.members.length ? stored.members : cloneInitialState().members
+        };
+    }
+
+    function readState() {
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return stored ? mergeState(JSON.parse(stored)) : cloneInitialState();
+        } catch (error) {
+            return cloneInitialState();
+        }
+    }
+
+    function writeState(state) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function readQueue() {
+        try {
+            const stored = localStorage.getItem(QUEUE_KEY);
+            return stored ? JSON.parse(stored) : [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function writeQueue(queue) {
+        localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
+    }
+
+    function formatKES(amount) {
         return new Intl.NumberFormat("en-KE", {
             style: "currency",
             currency: "KES",
             maximumFractionDigits: 0
-        }).format(amount);
+        }).format(Number(amount || 0)).replace("Ksh", "KES");
     }
 
-    function getTrustMeta(score) {
-        if (score >= 80) {
-            return { label: "Trusted", tone: "trusted", className: "status-trusted", color: "#16a34a" };
-        }
-        if (score >= 60) {
-            return { label: "Moderate", tone: "moderate", className: "status-moderate", color: "#d97706" };
-        }
-        return { label: "Risky", tone: "risky", className: "status-risky", color: "#dc2626" };
-    }
-
-    function averageScore(member) {
-        return Math.round((member.contributionsConsistency + member.repaymentHistory) / 2);
-    }
-
-    function loadQueue() {
-        try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEYS.queue) || "[]");
-        } catch (error) {
-            return [];
-        }
-    }
-
-    function saveQueue(queue) {
-        localStorage.setItem(STORAGE_KEYS.queue, JSON.stringify(queue));
-    }
-
-    function loadActivity() {
-        try {
-            const saved = JSON.parse(localStorage.getItem(STORAGE_KEYS.activity) || "[]");
-            return saved.length ? saved : data.activity;
-        } catch (error) {
-            return data.activity;
-        }
-    }
-
-    function saveActivity(activity) {
-        localStorage.setItem(STORAGE_KEYS.activity, JSON.stringify(activity.slice(0, 6)));
-    }
-
-    function loadChatHistory() {
-        try {
-            const saved = JSON.parse(localStorage.getItem(STORAGE_KEYS.chatHistory) || "[]");
-            if (saved.length) {
-                return saved;
-            }
-        } catch (error) {
-            // Fall through to defaults.
-        }
-
-        return [
-            {
-                author: "bot",
-                message: "Hello. Ask me about balance, reminders, loans, or member trust scores."
-            },
-            {
-                author: "member",
-                message: "Mary Wanjiku: Next meeting is on Thursday at 4 PM."
-            },
-            {
-                author: "member",
-                message: "John Doe: Please confirm contribution status before the meeting."
-            }
-        ];
-    }
-
-    function saveChatHistory(history) {
-        localStorage.setItem(STORAGE_KEYS.chatHistory, JSON.stringify(history.slice(-18)));
-    }
-
-    function isBotEnabled() {
-        const saved = localStorage.getItem(STORAGE_KEYS.botEnabled);
-        return saved === null ? true : saved === "true";
-    }
-
-    function saveBotEnabled(value) {
-        localStorage.setItem(STORAGE_KEYS.botEnabled, String(value));
-    }
-
-    function loadJoinRequests() {
-        try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEYS.joinRequests) || "[]");
-        } catch (error) {
-            return [];
-        }
-    }
-
-    function saveJoinRequests(requests) {
-        localStorage.setItem(STORAGE_KEYS.joinRequests, JSON.stringify(requests));
-    }
-
-    function loadApprovedMembers() {
-        try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEYS.approvedMembers) || "[]");
-        } catch (error) {
-            return [];
-        }
-    }
-
-    function saveApprovedMembers(members) {
-        localStorage.setItem(STORAGE_KEYS.approvedMembers, JSON.stringify(members));
-    }
-
-    function sameGroupName(left, right) {
-        return String(left || "").trim().toLowerCase() === String(right || "").trim().toLowerCase();
-    }
-
-    function sameGroupType(left, right) {
-        return String(left || "").trim().toLowerCase() === String(right || "").trim().toLowerCase();
-    }
-
-    function sameGroupContext(leftName, leftType, rightName, rightType) {
-        if (!sameGroupName(leftName, rightName)) {
-            return false;
-        }
-
-        if (!leftType || !rightType) {
-            return true;
-        }
-
-        return sameGroupType(leftType, rightType);
-    }
-
-    function formatRequestDate(value) {
-        return new Intl.DateTimeFormat("en-KE", {
-            month: "short",
-            day: "numeric",
-            year: "numeric"
-        }).format(new Date(value));
-    }
-
-    function icon(name, className) {
-        const icons = {
-            wallet: "M2.25 8.25h19.5m-18 0h16.5A1.5 1.5 0 0 1 21.75 9.75v8.25A1.5 1.5 0 0 1 20.25 19.5H3.75a1.5 1.5 0 0 1-1.5-1.5V9.75a1.5 1.5 0 0 1 1.5-1.5Zm0 0V6A1.5 1.5 0 0 1 3.75 4.5h12A1.5 1.5 0 0 1 17.25 6v2.25m-2.25 6h.008v.008H15v-.008Z",
-            loans: "M12 6v12m6-6H6",
-            balance: "M12 8c-3.314 0-6 1.79-6 4s2.686 4 6 4 6-1.79 6-4-2.686-4-6-4Zm0 0V4m0 12v4",
-            activity: "M3 13.5h4.5V21H3v-7.5Zm6.75-6h4.5V21h-4.5V7.5Zm6.75-4.5H21V21h-4.5V3Z",
-            chat: "M7.5 10.5h9m-9 3h5.25M6.75 3h10.5A2.25 2.25 0 0 1 19.5 5.25v8.52a2.25 2.25 0 0 1-.659 1.591l-2.83 2.83a2.25 2.25 0 0 1-1.591.659H6.75A2.25 2.25 0 0 1 4.5 16.5V5.25A2.25 2.25 0 0 1 6.75 3Z",
-            tips: "M12 18h.008v.008H12V18Zm-.75-13.5h1.5a3 3 0 0 1 2.207 5.032c-.5.53-.957 1.1-.957 1.968V12.75h-1.5v-1.25c0-1.225.64-2.05 1.365-2.818A1.5 1.5 0 0 0 12.75 6h-1.5A1.5 1.5 0 0 0 9.75 7.5H8.25A3 3 0 0 1 11.25 4.5Z",
-            offline: "M1.5 1.5 22.5 22.5M8.25 8.25A6.733 6.733 0 0 1 12 7.125c3.025 0 5.587 1.977 6.466 4.712m-1.86 3.296A6.719 6.719 0 0 1 12 16.875a6.72 6.72 0 0 1-5.37-2.655",
-            sync: "M16.023 9.348h4.992V4.356m-1.636 11.288A8.25 8.25 0 0 1 5.106 5.106m13.788 13.788A8.25 8.25 0 0 1 3.977 14.652",
-            member: "M15.75 6.75a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z",
-            send: "M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L6 12Zm0 0h7.5"
+    function normalizeGroupType(groupType = "") {
+        const aliases = {
+            "SACCOs": "sacco",
+            "SACCO": "sacco",
+            "Rotating savings (ROSCA)": "rosca",
+            "Table Banking": "table_banking",
+            "Women-led chamas": "women_group",
+            "Women-led Group": "women_group"
         };
 
-        return (
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="' +
-            className +
-            '" aria-hidden="true"><path d="' +
-            icons[name] +
-            '"></path></svg>'
-        );
+        const normalized = aliases[groupType] || groupType;
+        return GROUPS[normalized] ? normalized : "sacco";
     }
 
-    function TrustScore(member) {
-        const reputation = getTrustMeta(member.contributionsConsistency);
-        const reliability = getTrustMeta(member.repaymentHistory);
-        const overall = getTrustMeta(averageScore(member));
-
-        return `
-            <article class="member-row app-card p-5">
-                <div class="flex items-start justify-between gap-4">
-                    <div>
-                        <div class="flex items-center gap-3">
-                            <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
-                                ${icon("member", "h-5 w-5")}
-                            </div>
-                            <div>
-                                <h3 class="text-base font-semibold text-slate-900">${member.name}</h3>
-                                <p class="text-sm text-slate-500">${member.role}</p>
-                            </div>
-                        </div>
-                        <div class="mt-3 flex flex-wrap gap-2">
-                            <span class="status-pill ${overall.className}">${overall.label}</span>
-                            ${member.badges
-                                .map(function (badge) {
-                                    return '<span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">' + badge + "</span>";
-                                })
-                                .join("")}
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Trust</p>
-                        <p class="text-2xl font-black text-slate-900">${averageScore(member)}</p>
-                    </div>
-                </div>
-                <div class="mt-5 grid gap-4 sm:grid-cols-2">
-                    <div>
-                        <div class="mb-2 flex items-center justify-between text-sm">
-                            <span class="font-medium text-slate-700">Reputation Score</span>
-                            <span class="${reputation.className} rounded-full px-2.5 py-1 text-xs font-semibold">${member.contributionsConsistency}</span>
-                        </div>
-                        <div class="trust-meter"><span style="width:${member.contributionsConsistency}%;background:${reputation.color}"></span></div>
-                        <p class="mt-2 text-xs text-slate-500">Based on contribution consistency</p>
-                    </div>
-                    <div>
-                        <div class="mb-2 flex items-center justify-between text-sm">
-                            <span class="font-medium text-slate-700">Loan Reliability</span>
-                            <span class="${reliability.className} rounded-full px-2.5 py-1 text-xs font-semibold">${member.repaymentHistory}</span>
-                        </div>
-                        <div class="trust-meter"><span style="width:${member.repaymentHistory}%;background:${reliability.color}"></span></div>
-                        <p class="mt-2 text-xs text-slate-500">Based on repayment history</p>
-                    </div>
-                </div>
-            </article>
-        `;
+    function getStoredGroupType() {
+        return normalizeGroupType(localStorage.getItem(GROUP_STORAGE_KEY) || "sacco");
     }
 
-    function MemberDirectory(member) {
-        const isActive = member.status === "Active";
-        return `
-            <article class="member-directory-card">
-                <div class="flex items-start justify-between gap-4">
-                    <div>
-                        <h3 class="text-base font-semibold text-white">${member.name}</h3>
-                        <p class="mt-1 text-sm text-slate-300">Role: ${member.role}</p>
-                    </div>
-                    <span class="status-pill ${isActive ? "status-trusted" : "status-risky"}">${member.status}</span>
-                </div>
-                <div class="member-directory-meta mt-4 grid gap-3 text-sm text-slate-300 sm:grid-cols-3">
-                    <div class="member-meta-chip">
-                        <span class="member-meta-label">Role</span>
-                        <span class="member-meta-value">${member.role}</span>
-                    </div>
-                    <div class="member-meta-chip">
-                        <span class="member-meta-label">Status</span>
-                        <span class="member-meta-value">${member.status}</span>
-                    </div>
-                    <div class="member-meta-chip">
-                        <span class="member-meta-label">Joined</span>
-                        <span class="member-meta-value">${member.joined}</span>
-                    </div>
-                </div>
-                <div class="mt-4 grid gap-2 text-sm text-slate-300">
-                    <p><span class="font-semibold text-white">Phone:</span> ${member.phone}</p>
-                    <p><span class="font-semibold text-white">Trust:</span> ${averageScore(member)}/100</p>
-                </div>
-            </article>
-        `;
+    function getStoredGroupLabel(groupType) {
+        return localStorage.getItem(GROUP_LABEL_STORAGE_KEY) || GROUPS[groupType].label;
     }
 
-    function getMembersWithCurrentProfile() {
-        const profileName = (localStorage.getItem("chama_profile_name") || "").trim();
-        const profileRole = (localStorage.getItem("chama_profile_role") || "").trim() || "Member";
-        const profilePhone = (localStorage.getItem("chama_profile_phone") || "").trim() || "Not provided";
-        const groupName = (localStorage.getItem("chama_group_name") || "").trim();
-        const groupType = (localStorage.getItem("chama_group_type") || "").trim();
-        const approvedMembers = loadApprovedMembers().filter(function (member) {
-            return !member.groupName || sameGroupContext(member.groupName, member.groupType, groupName, groupType);
-        });
-        let members = data.members.slice();
+    function useGroupType() {
+        const value = getStoredGroupType();
+        const config = GROUPS[value];
 
-        if (!profileName) {
-            return approvedMembers.concat(members);
-        }
-
-        const existingIndex = members.findIndex(function (member) {
-            return member.name.toLowerCase() === profileName.toLowerCase();
-        });
-
-        const profileMember = {
-            id: existingIndex >= 0 ? members[existingIndex].id : Date.now(),
-            name: profileName,
-            role: profileRole,
-            status: "Active",
-            joined: "You",
-            phone: profilePhone,
-            contributionsConsistency: existingIndex >= 0 ? members[existingIndex].contributionsConsistency : 88,
-            repaymentHistory: existingIndex >= 0 ? members[existingIndex].repaymentHistory : 84,
-            badges: existingIndex >= 0 ? members[existingIndex].badges : ["Your Profile"]
+        return {
+            value,
+            label: getStoredGroupLabel(value),
+            config
         };
+    }
 
-        if (existingIndex >= 0) {
-            members = members.map(function (member, index) {
-                return index === existingIndex ? profileMember : member;
-            });
-        } else {
-            members = [profileMember].concat(members);
+    function saveGroupType(groupType) {
+        const normalized = normalizeGroupType(groupType);
+        localStorage.setItem(GROUP_STORAGE_KEY, normalized);
+        localStorage.setItem(GROUP_LABEL_STORAGE_KEY, GROUPS[normalized].label);
+        return normalized;
+    }
+
+    function memberNameById(memberId) {
+        return MEMBER_DIRECTORY[memberId] || memberId;
+    }
+
+    function getRoscaCurrentRecipient(state) {
+        const order = state.rosca.rotationOrder || [];
+        if (!order.length) {
+            return "No member selected";
         }
 
-        return approvedMembers.concat(members);
+        const safeIndex = state.rosca.currentCycleIndex % order.length;
+        return memberNameById(order[safeIndex]);
     }
 
-    function PendingJoinRequest(request, isChairman) {
-        return `
-            <article class="join-request-card">
-                <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                        <h3 class="text-base font-semibold text-white">${request.name}</h3>
-                        <p class="mt-1 text-sm text-slate-300">${request.phone}</p>
-                    </div>
-                    <span class="status-pill status-moderate">${request.status}</span>
-                </div>
-                <div class="mt-4 grid gap-3 text-sm text-slate-300 sm:grid-cols-3">
-                    <p><span class="font-semibold text-white">Requested role:</span> ${request.role}</p>
-                    <p><span class="font-semibold text-white">Referral:</span> ${request.referral || "Direct request"}</p>
-                    <p><span class="font-semibold text-white">Date:</span> ${formatRequestDate(request.requestedAt)}</p>
-                </div>
-                ${isChairman
-                    ? `
-                        <div class="mt-4 flex flex-wrap gap-2">
-                            <button data-approve-request="${request.id}" class="tap-target rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5">
-                                Approve
-                            </button>
-                            <button data-reject-request="${request.id}" class="tap-target rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:bg-white/8">
-                                Reject
-                            </button>
-                        </div>
-                    `
-                    : `
-                        <p class="mt-4 text-sm text-slate-400">Waiting for the chairman to review this request.</p>
-                    `}
-            </article>
-        `;
+    function getRoscaNextRecipient(state) {
+        const order = state.rosca.rotationOrder || [];
+        if (!order.length) {
+            return "No member selected";
+        }
+
+        const safeIndex = (state.rosca.currentCycleIndex + 1) % order.length;
+        return memberNameById(order[safeIndex]);
     }
 
-    function MemberListItem(member) {
-        const isActive = member.status === "Active";
-        return `
-            <article class="member-list-item">
-                <div class="member-list-item__identity">
-                    <div class="member-list-item__icon">
-                        ${icon("member", "h-4 w-4")}
-                    </div>
-                    <div class="min-w-0">
-                        <p class="member-list-item__name">${member.name}</p>
-                        <p class="member-list-item__meta">Joined ${member.joined}</p>
-                    </div>
-                </div>
-                <p class="member-list-item__role">${member.role}</p>
-                <div class="member-list-item__status">
-                    <span class="status-pill ${isActive ? "status-trusted" : "status-risky"}">${member.status}</span>
-                </div>
-            </article>
-        `;
+    function getRoscaCurrentPot(state) {
+        return (state.rosca.fixedContribution || 0) * state.members.length;
     }
 
-    function TipsSection() {
-        return `
-            <section id="tips-section" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                ${data.tips
-                    .map(function (tip) {
-                        return `
-                            <article class="tip-card app-card p-5">
-                                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
-                                    ${icon("tips", "h-5 w-5")}
-                                </div>
-                                <h3 class="text-lg font-semibold text-slate-900">${tip.title}</h3>
-                                <p class="mt-2 text-sm leading-6 text-slate-600">${tip.body}</p>
-                            </article>
-                        `;
-                    })
-                    .join("")}
-            </section>
-        `;
-    }
-
-    function renderSummaryCards(summary) {
-        const cards = [
-            {
-                label: "Total Contributions",
-                value: formatCurrency(summary.totalContributions),
-                iconName: "wallet",
-                bg: "from-emerald-500 to-green-600",
-                note: "All member savings"
-            },
-            {
-                label: "Active Loans",
-                value: formatCurrency(summary.activeLoans),
-                iconName: "loans",
-                bg: "from-sky-500 to-blue-600",
-                note: "Currently borrowed"
-            },
-            {
-                label: "Available Balance",
-                value: formatCurrency(summary.availableBalance),
-                iconName: "balance",
-                bg: "from-amber-400 to-orange-500",
-                note: "Ready for approved needs"
-            },
-            {
-                label: "Recent Activity",
-                value: loadActivity().length + " items",
-                iconName: "activity",
-                bg: "from-slate-700 to-slate-900",
-                note: "Latest chama updates"
+    const TrustScore = {
+        getLevel(score) {
+            if (score >= 80) {
+                return {
+                    label: "Trusted",
+                    barClass: "from-emerald-400 to-emerald-500",
+                    pillClass: "bg-emerald-500/15 text-emerald-200 border border-emerald-400/20"
+                };
             }
-        ];
 
-        return cards
-            .map(function (card) {
+            if (score >= 55) {
+                return {
+                    label: "Steady",
+                    barClass: "from-amber-300 to-amber-400",
+                    pillClass: "bg-amber-500/15 text-amber-100 border border-amber-300/20"
+                };
+            }
+
+            return {
+                label: "Needs support",
+                barClass: "from-rose-400 to-rose-500",
+                pillClass: "bg-rose-500/15 text-rose-100 border border-rose-300/20"
+            };
+        },
+
+        renderSummary(state) {
+            const averageScore = Math.round(
+                state.members.reduce((sum, member) => sum + member.reputationScore, 0) / state.members.length
+            );
+            const reliableBorrowers = state.members.filter((member) => member.loanReliabilityScore >= 80).length;
+            const followUps = state.members.filter((member) => member.reputationScore < 55 || member.loanReliabilityScore < 55).length;
+
+            const items = [
+                { label: "Trust score", value: `${averageScore}/100` },
+                { label: "Reliable borrowers", value: reliableBorrowers },
+                { label: "Need follow-up", value: followUps }
+            ];
+
+            return `
+                <div class="grid gap-3 sm:grid-cols-3">
+                    ${items.map((item) => `
+                        <div class="rounded-3xl border border-white/10 bg-white/5 p-4">
+                            <p class="text-xs font-bold uppercase tracking-[0.24em] text-slate-400">${item.label}</p>
+                            <p class="mt-3 text-2xl font-extrabold text-white">${item.value}</p>
+                        </div>
+                    `).join("")}
+                </div>
+            `;
+        },
+
+        renderMembers(state) {
+            return state.members.map((member) => {
+                const reputation = this.getLevel(member.reputationScore);
+                const reliability = this.getLevel(member.loanReliabilityScore);
+                const memberStatusClass = member.status === "Active"
+                    ? "bg-emerald-500/15 text-emerald-200 border border-emerald-400/20"
+                    : "bg-rose-500/15 text-rose-100 border border-rose-300/20";
+
                 return `
-                    <article class="metric-card rounded-[1.75rem] bg-gradient-to-br ${card.bg} p-5 text-white shadow-lg">
-                        <div class="flex items-start justify-between gap-4">
+                    <article class="member-card">
+                        <div class="flex items-start justify-between gap-3">
                             <div>
-                                <p class="text-sm font-medium text-white/80">${card.label}</p>
-                                <p class="mt-3 text-3xl font-black tracking-tight sm:text-4xl">${card.value}</p>
-                                <p class="mt-2 text-sm text-white/80">${card.note}</p>
+                                <h4 class="text-base font-bold text-white">${member.name}</h4>
+                                <p class="text-sm text-slate-400">${member.role}</p>
                             </div>
-                            <div class="rounded-2xl bg-white/15 p-3">
-                                ${icon(card.iconName, "h-6 w-6")}
+                            <span class="rounded-full px-3 py-1 text-xs font-semibold ${reputation.pillClass}">${reputation.label}</span>
+                        </div>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="rounded-full px-3 py-1 text-xs font-semibold ${memberStatusClass}">${member.status}</span>
+                            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-slate-200">${member.role}</span>
+                        </div>
+                        <div class="mt-4 space-y-3">
+                            <div>
+                                <div class="mb-2 flex items-center justify-between text-sm">
+                                    <span class="text-slate-400">Reputation</span>
+                                    <span class="font-semibold text-white">${member.reputationScore}/100</span>
+                                </div>
+                                <div class="progress-track"><span class="bg-gradient-to-r ${reputation.barClass}" style="width:${member.reputationScore}%"></span></div>
+                                <p class="mt-2 text-xs text-slate-400">${member.contributionConsistency}</p>
+                            </div>
+                            <div>
+                                <div class="mb-2 flex items-center justify-between text-sm">
+                                    <span class="text-slate-400">Loan reliability</span>
+                                    <span class="font-semibold text-white">${member.loanReliabilityScore}/100</span>
+                                </div>
+                                <div class="progress-track"><span class="bg-gradient-to-r ${reliability.barClass}" style="width:${member.loanReliabilityScore}%"></span></div>
+                                <p class="mt-2 text-xs text-slate-400">${member.repaymentHistory}</p>
                             </div>
                         </div>
                     </article>
                 `;
-            })
-            .join("");
-    }
+            }).join("");
+        },
 
-    function renderActivity(activity) {
-        return activity
-            .map(function (item) {
-                const meta = item.tone === "trusted"
-                    ? getTrustMeta(90)
-                    : item.tone === "moderate"
-                        ? getTrustMeta(70)
-                        : getTrustMeta(40);
+        renderMemberDirectory(state) {
+            return state.members.map((member) => {
+                const statusClass = member.status === "Active"
+                    ? "bg-emerald-500/15 text-emerald-200 border border-emerald-400/20"
+                    : "bg-rose-500/15 text-rose-100 border border-rose-300/20";
 
                 return `
-                    <li class="flex items-start gap-3">
-                        <div class="mt-2 h-2.5 w-2.5 rounded-full" style="background:${meta.color}"></div>
-                        <div class="min-w-0 flex-1">
-                            <p class="text-sm font-medium text-slate-800">${item.text}</p>
-                            <p class="mt-1 text-xs text-slate-500">${item.time}</p>
+                    <article class="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <h4 class="text-base font-bold text-white">${member.name}</h4>
+                                <p class="mt-1 text-sm text-slate-300">${member.role}</p>
+                            </div>
+                            <span class="rounded-full px-3 py-1 text-xs font-semibold ${statusClass}">${member.status}</span>
                         </div>
-                        <span class="status-pill ${meta.className}">${meta.label}</span>
-                    </li>
+                    </article>
                 `;
-            })
-            .join("");
-    }
+            }).join("");
+        },
 
-    function buildDashboard(root) {
-        const organizationName = localStorage.getItem("chama_group_name") || "My Chama";
-        const organizationType = localStorage.getItem("chama_group_type") || "";
-        const profileRole = (localStorage.getItem("chama_profile_role") || "").toLowerCase();
-        const isChairman = profileRole === "chairman";
-        const members = getMembersWithCurrentProfile();
-        const joinRequests = loadJoinRequests().filter(function (request) {
-            return !request.groupName || sameGroupContext(request.groupName, request.groupType, organizationName, organizationType);
-        });
-        const trustedMembers = members.filter(function (member) {
-            return averageScore(member) >= 80;
-        }).length;
+        renderPanel(state) {
+            const trustScore = state.womenGroup.trustScore;
+            const level = this.getLevel(trustScore);
 
-        const moderateMembers = members.filter(function (member) {
-            const score = averageScore(member);
-            return score >= 60 && score < 80;
-        }).length;
-
-        const riskyMembers = members.length - trustedMembers - moderateMembers;
-        const activity = loadActivity();
-
-        root.innerHTML = `
-            <div class="app-shell text-slate-900">
-                <div id="offline-banner" class="offline-banner fixed left-1/2 top-4 z-50 w-[min(92vw,40rem)] -translate-x-1/2 rounded-2xl border border-amber-300/20 bg-amber-500/15 px-4 py-3 text-white shadow-lg backdrop-blur-xl">
-                    <div class="mx-auto flex items-center justify-center gap-4">
-                        <div class="flex items-center gap-3 text-sm font-medium">
-                            ${icon("offline", "h-5 w-5")}
-                            <span>Offline Mode is on. Your contributions and loan requests will queue safely.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="toast-stack" class="toast-stack fixed right-4 top-20 z-50 flex w-[calc(100%-2rem)] max-w-sm flex-col gap-3"></div>
-
-                <header class="mx-auto max-w-6xl px-4 pt-5 sm:px-6">
-                    <div class="glass-topbar reveal is-visible flex items-center justify-between gap-3 px-4 py-4 sm:px-6">
+            return `
+                <div class="glass-panel p-6">
+                    <div class="flex items-center justify-between gap-3">
                         <div>
-                            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">Simple Money View</p>
-                            <h1 class="text-2xl font-black tracking-tight text-white sm:text-3xl">Chama OS</h1>
-                            <p class="mt-1 text-sm font-medium text-slate-300">${organizationName}</p>
+                            <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Trust Score</p>
+                            <h3 class="mt-2 text-3xl font-extrabold text-white">${trustScore}/100</h3>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <a href="index.html" class="tap-target inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                <span>Back Home</span>
-                            </a>
-                            <button id="open-chat" class="tap-target inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-emerald-500 px-4 py-3 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(16,185,129,0.2)] transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                ${icon("chat", "h-5 w-5")}
-                                <span>Chat</span>
-                            </button>
-                            <a href="#learn" class="tap-target inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                ${icon("tips", "h-5 w-5")}
-                                <span>Tips</span>
-                            </a>
-                        </div>
+                        <span class="rounded-full px-3 py-1 text-xs font-semibold ${level.pillClass}">${level.label}</span>
                     </div>
-                </header>
+                    <p class="mt-4 text-sm leading-7 text-slate-300">${state.womenGroup.trustNote}</p>
+                    <div class="mt-4 progress-track"><span class="bg-gradient-to-r ${level.barClass}" style="width:${trustScore}%"></span></div>
+                </div>
+            `;
+        }
+    };
 
-                <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
-                    <section class="app-card reveal is-visible mb-6 overflow-hidden p-5 sm:p-7">
-                        <div class="grid gap-6 lg:grid-cols-[1.5fr_1fr] lg:items-center">
-                            <div>
-                                <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Today at a glance</p>
-                                <h2 class="mt-2 text-3xl font-black tracking-tight text-white sm:text-4xl">${organizationName}</h2>
-                                <p class="mt-2 text-lg font-semibold text-slate-100">Clear money updates for every member</p>
-                                <p class="mt-3 max-w-2xl text-base leading-7 text-slate-200">See what the group has saved, what is out on loan, who is trusted, and what needs action without technical terms or clutter.</p>
-                            </div>
-                            <div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
-                                <p class="text-sm font-semibold text-slate-100">Trust snapshot</p>
-                                <div class="mt-4 grid grid-cols-3 gap-3 text-center">
-                                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-                                        <p class="text-2xl font-black text-emerald-300">${trustedMembers}</p>
-                                        <p class="mt-1 text-xs font-medium text-slate-300">Trusted</p>
-                                    </div>
-                                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-                                        <p class="text-2xl font-black text-amber-300">${moderateMembers}</p>
-                                        <p class="mt-1 text-xs font-medium text-slate-300">Moderate</p>
-                                    </div>
-                                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-                                        <p class="text-2xl font-black text-rose-300">${riskyMembers}</p>
-                                        <p class="mt-1 text-xs font-medium text-slate-300">Risky</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+    const TipsSection = {
+        items: {
+            sacco: [
+                "Keep dividend rules simple and written down before the year closes.",
+                "Show total savings, loans out, and available funds after every update."
+            ],
+            rosca: [
+                "Use one fixed contribution amount so each round feels predictable.",
+                "Make the next recipient visible before the meeting starts."
+            ],
+            table_banking: [
+                "Record attendance first. It keeps meeting decisions fair and easier to explain later.",
+                "Capture contributions and loan decisions before members leave the room."
+            ],
+            women_group: [
+                "Use short explanations and larger actions so every member can follow with confidence.",
+                "Celebrate on-time saving. Positive visibility builds trust faster than pressure."
+            ]
+        },
 
-                    <section aria-label="Dashboard summary" class="reveal grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                        ${renderSummaryCards(data.summary)}
-                    </section>
-
-                    <section class="reveal mt-6 grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-                        <div class="app-card p-5 sm:p-6">
-                            <div class="flex items-center justify-between gap-4">
-                                <div>
-                                    <h2 class="section-title">Recent Activity</h2>
-                                    <p class="section-copy mt-1">Short, readable updates from the chama.</p>
-                                </div>
-                                <button id="simulate-reminder" class="tap-target rounded-2xl border border-white/10 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:bg-white/5">Send reminder</button>
-                            </div>
-                            <ul id="activity-list" class="mt-6 space-y-4">
-                                ${renderActivity(activity)}
-                            </ul>
-                        </div>
-
-                        <aside class="space-y-6">
-                            <section class="app-card p-5 sm:p-6">
-                                <div class="flex items-center justify-between gap-3">
-                                    <div>
-                                        <h2 class="section-title">Trust Summary</h2>
-                                        <p class="section-copy mt-1">A simple way to spot reliable members.</p>
-                                    </div>
-                                    <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">${members.length} members</span>
-                                </div>
-                                <div class="mt-5 space-y-3">
-                                    ${members
-                                        .slice(0, 3)
-                                        .map(function (member) {
-                                            const meta = getTrustMeta(averageScore(member));
-                                            return `
-                                                <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                                    <div class="flex items-center justify-between gap-4">
-                                                        <div>
-                                                            <p class="font-semibold text-white">${member.name}</p>
-                                                            <p class="text-sm text-slate-300">${member.badges[0] || "Growing trust"}</p>
-                                                        </div>
-                                                        <span class="status-pill ${meta.className}">${meta.label}</span>
-                                                    </div>
-                                                </div>
-                                            `;
-                                        })
-                                        .join("")}
-                                </div>
-                            </section>
-
-                            <section class="app-card p-5 sm:p-6">
-                                <div class="flex items-center justify-between gap-3">
-                                    <div>
-                                        <h2 class="section-title">Quick Actions</h2>
-                                        <p class="section-copy mt-1">Large buttons for everyday tasks.</p>
-                                    </div>
-                                </div>
-                                <div class="mt-5 grid gap-3">
-                                    <button data-action="contribution" class="queue-action tap-target rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-4 py-4 text-left text-white transition hover:-translate-y-0.5">
-                                        <span class="block text-base font-bold">Record contribution</span>
-                                        <span class="mt-1 block text-sm text-emerald-50">Store KES 2,000 payment</span>
-                                    </button>
-                                    <button data-action="loan" class="queue-action tap-target rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 px-4 py-4 text-left text-white transition hover:-translate-y-0.5">
-                                        <span class="block text-base font-bold">Request loan</span>
-                                        <span class="mt-1 block text-sm text-sky-50">Queue KES 15,000 request</span>
-                                    </button>
-                                    <button id="open-tips-inline" class="tap-target rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-left transition hover:bg-white/8">
-                                        <span class="block text-base font-bold text-white">Open money tips</span>
-                                        <span class="mt-1 block text-sm text-slate-300">Read simple chama guidance</span>
-                                    </button>
-                                </div>
-                            </section>
-                        </aside>
-                    </section>
-
-                    <section class="reveal mt-6 app-card p-5 sm:p-6">
-                        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                            <div>
-                                <h2 class="section-title">Members</h2>
-                                <p class="section-copy mt-1">See the full group member list with each person&apos;s role and whether they are active.</p>
-                            </div>
-                            <div class="flex flex-wrap gap-2">
-                                <button id="add-member" class="tap-target rounded-2xl bg-gradient-to-r from-blue-500 to-emerald-500 px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5">
-                                    Add
-                                </button>
-                                ${isChairman
-                                    ? `
-                                        <button id="approve-join-request" class="tap-target rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5">
-                                            Approve join
-                                        </button>
-                                        <button id="mark-quit-request" class="tap-target rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:bg-white/8">
-                                            Mark quit
-                                        </button>
-                                    `
-                                    : `
-                                        <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-300">
-                                            Join and quit requests are handled by the chairman
-                                        </span>
-                                    `}
-                            </div>
-                        </div>
-                        <div class="member-top-summary mt-6">
-                            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                <div>
-                                    <p class="member-roster-kicker">At the top</p>
-                                    <h3 class="member-roster-title">Member names in this group</h3>
-                                </div>
-                                <span class="member-roster-count">${members.length} members in the group</span>
-                            </div>
-                            <div class="member-top-names mt-4">
-                                ${members.map(function (member) {
-                                    return `
-                                        <span class="member-top-chip">${member.name}</span>
-                                    `;
-                                }).join("")}
-                            </div>
-                        </div>
-                        <div class="join-flow-panel mt-6">
-                            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                                <div>
-                                    <p class="member-roster-kicker">New here?</p>
-                                    <h3 class="member-roster-title">How new members join this group</h3>
-                                    <p class="mt-2 text-sm leading-7 text-slate-300">A new person sends a join request with their name, phone number, and role. The chairman reviews the request, then approves it into the active members list.</p>
-                                </div>
-                                <button id="open-join-request" class="tap-target rounded-2xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-500/15">
-                                    Request to join
-                                </button>
-                            </div>
-                            <div class="join-steps mt-4">
-                                <span class="join-step-chip">1. Request</span>
-                                <span class="join-step-chip">2. Pending approval</span>
-                                <span class="join-step-chip">3. Chairman approves</span>
-                                <span class="join-step-chip">4. Member becomes active</span>
-                            </div>
-                        </div>
-                        <div class="member-roster-panel mt-6">
-                            <div class="member-roster-heading">
-                                <div>
-                                    <p class="member-roster-kicker">Join requests</p>
-                                    <h3 class="member-roster-title">Pending requests to join this group</h3>
-                                </div>
-                                <span class="member-roster-count">${joinRequests.length} pending</span>
-                            </div>
-                            <div class="mt-4 grid gap-3">
-                                ${joinRequests.length
-                                    ? joinRequests.map(function (request) {
-                                        return PendingJoinRequest(request, isChairman);
-                                    }).join("")
-                                    : `
-                                        <div class="empty-join-state">
-                                            No pending join requests yet. New members can use the request button to ask to join this group.
-                                        </div>
-                                    `}
-                            </div>
-                        </div>
-                        <div class="member-roster-panel mt-6">
-                            <div class="member-roster-heading">
-                                <div>
-                                    <p class="member-roster-kicker">Group roster</p>
-                                    <h3 class="member-roster-title">List of users and members in the group</h3>
-                                </div>
-                                <span class="member-roster-count">${members.length} members</span>
-                            </div>
-                            <div class="member-list-labels mt-4">
-                                <span>Name</span>
-                                <span>Role</span>
-                                <span>Status</span>
-                            </div>
-                            <div class="mt-3 grid gap-3">
-                                ${members.map(MemberListItem).join("")}
-                            </div>
-                        </div>
-                        <div id="member-directory" class="mt-6 grid gap-4 lg:grid-cols-2">
-                            ${members.map(MemberDirectory).join("")}
-                        </div>
-                    </section>
-
-                    <section class="reveal mt-6 app-card p-5 sm:p-6">
-                        <div class="flex items-center justify-between gap-4">
-                            <div>
-                                <h2 class="section-title">Member Profile Trust Scores</h2>
-                                <p class="section-copy mt-1">Reputation comes from contribution consistency. Loan reliability comes from repayment history.</p>
-                            </div>
-                        </div>
-                        <div id="member-profiles" class="mt-6 grid gap-4 lg:grid-cols-2">
-                            ${members.map(TrustScore).join("")}
-                        </div>
-                    </section>
-
-                    <section id="learn" class="reveal mt-6 app-card p-5 sm:p-6">
-                        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                            <div>
-                                <h2 class="section-title">Financial Education</h2>
-                                <p class="section-copy mt-1">Simple tips in everyday language with Kenyan examples.</p>
-                            </div>
-                            <p class="text-sm font-medium text-slate-500">Low-data reading for members and leaders</p>
-                        </div>
-                        <div class="mt-6">
-                            ${TipsSection()}
-                        </div>
-                    </section>
-                </main>
-
-                <div id="chat-modal" class="fixed inset-0 z-50 hidden bg-slate-950/45 px-4 py-6">
-                    <div class="mx-auto flex h-full max-w-md items-end sm:items-center">
-                        <section class="flex h-[min(85vh,42rem)] w-full flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#091320] shadow-2xl">
-                            <header class="flex items-center justify-between bg-gradient-to-r from-blue-500 to-emerald-500 px-4 py-4 text-white">
-                                <div class="flex items-center gap-3">
-                                    <div class="rounded-2xl bg-white/15 p-2">
-                                        ${icon("chat", "h-5 w-5")}
-                                    </div>
-                                    <div>
-                                        <h2 class="text-sm font-bold">Chama Assistant</h2>
-                                        <p id="chat-mode-label" class="text-xs text-emerald-50">Bot is on and group chat history is saved</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <button id="toggle-bot" class="tap-target rounded-2xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/15">Turn bot off</button>
-                                    <button id="close-chat" class="tap-target rounded-2xl px-3 py-2 text-sm font-semibold text-white/90 transition hover:bg-white/10">Close</button>
-                                </div>
-                            </header>
-                            <div id="chat-log" class="chat-log flex-1 overflow-y-auto px-4 py-4"></div>
-                            <div class="border-t border-white/10 bg-[#091320] p-4">
-                                <div class="mb-3 flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300">
-                                    <span>Members can communicate here in the group chat.</span>
-                                    <span id="chat-history-count" class="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-white">0 messages</span>
-                                </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <button data-chat-quick="balance" class="chat-quick tap-target rounded-2xl bg-emerald-600 px-3 py-3 text-sm font-semibold text-white">Check Balance</button>
-                                    <button data-chat-quick="reminder" class="chat-quick tap-target rounded-2xl bg-sky-600 px-3 py-3 text-sm font-semibold text-white">Reminder</button>
-                                </div>
-                                <div class="mt-3 flex gap-2">
-                                    <label for="chat-input" class="sr-only">Type a message</label>
-                                    <input id="chat-input" type="text" placeholder="Write a group message or ask the bot something" class="tap-target min-w-0 flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
-                                    <button id="send-chat" class="tap-target rounded-2xl bg-slate-900 px-4 py-3 text-white transition hover:bg-slate-800">
-                                        ${icon("send", "h-5 w-5")}
-                                    </button>
-                                </div>
-                            </div>
-                        </section>
+        render(groupType) {
+            const tips = this.items[groupType] || this.items.sacco;
+            return `
+                <div class="glass-panel p-6">
+                    <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Tips</p>
+                    <div class="mt-4 space-y-3">
+                        ${tips.map((tip, index) => `
+                            <article class="tip-card">
+                                <span class="tip-kicker">Tip ${index + 1}</span>
+                                <p class="mt-3 text-sm leading-7 text-slate-200">${tip}</p>
+                            </article>
+                        `).join("")}
                     </div>
                 </div>
+            `;
+        }
+    };
 
-                <div id="join-request-modal" class="fixed inset-0 z-50 hidden bg-slate-950/55 px-4 py-6">
-                    <div class="mx-auto flex h-full max-w-lg items-end sm:items-center">
-                        <section class="join-request-modal-card w-full overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#091320] shadow-2xl">
-                            <header class="flex items-center justify-between bg-gradient-to-r from-emerald-500 to-blue-500 px-5 py-4 text-white">
-                                <div>
-                                    <h2 class="text-base font-bold">Request to join this group</h2>
-                                    <p class="mt-1 text-xs text-emerald-50">A chairman approves new members before they become active.</p>
-                                </div>
-                                <button id="close-join-request" class="tap-target rounded-2xl px-3 py-2 text-sm font-semibold text-white/90 transition hover:bg-white/10">Close</button>
-                            </header>
-                            <form id="join-request-form" class="grid gap-4 p-5">
-                                <div>
-                                    <label for="join-name" class="sr-only">Full name</label>
-                                    <input id="join-name" type="text" placeholder="Full name" class="join-input" required>
-                                </div>
-                                <div class="grid gap-4 sm:grid-cols-2">
-                                    <div>
-                                        <label for="join-phone" class="sr-only">Phone number</label>
-                                        <input id="join-phone" type="text" placeholder="Phone number" class="join-input" required>
-                                    </div>
-                                    <div>
-                                        <label for="join-role" class="sr-only">Role</label>
-                                        <select id="join-role" class="join-input" required>
-                                            <option value="Chairman">Chairman</option>
-                                            <option value="Member">Member</option>
-                                            <option value="Secretary">Secretary</option>
-                                            <option value="Treasurer">Treasurer</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label for="join-referral" class="sr-only">Referral</label>
-                                    <input id="join-referral" type="text" placeholder="Who referred you? Optional" class="join-input">
-                                </div>
-                                <p class="text-sm leading-6 text-slate-300">Your request will appear in the pending list until the chairman approves it.</p>
-                                <div class="flex flex-col gap-3 sm:flex-row">
-                                    <button type="submit" class="tap-target rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5">
-                                        Send join request
-                                    </button>
-                                    <button id="cancel-join-request" type="button" class="tap-target rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:bg-white/8">
-                                        Cancel
-                                    </button>
-                                </div>
-                            </form>
-                        </section>
-                    </div>
+    const GroupTypeSelector = {
+        render(currentGroup) {
+            return `
+                <div class="flex flex-wrap gap-3">
+                    ${Object.entries(GROUPS).map(([value, config]) => `
+                        <button
+                            type="button"
+                            class="group-switch ${value === currentGroup ? "is-active" : ""}"
+                            data-switch-group="${value}"
+                        >
+                            ${config.label}
+                        </button>
+                    `).join("")}
                 </div>
-            </div>
-        `;
-    }
+            `;
+        }
+    };
 
-    function createToast(message, tone) {
-        const stack = document.getElementById("toast-stack");
-        const toneClasses = {
-            success: "bg-emerald-600",
-            info: "bg-slate-900",
-            warning: "bg-amber-500"
-        };
+    const RotationTracker = {
+        render(state) {
+            const cyclesCompleted = state.rosca.cyclesCompleted;
+            const totalCycles = state.rosca.totalCycles || 1;
+            const progress = Math.min(Math.round((cyclesCompleted / totalCycles) * 100), 100);
 
-        const toast = document.createElement("div");
-        toast.className = "toast-item pointer-events-auto rounded-2xl px-4 py-3 text-sm font-medium text-white shadow-xl " + (toneClasses[tone] || toneClasses.info);
-        toast.textContent = message;
-        stack.appendChild(toast);
+            return `
+                <section class="glass-panel p-6">
+                    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                        <div>
+                            <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Rotation Tracker</p>
+                            <h3 class="mt-2 text-2xl font-bold text-white">Next to receive: ${getRoscaNextRecipient(state)}</h3>
+                            <p class="mt-3 text-sm leading-7 text-slate-300">Each cycle one member receives the full pot. The order stays visible so everyone knows what comes next.</p>
+                        </div>
+                        <div class="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 px-5 py-4">
+                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-emerald-200">Current cycle</p>
+                            <p class="mt-2 text-2xl font-extrabold text-white">${cyclesCompleted} / ${totalCycles}</p>
+                        </div>
+                    </div>
+                    <div class="mt-5 progress-track"><span class="bg-gradient-to-r from-blue-400 to-emerald-400" style="width:${progress}%"></span></div>
+                    <div class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                        ${(state.rosca.rotationOrder || []).map((memberId, index) => `
+                            <article class="rounded-3xl border ${index === state.rosca.currentCycleIndex ? "border-emerald-300/40 bg-emerald-500/10" : "border-white/10 bg-white/5"} p-4">
+                                <p class="text-xs font-bold uppercase tracking-[0.22em] ${index === state.rosca.currentCycleIndex ? "text-emerald-200" : "text-slate-500"}">Position ${index + 1}</p>
+                                <h4 class="mt-3 text-base font-bold text-white">${memberNameById(memberId)}</h4>
+                                <p class="mt-2 text-sm text-slate-300">${index === state.rosca.currentCycleIndex ? "Receiving now" : "Waiting in queue"}</p>
+                            </article>
+                        `).join("")}
+                    </div>
+                </section>
+            `;
+        }
+    };
 
-        setTimeout(function () {
-            toast.remove();
-        }, 2800);
-    }
+    const MeetingManager = {
+        render(state) {
+            return `
+                <section class="glass-panel p-6">
+                    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                        <div>
+                            <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Meeting Manager</p>
+                            <h3 class="mt-2 text-2xl font-bold text-white">Next meeting: ${state.tableBanking.nextMeetingDate}</h3>
+                            <p class="mt-3 text-sm leading-7 text-slate-300">Track attendance, what was collected, and how much was lent out in each sitting.</p>
+                        </div>
+                        <div class="rounded-3xl border border-blue-300/20 bg-blue-500/10 px-5 py-4">
+                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-blue-200">Attendance rate</p>
+                            <p class="mt-2 text-2xl font-extrabold text-white">${state.tableBanking.attendanceRate}%</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 space-y-3">
+                        ${state.tableBanking.meetings.map((meeting) => `
+                            <article class="activity-card">
+                                <div>
+                                    <p class="text-sm font-semibold text-white">${meeting.meetingDate}</p>
+                                    <p class="mt-2 text-sm text-slate-300">${meeting.attendanceText}</p>
+                                </div>
+                                <div class="grid gap-2 text-right text-sm sm:text-base">
+                                    <p class="text-slate-300">Collected: <span class="font-bold text-white">${formatKES(meeting.contributionAmount)}</span></p>
+                                    <p class="text-slate-300">Loans issued: <span class="font-bold text-white">${formatKES(meeting.loansIssued)}</span></p>
+                                </div>
+                            </article>
+                        `).join("")}
+                    </div>
+                </section>
+            `;
+        }
+    };
 
-    function OnlineQueueManager() {
-        const offlineBanner = document.getElementById("offline-banner");
-        const offlineCount = document.getElementById("offline-count");
-        let queue = loadQueue();
-        let online = navigator.onLine;
-        let syncing = false;
+    const OfflineManager = {
+        queue: readQueue(),
+        isOnline: navigator.onLine,
+        syncing: false,
 
-        function updateBanner() {
-            if (offlineCount) {
-                offlineCount.textContent = queue.length + " queued";
-            }
+        init(app) {
+            this.app = app;
+            window.addEventListener("online", () => this.handleConnectivityChange());
+            window.addEventListener("offline", () => this.handleConnectivityChange());
+            this.handleConnectivityChange();
+        },
 
-            if (!offlineBanner) {
+        handleConnectivityChange() {
+            this.isOnline = navigator.onLine;
+            const indicator = document.getElementById("offline-indicator");
+
+            if (!indicator) {
                 return;
             }
 
-            if (!online) {
-                offlineBanner.classList.add("show");
-                window.clearTimeout(updateBanner.hideTimer);
-                updateBanner.hideTimer = setTimeout(function () {
-                    offlineBanner.classList.remove("show");
+            if (!this.isOnline) {
+                indicator.textContent = "Offline Mode is on. Your contributions and loan requests will queue safely.";
+                indicator.classList.remove("hidden");
+                window.clearTimeout(this.hideIndicatorTimer);
+                this.hideIndicatorTimer = window.setTimeout(() => {
+                    indicator.classList.add("hidden");
                 }, 3200);
-            } else {
-                offlineBanner.classList.remove("show");
             }
-        }
 
-        function addQueuedAction(type, payload) {
-            const entry = {
-                id: Date.now() + Math.random(),
-                type: type,
-                payload: payload,
+            if (this.isOnline && this.queue.length > 0) {
+                this.sync();
+            }
+        },
+
+        enqueue(action) {
+            this.queue.push({
+                ...action,
+                id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
                 queuedAt: new Date().toISOString()
-            };
-            queue.unshift(entry);
-            saveQueue(queue);
-            updateBanner();
-            return entry;
-        }
+            });
+            writeQueue(this.queue);
+            this.handleConnectivityChange();
+        },
 
-        function appendActivity(text, tone) {
-            const updated = [
-                {
-                    text: text,
-                    time: "Just now",
-                    tone: tone
-                }
-            ].concat(loadActivity());
-            saveActivity(updated);
-            document.getElementById("activity-list").innerHTML = renderActivity(loadActivity());
-        }
-
-        function syncQueuedActions() {
-            if (!online || syncing || !queue.length) {
+        sync() {
+            if (this.syncing || this.queue.length === 0) {
                 return;
             }
 
-            syncing = true;
-            createToast("Syncing " + queue.length + " saved actions...", "info");
+            this.syncing = true;
+            this.app.showToast(`Syncing ${this.queue.length} queued update${this.queue.length === 1 ? "" : "s"}...`, "success");
 
-            setTimeout(function () {
-                queue.forEach(function (entry) {
-                    if (entry.type === "contribution") {
-                        appendActivity("Queued contribution synced for " + formatCurrency(entry.payload.amount), "trusted");
-                    }
-                    if (entry.type === "loan") {
-                        appendActivity("Queued loan request synced for " + formatCurrency(entry.payload.amount), "moderate");
-                    }
-                });
-
-                queue = [];
-                saveQueue(queue);
-                syncing = false;
-                updateBanner();
-                createToast("Offline actions synced successfully.", "success");
-            }, 1400);
+            window.setTimeout(() => {
+                const queuedActions = [...this.queue];
+                this.queue = [];
+                writeQueue(this.queue);
+                this.syncing = false;
+                this.handleConnectivityChange();
+                this.app.applySyncedActions(queuedActions);
+                this.app.showToast("Queued updates synced.", "success");
+            }, 1200);
         }
+    };
 
-        window.addEventListener("online", function () {
-            online = true;
-            updateBanner();
-            syncQueuedActions();
-        });
+    const ChatUI = {
+        init(app) {
+            this.app = app;
+            this.modal = document.getElementById("chat-modal");
+            this.messages = document.getElementById("chat-messages");
 
-        window.addEventListener("offline", function () {
-            online = false;
-            updateBanner();
-            createToast("You are offline. New actions will be saved on this device.", "warning");
-        });
-
-        updateBanner();
-
-        return {
-            queueAction: function (type, payload, onlineMessage, queuedMessage) {
-                if (!online) {
-                    addQueuedAction(type, payload);
-                    createToast(queuedMessage, "warning");
-                    return;
+            document.getElementById("chat-btn").addEventListener("click", () => this.open());
+            document.getElementById("close-chat").addEventListener("click", () => this.close());
+            document.getElementById("check-balance-btn").addEventListener("click", () => this.sendBalance());
+            document.getElementById("chat-reminder-btn").addEventListener("click", () => this.sendReminder());
+            this.modal.addEventListener("click", (event) => {
+                if (event.target === this.modal) {
+                    this.close();
                 }
+            });
 
-                appendActivity(onlineMessage, type === "contribution" ? "trusted" : "moderate");
-                createToast("Saved successfully.", "success");
-            },
-            forceSync: syncQueuedActions
-        };
-    }
+            this.reset();
+        },
 
-    function ChatUI(summary, members) {
-        const modal = document.getElementById("chat-modal");
-        const log = document.getElementById("chat-log");
-        const input = document.getElementById("chat-input");
-        const openButton = document.getElementById("open-chat");
-        const closeButton = document.getElementById("close-chat");
-        const sendButton = document.getElementById("send-chat");
-        const toggleBotButton = document.getElementById("toggle-bot");
-        const modeLabel = document.getElementById("chat-mode-label");
-        const historyCount = document.getElementById("chat-history-count");
-        let chatHistory = loadChatHistory();
-        let botEnabled = isBotEnabled();
+        reset() {
+            const group = useGroupType();
+            this.messages.innerHTML = "";
+            this.addBotMessage(`Hello. I can help with quick ${group.config.label.toLowerCase()} updates like checking balance or sending a reminder.`);
+        },
 
-        if (!modal || !log || !input || !openButton || !closeButton || !sendButton || !toggleBotButton || !modeLabel || !historyCount) {
-            return;
-        }
+        open() {
+            this.modal.classList.remove("hidden");
+        },
 
-        function updateChatMeta() {
-            toggleBotButton.textContent = botEnabled ? "Turn bot off" : "Turn bot on";
-            modeLabel.textContent = botEnabled
-                ? "Bot is on and group chat history is saved"
-                : "Bot is off. Members can still chat with each other";
-            historyCount.textContent = chatHistory.length + (chatHistory.length === 1 ? " message" : " messages");
-        }
+        close() {
+            this.modal.classList.add("hidden");
+        },
 
-        function addBubble(message, author) {
+        addMessage(text, type) {
             const row = document.createElement("div");
-            const isUser = author === "user";
-            const isMember = author === "member";
-            row.className = "mb-3 flex " + (isUser ? "justify-end" : "justify-start");
+            row.className = `flex ${type === "user" ? "justify-end" : "justify-start"}`;
 
             const bubble = document.createElement("div");
-            bubble.className = "chat-bubble " + (isUser ? "user" : isMember ? "member" : "bot");
-            bubble.textContent = message;
+            bubble.className = `chat-bubble ${type}`;
+            bubble.textContent = text;
 
             row.appendChild(bubble);
-            log.appendChild(row);
-            log.scrollTop = log.scrollHeight;
-        }
+            this.messages.appendChild(row);
+            this.messages.scrollTop = this.messages.scrollHeight;
+        },
 
-        function addMessage(message, author) {
-            chatHistory.push({ author: author, message: message });
-            saveChatHistory(chatHistory);
-            addBubble(message, author);
-            updateChatMeta();
-        }
+        addBotMessage(text) {
+            this.addMessage(text, "bot");
+        },
 
-        function renderHistory() {
-            log.innerHTML = "";
-            chatHistory.forEach(function (entry) {
-                addBubble(entry.message, entry.author);
+        addUserMessage(text) {
+            this.addMessage(text, "user");
+        },
+
+        sendBalance() {
+            const state = this.app.state;
+            const group = useGroupType();
+            this.addUserMessage("Show today’s balance");
+            window.setTimeout(() => {
+                if (group.value === "rosca") {
+                    this.addBotMessage(`Current pot is ${formatKES(getRoscaCurrentPot(state))}. ${getRoscaCurrentRecipient(state)} receives this cycle, and ${getRoscaNextRecipient(state)} is next.`);
+                    return;
+                }
+
+                if (group.value === "table_banking") {
+                    this.addBotMessage(`Meeting contributions this month are ${formatKES(state.tableBanking.meetingContributionTotal)}. Loans issued during meetings total ${formatKES(state.tableBanking.loansIssuedThisMonth)}.`);
+                    return;
+                }
+
+                this.addBotMessage(`Available funds are ${formatKES(state.totals.availableBalance)}. Savings stand at ${formatKES(state.totals.contributions)} and active loans at ${formatKES(state.totals.activeLoans)}.`);
+            }, 350);
+        },
+
+        sendReminder() {
+            this.addUserMessage("Send a friendly reminder");
+            window.setTimeout(() => {
+                this.addBotMessage("Reminder prepared. Members with pending actions will receive a calm follow-up message.");
+                this.app.sendReminder();
+            }, 350);
+        }
+    };
+
+    const DashboardApp = {
+        state: readState(),
+
+        init() {
+            saveGroupType(getStoredGroupType());
+            this.renderShell();
+            this.cacheDom();
+            this.bindEvents();
+            OfflineManager.init(this);
+            ChatUI.init(this);
+            this.render();
+        },
+
+        renderShell() {
+            const app = document.getElementById("app");
+
+            app.innerHTML = `
+                <div class="dashboard-shell min-h-screen">
+                    <div id="offline-indicator" class="hidden fixed left-1/2 top-4 z-40 w-[min(92vw,34rem)] -translate-x-1/2 rounded-2xl border border-amber-300/20 bg-amber-500/15 px-4 py-3 text-center text-sm font-semibold text-amber-100 shadow-xl backdrop-blur">
+                        Offline Mode is on. Your contributions and loan requests will queue safely.
+                    </div>
+
+                    <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                        <header class="glass-panel flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+                            <div class="flex items-center gap-4">
+                                <img src="images/chama-icon.png" alt="ChamaConnect logo" class="h-14 w-14 rounded-2xl ring-1 ring-white/10">
+                                <div>
+                                    <p class="text-sm font-bold uppercase tracking-[0.28em] text-slate-400">ChamaConnect</p>
+                                    <h1 class="mt-2 text-2xl font-extrabold text-white">Chama OS Dashboard</h1>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-3">
+                                <a href="onboarding.html" class="secondary-button">Change group setup</a>
+                                <button id="chat-btn" type="button" class="primary-button">Open assistant</button>
+                            </div>
+                        </header>
+
+                        <section class="mt-8 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+                            <div class="glass-panel p-6 sm:p-8">
+                                <p id="dashboard-eyebrow" class="text-sm font-bold uppercase tracking-[0.28em] text-slate-400"></p>
+                                <h2 id="dashboard-title" class="mt-4 text-4xl font-extrabold leading-tight text-white sm:text-5xl"></h2>
+                                <p id="dashboard-copy" class="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg"></p>
+                                <div id="group-type-selector" class="mt-6"></div>
+                                <div id="quick-actions" class="mt-8 grid gap-3 sm:grid-cols-3"></div>
+                            </div>
+
+                            <aside id="group-highlight" class="glass-panel p-6 sm:p-8"></aside>
+                        </section>
+
+                        <section class="mt-8" id="summary-cards"></section>
+
+                        <section class="mt-8 grid gap-6 lg:grid-cols-[1.06fr_0.94fr]">
+                            <div class="space-y-6">
+                                <div id="group-feature-area" class="space-y-6"></div>
+                                <section class="glass-panel p-6">
+                                    <div class="flex items-center justify-between gap-4">
+                                        <div>
+                                            <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Recent activity</p>
+                                            <h3 class="mt-2 text-2xl font-bold text-white">Latest updates</h3>
+                                        </div>
+                                    </div>
+                                    <div id="recent-activity" class="mt-5 space-y-3"></div>
+                                </section>
+                            </div>
+
+                            <aside class="space-y-6">
+                                <div id="trust-summary"></div>
+                                <div id="tips-grid"></div>
+                                <section class="glass-panel p-6">
+                                    <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                                        <div>
+                                            <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Members</p>
+                                            <h3 class="mt-2 text-2xl font-bold text-white">List of users and members</h3>
+                                            <p class="mt-2 text-sm leading-7 text-slate-300">See each member, whether they are active, and the role they hold in the group.</p>
+                                        </div>
+                                        <button type="button" class="primary-button">Add</button>
+                                    </div>
+                                    <div id="member-directory" class="mt-5 grid gap-3"></div>
+                                </section>
+                                <section class="glass-panel p-6">
+                                    <div>
+                                        <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Members</p>
+                                        <h3 class="mt-2 text-2xl font-bold text-white">Group health</h3>
+                                    </div>
+                                    <div id="member-profiles" class="mt-5 space-y-4"></div>
+                                </section>
+                            </aside>
+                        </section>
+                    </main>
+
+                    <div id="chat-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 p-4 backdrop-blur-sm">
+                        <div class="mx-auto mt-12 max-w-lg rounded-[2rem] border border-white/10 bg-[#081120] p-5 shadow-2xl">
+                            <div class="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
+                                <div>
+                                    <p class="text-sm font-bold uppercase tracking-[0.22em] text-slate-400">Assistant</p>
+                                    <h3 class="mt-2 text-xl font-bold text-white">Quick help for your group</h3>
+                                </div>
+                                <button id="close-chat" type="button" class="secondary-button !px-4 !py-2">Close</button>
+                            </div>
+                            <div id="chat-messages" class="chat-log mt-4 h-80 space-y-3 overflow-y-auto rounded-[1.5rem] border border-white/10 p-4"></div>
+                            <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                                <button id="check-balance-btn" type="button" class="secondary-button">Check balance</button>
+                                <button id="chat-reminder-btn" type="button" class="primary-button">Send reminder</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="toast" class="hidden"></div>
+                </div>
+            `;
+        },
+
+        cacheDom() {
+            this.root = document.getElementById("app");
+            this.dashboardEyebrow = document.getElementById("dashboard-eyebrow");
+            this.dashboardTitle = document.getElementById("dashboard-title");
+            this.dashboardCopy = document.getElementById("dashboard-copy");
+            this.groupTypeSelector = document.getElementById("group-type-selector");
+            this.quickActions = document.getElementById("quick-actions");
+            this.groupHighlight = document.getElementById("group-highlight");
+            this.summaryCards = document.getElementById("summary-cards");
+            this.groupFeatureArea = document.getElementById("group-feature-area");
+            this.recentActivity = document.getElementById("recent-activity");
+            this.memberDirectory = document.getElementById("member-directory");
+            this.memberProfiles = document.getElementById("member-profiles");
+            this.tipsGrid = document.getElementById("tips-grid");
+            this.trustSummary = document.getElementById("trust-summary");
+            this.toast = document.getElementById("toast");
+        },
+
+        bindEvents() {
+            this.root.addEventListener("click", (event) => {
+                const switchButton = event.target.closest("[data-switch-group]");
+                if (switchButton) {
+                    const nextGroup = saveGroupType(switchButton.dataset.switchGroup);
+                    this.showToast(`${GROUPS[nextGroup].label} view selected.`, "success");
+                    ChatUI.reset();
+                    this.render();
+                    return;
+                }
+
+                const actionButton = event.target.closest("[data-dashboard-action]");
+                if (actionButton) {
+                    this.handleDashboardAction(actionButton.dataset.dashboardAction);
+                }
             });
-            updateChatMeta();
-        }
+        },
 
-        function addTyping(callback) {
-            const row = document.createElement("div");
-            row.className = "mb-3 flex justify-start";
-            row.id = "typing";
+        render() {
+            const group = useGroupType();
 
-            const bubble = document.createElement("div");
-            bubble.className = "chat-bubble bot";
-            bubble.innerHTML = '<div class="flex gap-1"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>';
-            row.appendChild(bubble);
-            log.appendChild(row);
-            log.scrollTop = log.scrollHeight;
+            this.dashboardEyebrow.textContent = group.config.eyebrow;
+            this.dashboardTitle.textContent = `${this.state.groupName} runs as a ${group.config.label}.`;
+            this.dashboardCopy.textContent = group.config.description;
+            this.groupTypeSelector.innerHTML = GroupTypeSelector.render(group.value);
+            this.quickActions.innerHTML = this.renderQuickActions(group.value);
+            this.groupHighlight.innerHTML = this.renderGroupHighlight(group.value);
+            this.summaryCards.innerHTML = this.renderSummaryCards(group.value);
+            this.groupFeatureArea.innerHTML = this.renderGroupFeatureArea(group.value);
+            this.recentActivity.innerHTML = this.renderActivities();
+            this.memberDirectory.innerHTML = TrustScore.renderMemberDirectory(this.state);
+            this.memberProfiles.innerHTML = TrustScore.renderMembers(this.state);
+            this.trustSummary.innerHTML = this.renderTrustSection(group.value);
+            this.tipsGrid.innerHTML = TipsSection.render(group.value);
+        },
 
-            setTimeout(function () {
-                row.remove();
-                callback();
-            }, 900);
-        }
-
-        function respond(kind) {
-            const trustedCount = members.filter(function (member) {
-                return averageScore(member) >= 80;
-            }).length;
-
-            const replies = {
-                balance:
-                    "Balance update\n\nAvailable balance: " +
-                    formatCurrency(summary.availableBalance) +
-                    "\nTotal contributions: " +
-                    formatCurrency(summary.totalContributions) +
-                    "\nActive loans: " +
-                    formatCurrency(summary.activeLoans) +
-                    "\n\nLast checked just now.",
-                reminder:
-                    "Reminder ready\n\nI have prepared a friendly reminder for members with upcoming payments.\n\n'Hello, please remember your chama payment this week. Thank you.'",
-                loans:
-                    "Loan update\n\n3 active loans are running.\nMost reliable borrower: John Doe.\nMember needing support: Peter Kamau.",
-                members:
-                    "Member summary\n\nTrusted members: " +
-                    trustedCount +
-                    "\nModerate members: 1\nRisky members: 1\n\nTop badge: Trusted Member"
+        renderQuickActions(groupType) {
+            const actions = {
+                sacco: [
+                    { id: "record-contribution", label: "Record contribution" },
+                    { id: "apply-loan", label: "Issue loan" },
+                    { id: "record-repayment", label: "Record repayment" }
+                ],
+                rosca: [
+                    { id: "record-contribution", label: "Save cycle contribution" },
+                    { id: "advance-cycle", label: "Advance cycle" },
+                    { id: "simulate-reminder", label: "Send reminder" }
+                ],
+                table_banking: [
+                    { id: "record-meeting", label: "Log meeting" },
+                    { id: "meeting-loan", label: "Issue meeting loan" },
+                    { id: "mark-attendance", label: "Mark attendance" }
+                ],
+                women_group: [
+                    { id: "record-contribution", label: "Save contribution" },
+                    { id: "refresh-trust", label: "Refresh trust score" },
+                    { id: "share-tip", label: "Share financial tip" }
+                ]
             };
 
-            addTyping(function () {
-                addMessage(replies[kind] || "I can help with balance, reminders, loans, and member trust updates.", "bot");
-            });
-        }
+            return actions[groupType].map((action, index) => `
+                <button
+                    type="button"
+                    class="${index === 0 ? "primary-button" : "secondary-button"} w-full justify-center"
+                    data-dashboard-action="${action.id}"
+                >
+                    ${action.label}
+                </button>
+            `).join("");
+        },
 
-        renderHistory();
-
-        openButton.addEventListener("click", function () {
-            modal.classList.remove("hidden");
-        });
-
-        closeButton.addEventListener("click", function () {
-            modal.classList.add("hidden");
-        });
-
-        modal.addEventListener("click", function (event) {
-            if (event.target === modal) {
-                modal.classList.add("hidden");
+        renderGroupHighlight(groupType) {
+            if (groupType === "rosca") {
+                return `
+                    <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Current round</p>
+                    <h3 class="mt-3 text-3xl font-extrabold text-white">${getRoscaCurrentRecipient(this.state)}</h3>
+                    <p class="mt-4 text-sm leading-7 text-slate-300">This member receives the full pot this cycle. Next payout date is ${this.state.rosca.nextPayoutDate}.</p>
+                    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                        <div class="summary-card">
+                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">Current pot</p>
+                            <p class="mt-3 text-3xl font-extrabold text-white">${formatKES(getRoscaCurrentPot(this.state))}</p>
+                        </div>
+                        <div class="summary-card">
+                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">Fixed contribution</p>
+                            <p class="mt-3 text-3xl font-extrabold text-white">${formatKES(this.state.rosca.fixedContribution)}</p>
+                        </div>
+                    </div>
+                `;
             }
-        });
 
-        document.querySelectorAll(".chat-quick").forEach(function (button) {
-            button.addEventListener("click", function () {
-                const kind = button.getAttribute("data-chat-quick");
-                addMessage("You: " + button.textContent.trim(), "user");
-                if (botEnabled) {
-                    respond(kind === "reminder" ? "reminder" : "balance");
+            if (groupType === "table_banking") {
+                return `
+                    <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Meeting snapshot</p>
+                    <h3 class="mt-3 text-3xl font-extrabold text-white">${this.state.tableBanking.nextMeetingDate}</h3>
+                    <p class="mt-4 text-sm leading-7 text-slate-300">Session records stay simple: who came, what was collected, and what was approved.</p>
+                    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                        <div class="summary-card">
+                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">Attendance</p>
+                            <p class="mt-3 text-3xl font-extrabold text-white">${this.state.tableBanking.attendanceRate}%</p>
+                        </div>
+                        <div class="summary-card">
+                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">Loans this month</p>
+                            <p class="mt-3 text-3xl font-extrabold text-white">${formatKES(this.state.tableBanking.loansIssuedThisMonth)}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (groupType === "women_group") {
+                return `
+                    <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Friendly overview</p>
+                    <h3 class="mt-3 text-3xl font-extrabold text-white">${this.state.womenGroup.trustScore}/100 trust score</h3>
+                    <p class="mt-4 text-sm leading-7 text-slate-300">${this.state.womenGroup.trustNote}</p>
+                    <div class="mt-6 space-y-3">
+                        ${this.state.womenGroup.largeActions.map((action) => `
+                            <div class="rounded-3xl border border-white/10 bg-white/5 px-4 py-3 text-base font-semibold text-white">${action}</div>
+                        `).join("")}
+                    </div>
+                `;
+            }
+
+            return `
+                <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Finance snapshot</p>
+                <h3 class="mt-3 text-3xl font-extrabold text-white">${formatKES(this.state.totals.availableBalance)}</h3>
+                <p class="mt-4 text-sm leading-7 text-slate-300">Funds currently available after loans out and recent contributions in.</p>
+                <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                    <div class="summary-card">
+                        <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">Loan balance</p>
+                        <p class="mt-3 text-3xl font-extrabold text-white">${formatKES(this.state.totals.activeLoans)}</p>
+                    </div>
+                    <div class="summary-card">
+                        <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">Dividends reserve</p>
+                        <p class="mt-3 text-3xl font-extrabold text-white">${formatKES(this.state.totals.dividendsReserve)}</p>
+                    </div>
+                </div>
+            `;
+        },
+
+        renderSummaryCards(groupType) {
+            const cardsByGroup = {
+                sacco: [
+                    { label: "Contributions", value: formatKES(this.state.totals.contributions), hint: "All member savings received" },
+                    { label: "Loans", value: formatKES(this.state.totals.activeLoans), hint: "Money currently lent out" },
+                    { label: "Available funds", value: formatKES(this.state.totals.availableBalance), hint: "Ready for emergencies or new loans" },
+                    { label: "Repayments", value: formatKES(this.state.totals.repayments), hint: "Money collected back from borrowers" }
+                ],
+                rosca: [
+                    { label: "Current pot", value: formatKES(getRoscaCurrentPot(this.state)), hint: "Amount going out in this round" },
+                    { label: "Next recipient", value: getRoscaNextRecipient(this.state), hint: "Who receives after this cycle" },
+                    { label: "Cycle progress", value: `${this.state.rosca.cyclesCompleted}/${this.state.rosca.totalCycles}`, hint: "Completed rounds so far" },
+                    { label: "Fixed contribution", value: formatKES(this.state.rosca.fixedContribution), hint: "Per member, per cycle" }
+                ],
+                table_banking: [
+                    { label: "Meeting contributions", value: formatKES(this.state.tableBanking.meetingContributionTotal), hint: "Collected in recent sessions" },
+                    { label: "Attendance", value: `${this.state.tableBanking.attendanceRate}%`, hint: "Average member turnout" },
+                    { label: "Loans issued", value: formatKES(this.state.tableBanking.loansIssuedThisMonth), hint: "Approved during meetings" },
+                    { label: "Available funds", value: formatKES(this.state.totals.availableBalance), hint: "Cash ready for the next session" }
+                ],
+                women_group: [
+                    { label: "Balance", value: formatKES(this.state.totals.availableBalance), hint: "Money ready for the group" },
+                    { label: "Trust score", value: `${this.state.womenGroup.trustScore}/100`, hint: "How clear and reliable the process feels" },
+                    { label: "Savings", value: formatKES(this.state.totals.contributions), hint: "Total money saved together" },
+                    { label: "Simple next step", value: "3 actions", hint: "Contribute, trust check, or read a tip" }
+                ]
+            };
+
+            return `
+                <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                    ${cardsByGroup[groupType].map((card) => `
+                        <article class="summary-card">
+                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">${card.label}</p>
+                            <p class="metric-value mt-4 text-white">${card.value}</p>
+                            <p class="mt-3 text-sm leading-6 text-slate-300">${card.hint}</p>
+                        </article>
+                    `).join("")}
+                </div>
+            `;
+        },
+
+        renderGroupFeatureArea(groupType) {
+            if (groupType === "rosca") {
+                return RotationTracker.render(this.state);
+            }
+
+            if (groupType === "table_banking") {
+                return MeetingManager.render(this.state);
+            }
+
+            if (groupType === "women_group") {
+                return `
+                    ${TrustScore.renderPanel(this.state)}
+                    <section class="glass-panel p-6">
+                        <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Friendly language</p>
+                        <h3 class="mt-2 text-2xl font-bold text-white">Keep the dashboard easy to follow</h3>
+                        <p class="mt-4 text-sm leading-7 text-slate-300">This version uses fewer words, bigger actions, and more reassurance so members can understand the group quickly.</p>
+                    </section>
+                `;
+            }
+
+            return `
+                <section class="glass-panel p-6">
+                    <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">SACCO overview</p>
+                    <div class="mt-5 grid gap-4 sm:grid-cols-3">
+                        <article class="summary-card">
+                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">Total savings</p>
+                            <p class="mt-3 text-2xl font-extrabold text-white">${formatKES(this.state.totals.contributions)}</p>
+                        </article>
+                        <article class="summary-card">
+                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">Loan balance</p>
+                            <p class="mt-3 text-2xl font-extrabold text-white">${formatKES(this.state.totals.activeLoans)}</p>
+                        </article>
+                        <article class="summary-card">
+                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">Available funds</p>
+                            <p class="mt-3 text-2xl font-extrabold text-white">${formatKES(this.state.totals.availableBalance)}</p>
+                        </article>
+                    </div>
+                    <div class="mt-6 activity-card">
+                        <div>
+                            <p class="text-sm font-semibold text-white">Optional dividends reserve</p>
+                            <p class="mt-2 text-sm leading-6 text-slate-300">Keep a reserve visible so dividends do not surprise your balance at year end.</p>
+                        </div>
+                        <p class="text-2xl font-extrabold text-white">${formatKES(this.state.totals.dividendsReserve)}</p>
+                    </div>
+                </section>
+            `;
+        },
+
+        renderTrustSection(groupType) {
+            if (groupType === "women_group") {
+                return TrustScore.renderSummary(this.state);
+            }
+
+            return `
+                <div class="glass-panel p-6">
+                    <p class="text-sm font-bold uppercase tracking-[0.24em] text-slate-400">Why this setup fits</p>
+                    <p class="mt-4 text-sm leading-7 text-slate-300">${GROUPS[groupType].summary}</p>
+                </div>
+            `;
+        },
+
+        renderActivities() {
+            return this.state.activities.slice(0, 6).map((activity) => {
+                const tone = this.activityTone(activity.status);
+                return `
+                    <article class="activity-card">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="status-dot ${tone.dotClass}"></span>
+                                <p class="text-sm font-semibold text-white">${activity.member}</p>
+                            </div>
+                            <p class="mt-2 text-sm leading-7 text-slate-300">${activity.note}</p>
+                            ${activity.amount ? `<p class="mt-2 text-sm font-semibold text-white">${formatKES(activity.amount)}</p>` : ""}
+                        </div>
+                        <div class="text-right">
+                            <span class="rounded-full px-3 py-1 text-xs font-semibold ${tone.pillClass}">${tone.label}</span>
+                            <p class="mt-2 text-xs text-slate-500">${activity.time}</p>
+                        </div>
+                    </article>
+                `;
+            }).join("");
+        },
+
+        activityTone(status) {
+            if (status === "trusted") {
+                return { label: "Trusted", dotClass: "bg-emerald-400", pillClass: "bg-emerald-500/15 text-emerald-200 border border-emerald-400/20" };
+            }
+
+            if (status === "moderate") {
+                return { label: "Moderate", dotClass: "bg-amber-300", pillClass: "bg-amber-500/15 text-amber-100 border border-amber-300/20" };
+            }
+
+            return { label: "Attention", dotClass: "bg-rose-400", pillClass: "bg-rose-500/15 text-rose-100 border border-rose-300/20" };
+        },
+
+        handleDashboardAction(actionType) {
+            if (!OfflineManager.isOnline) {
+                OfflineManager.enqueue({ type: actionType });
+                this.showToast("Action saved offline and will sync later.", "warning");
+                return;
+            }
+
+            this.applyAction({ type: actionType }, "Just now");
+        },
+
+        applySyncedActions(actions) {
+            actions.forEach((action) => this.applyAction(action, "Synced now"));
+        },
+
+        applyAction(action, time) {
+            switch (action.type) {
+                case "record-contribution":
+                    this.recordContribution(time);
+                    break;
+                case "apply-loan":
+                    this.issueLoan(time);
+                    break;
+                case "record-repayment":
+                    this.recordRepayment(time);
+                    break;
+                case "advance-cycle":
+                    this.advanceCycle(time);
+                    break;
+                case "simulate-reminder":
+                    this.sendReminder(time);
+                    break;
+                case "record-meeting":
+                    this.recordMeeting(time);
+                    break;
+                case "meeting-loan":
+                    this.issueMeetingLoan(time);
+                    break;
+                case "mark-attendance":
+                    this.markAttendance(time);
+                    break;
+                case "refresh-trust":
+                    this.refreshTrustScore(time);
+                    break;
+                case "share-tip":
+                    this.shareTip(time);
+                    break;
+                default:
                     return;
-                }
-                createToast("Bot is off. Turn it on for automated replies.", "info");
-            });
-        });
-
-        function sendCustomMessage() {
-            const message = input.value.trim();
-            if (!message) {
-                return;
             }
 
-            addMessage("You: " + message, "user");
-            input.value = "";
+            writeState(this.state);
+            this.render();
+        },
 
-            if (!botEnabled) {
-                createToast("Group message sent. The bot is currently off.", "info");
-                return;
+        pushActivity(entry) {
+            this.state.activities.unshift({
+                id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+                ...entry
+            });
+        },
+
+        recordContribution(time) {
+            const group = useGroupType().value;
+            const amount = group === "rosca" ? this.state.rosca.fixedContribution : 2000;
+            this.state.totals.contributions += amount;
+            this.state.totals.availableBalance += group === "rosca" ? 0 : amount;
+            if (group === "table_banking") {
+                this.state.tableBanking.meetingContributionTotal += amount;
             }
-
-            const lowered = message.toLowerCase();
-            if (lowered.includes("balance") || lowered.includes("money")) {
-                respond("balance");
-                return;
-            }
-            if (lowered.includes("remind")) {
-                respond("reminder");
-                return;
-            }
-            if (lowered.includes("loan") || lowered.includes("borrow")) {
-                respond("loans");
-                return;
-            }
-            if (lowered.includes("member") || lowered.includes("trust")) {
-                respond("members");
-                return;
-            }
-
-            respond("help");
-        }
-
-        toggleBotButton.addEventListener("click", function () {
-            botEnabled = !botEnabled;
-            saveBotEnabled(botEnabled);
-            updateChatMeta();
-            createToast(botEnabled ? "Bot turned on." : "Bot turned off. Members can still chat.", "info");
-        });
-
-        sendButton.addEventListener("click", sendCustomMessage);
-        input.addEventListener("keydown", function (event) {
-            if (event.key === "Enter") {
-                sendCustomMessage();
-            }
-        });
-    }
-
-    function wireInteractions() {
-        const offlineManager = OnlineQueueManager();
-        ChatUI(data.summary, getMembersWithCurrentProfile());
-        const joinRequestModal = document.getElementById("join-request-modal");
-        const openJoinRequestButton = document.getElementById("open-join-request");
-        const closeJoinRequestButton = document.getElementById("close-join-request");
-        const cancelJoinRequestButton = document.getElementById("cancel-join-request");
-        const joinRequestForm = document.getElementById("join-request-form");
-
-        document.querySelectorAll(".queue-action").forEach(function (button) {
-            button.addEventListener("click", function () {
-                const action = button.getAttribute("data-action");
-
-                if (action === "contribution") {
-                    offlineManager.queueAction(
-                        "contribution",
-                        { amount: 2000, memberId: "current-user" },
-                        "Contribution saved for KES 2,000.",
-                        "Contribution saved offline. It will sync when you reconnect."
-                    );
-                }
-
-                if (action === "loan") {
-                    offlineManager.queueAction(
-                        "loan",
-                        { amount: 15000, purpose: "School fees" },
-                        "Loan request saved for KES 15,000.",
-                        "Loan request saved offline. It will sync when you reconnect."
-                    );
-                }
+            this.pushActivity({
+                type: "contribution",
+                member: "You",
+                amount,
+                note: group === "rosca" ? "Cycle contribution recorded for the current round" : "Contribution saved from dashboard",
+                status: "trusted",
+                time
             });
-        });
+            this.showToast("Contribution recorded.", "success");
+        },
 
-        document.getElementById("simulate-reminder").addEventListener("click", function () {
-            createToast("Friendly reminder prepared for members with upcoming payments.", "info");
-        });
-
-        document.getElementById("open-tips-inline").addEventListener("click", function () {
-            const section = document.getElementById("learn");
-            if (section) {
-                section.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
-        });
-
-        const approveJoinButton = document.getElementById("approve-join-request");
-        if (approveJoinButton) {
-            approveJoinButton.addEventListener("click", function () {
-                const requests = loadJoinRequests();
-                if (!requests.length) {
-                    createToast("There are no pending join requests right now.", "info");
-                    return;
-                }
-
-                approveJoinRequest(requests[0].id);
+        issueLoan(time) {
+            const amount = 12000;
+            this.state.totals.activeLoans += amount;
+            this.state.totals.availableBalance -= amount;
+            this.pushActivity({
+                type: "loan",
+                member: "You",
+                amount,
+                note: "Loan issued from SACCO dashboard",
+                status: "moderate",
+                time
             });
-        }
+            this.showToast("Loan recorded.", "success");
+        },
 
-        const addMemberButton = document.getElementById("add-member");
-        if (addMemberButton) {
-            addMemberButton.addEventListener("click", function () {
-                if (joinRequestModal) {
-                    joinRequestModal.classList.remove("hidden");
-                }
+        recordRepayment(time) {
+            const amount = 5000;
+            this.state.totals.activeLoans = Math.max(0, this.state.totals.activeLoans - amount);
+            this.state.totals.availableBalance += amount;
+            this.state.totals.repayments += amount;
+            this.pushActivity({
+                type: "repayment",
+                member: "You",
+                amount,
+                note: "Loan repayment added to balance",
+                status: "trusted",
+                time
             });
-        }
+            this.showToast("Repayment recorded.", "success");
+        },
 
-        const markQuitButton = document.getElementById("mark-quit-request");
-        if (markQuitButton) {
-            markQuitButton.addEventListener("click", function () {
-                createToast("Quit request recorded by the chairman.", "info");
+        advanceCycle(time) {
+            const orderLength = this.state.rosca.rotationOrder.length || 1;
+            const recipient = getRoscaCurrentRecipient(this.state);
+            this.state.rosca.currentCycleIndex = (this.state.rosca.currentCycleIndex + 1) % orderLength;
+            this.state.rosca.cyclesCompleted = Math.min(this.state.rosca.cyclesCompleted + 1, this.state.rosca.totalCycles);
+            this.pushActivity({
+                type: "rotation",
+                member: recipient,
+                amount: getRoscaCurrentPot(this.state),
+                note: `Full pot paid out to ${recipient}. ${getRoscaCurrentRecipient(this.state)} is now in the active slot.`,
+                status: "trusted",
+                time
             });
-        }
+            this.showToast("Cycle advanced.", "success");
+        },
 
-        if (openJoinRequestButton && joinRequestModal) {
-            openJoinRequestButton.addEventListener("click", function () {
-                joinRequestModal.classList.remove("hidden");
+        recordMeeting(time) {
+            const contributionAmount = 18000;
+            this.state.tableBanking.meetings.unshift({
+                id: `${Date.now()}`,
+                meetingDate: "Today",
+                attendanceText: "18 / 20 members",
+                contributionAmount,
+                loansIssued: 0
             });
-        }
-
-        if (closeJoinRequestButton && joinRequestModal) {
-            closeJoinRequestButton.addEventListener("click", function () {
-                joinRequestModal.classList.add("hidden");
+            this.state.tableBanking.meetingContributionTotal += contributionAmount;
+            this.state.totals.contributions += contributionAmount;
+            this.state.totals.availableBalance += contributionAmount;
+            this.pushActivity({
+                type: "meeting",
+                member: "Meeting",
+                amount: contributionAmount,
+                note: "Meeting log created with today’s contributions",
+                status: "trusted",
+                time
             });
-        }
+            this.showToast("Meeting logged.", "success");
+        },
 
-        if (cancelJoinRequestButton && joinRequestModal) {
-            cancelJoinRequestButton.addEventListener("click", function () {
-                joinRequestModal.classList.add("hidden");
+        issueMeetingLoan(time) {
+            const amount = 10000;
+            this.state.tableBanking.loansIssuedThisMonth += amount;
+            this.state.totals.activeLoans += amount;
+            this.state.totals.availableBalance -= amount;
+            this.pushActivity({
+                type: "loan",
+                member: "Meeting committee",
+                amount,
+                note: "Loan issued during today’s meeting",
+                status: "moderate",
+                time
             });
-        }
+            this.showToast("Meeting loan recorded.", "success");
+        },
 
-        if (joinRequestModal) {
-            joinRequestModal.addEventListener("click", function (event) {
-                if (event.target === joinRequestModal) {
-                    joinRequestModal.classList.add("hidden");
-                }
+        markAttendance(time) {
+            this.state.tableBanking.attendanceRate = Math.min(100, this.state.tableBanking.attendanceRate + 2);
+            this.pushActivity({
+                type: "attendance",
+                member: "Secretary",
+                amount: 0,
+                note: "Attendance register updated for the current session",
+                status: "trusted",
+                time
             });
-        }
+            this.showToast("Attendance updated.", "success");
+        },
 
-        if (joinRequestForm) {
-            joinRequestForm.addEventListener("submit", function (event) {
-                event.preventDefault();
-
-                const request = {
-                    id: Date.now(),
-                    name: document.getElementById("join-name").value.trim(),
-                    phone: document.getElementById("join-phone").value.trim(),
-                    role: document.getElementById("join-role").value,
-                    referral: document.getElementById("join-referral").value.trim(),
-                    status: "Pending",
-                    requestedAt: new Date().toISOString()
-                };
-
-                if (!request.name || !request.phone) {
-                    createToast("Please enter the new member's name and phone number.", "warning");
-                    return;
-                }
-
-                const requests = loadJoinRequests();
-                requests.unshift(request);
-                saveJoinRequests(requests);
-                joinRequestForm.reset();
-                joinRequestModal.classList.add("hidden");
-                createToast("Join request sent. It is now waiting for approval.", "success");
-                rerenderDashboard();
+        refreshTrustScore(time) {
+            this.state.womenGroup.trustScore = Math.min(100, this.state.womenGroup.trustScore + 2);
+            this.pushActivity({
+                type: "trust",
+                member: "System",
+                amount: 0,
+                note: "Trust score refreshed after recent on-time contributions",
+                status: "trusted",
+                time
             });
-        }
+            this.showToast("Trust score refreshed.", "success");
+        },
 
-        document.querySelectorAll("[data-approve-request]").forEach(function (button) {
-            button.addEventListener("click", function () {
-                approveJoinRequest(button.getAttribute("data-approve-request"));
+        shareTip(time) {
+            this.pushActivity({
+                type: "tip",
+                member: "Coach",
+                amount: 0,
+                note: "Shared a financial tip with the group in friendly language",
+                status: "trusted",
+                time
             });
-        });
+            this.showToast("Tip shared.", "success");
+        },
 
-        document.querySelectorAll("[data-reject-request]").forEach(function (button) {
-            button.addEventListener("click", function () {
-                const requestId = button.getAttribute("data-reject-request");
-                const requests = loadJoinRequests().filter(function (request) {
-                    return String(request.id) !== String(requestId);
-                });
-                saveJoinRequests(requests);
-                createToast("Join request rejected.", "info");
-                rerenderDashboard();
+        sendReminder(time = "Just now") {
+            this.pushActivity({
+                type: "reminder",
+                member: "System",
+                amount: 0,
+                note: "Friendly reminder prepared for members with pending actions",
+                status: "moderate",
+                time
             });
-        });
+            writeState(this.state);
+            this.render();
+            this.showToast("Reminder prepared.", "success");
+        },
 
-        offlineManager.forceSync();
-    }
+        showToast(message, tone) {
+            const toneClasses = {
+                success: "bg-emerald-500",
+                warning: "bg-amber-500",
+                error: "bg-rose-500"
+            };
 
-    function approveJoinRequest(requestId) {
-        const requests = loadJoinRequests();
-        const request = requests.find(function (item) {
-            return String(item.id) === String(requestId);
-        });
+            this.toast.textContent = message;
+            this.toast.className = `fixed right-4 top-4 z-50 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow-2xl ${toneClasses[tone] || "bg-slate-800"}`;
+            this.toast.classList.remove("hidden");
 
-        if (!request) {
-            createToast("That join request could not be found.", "warning");
-            return;
+            window.clearTimeout(this.toastTimer);
+            this.toastTimer = window.setTimeout(() => {
+                this.toast.classList.add("hidden");
+            }, 2200);
         }
+    };
 
-        const approvedMembers = loadApprovedMembers();
-        approvedMembers.unshift({
-            id: request.id,
-            name: request.name,
-            role: request.role,
-            status: "Active",
-            joined: "Approved today",
-            phone: request.phone,
-            contributionsConsistency: 72,
-            repaymentHistory: 70,
-            badges: ["New Member"],
-            groupName: request.groupName || localStorage.getItem("chama_group_name") || "My Chama",
-            groupType: request.groupType || localStorage.getItem("chama_group_type") || ""
-        });
-        saveApprovedMembers(approvedMembers);
-        saveJoinRequests(requests.filter(function (item) {
-            return String(item.id) !== String(requestId);
-        }));
-        createToast(request.name + " has joined the group.", "success");
-        rerenderDashboard();
-    }
-
-    function observeReveals() {
-        const reveals = document.querySelectorAll(".reveal");
-        const revealObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("is-visible");
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12 });
-
-        reveals.forEach(function (element) {
-            revealObserver.observe(element);
-        });
-    }
-
-    function rerenderDashboard() {
-        const root = document.getElementById("app");
-        if (!root) {
-            return;
-        }
-
-        buildDashboard(root);
-        wireInteractions();
-        observeReveals();
-    }
-
-    function init() {
-        const root = document.getElementById("app");
-        if (!root) {
-            return;
-        }
-
-        buildDashboard(root);
-        wireInteractions();
-        observeReveals();
-    }
-
-    document.addEventListener("DOMContentLoaded", init);
-}());
+    DashboardApp.init();
+})();

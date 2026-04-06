@@ -1,7 +1,7 @@
 let deferredInstallPrompt = null;
 const INSTALL_RELOAD_KEY = "chamaconnect_install_reload_done";
 const SERVICE_WORKER_RESET_KEY = "chamaconnect_sw_reset_version";
-const SERVICE_WORKER_RESET_VERSION = "20260405-mobile-fix";
+const SERVICE_WORKER_RESET_VERSION = "20260406-password-toggle-showcase";
 let promptReady = false;
 
 function isIosDevice() {
@@ -159,7 +159,7 @@ function registerServiceWorker() {
     window.addEventListener("load", () => {
         const shouldResetServiceWorker = window.localStorage.getItem(SERVICE_WORKER_RESET_KEY) !== SERVICE_WORKER_RESET_VERSION;
 
-        const registerWorker = () => navigator.serviceWorker.register("./service-worker.js?v=20260405e").then((registration) => {
+        const registerWorker = () => navigator.serviceWorker.register("./service-worker.js?v=20260406e").then((registration) => {
             registration.update().catch(() => {});
 
             if (!navigator.serviceWorker.controller) {

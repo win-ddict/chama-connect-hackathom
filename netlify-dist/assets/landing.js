@@ -59,3 +59,118 @@ if (toggleButton && mobileNav) {
         }
     });
 }
+
+const marqueeTrack = document.querySelector(".partner-marquee");
+const marqueeShell = document.querySelector(".marquee-fade");
+
+if (marqueeTrack && marqueeShell) {
+    const pauseMarquee = () => {
+        marqueeTrack.style.animationPlayState = "paused";
+    };
+
+    const resumeMarquee = () => {
+        marqueeTrack.style.animationPlayState = "running";
+    };
+
+    ["mouseenter", "focusin", "touchstart", "pointerdown"].forEach((eventName) => {
+        marqueeShell.addEventListener(eventName, pauseMarquee, { passive: true });
+    });
+
+    ["mouseleave", "focusout", "touchend", "touchcancel", "pointerup", "pointercancel"].forEach((eventName) => {
+        marqueeShell.addEventListener(eventName, resumeMarquee, { passive: true });
+    });
+}
+
+const showcaseSection = document.getElementById("showcase");
+const showcaseSlides = Array.from(document.querySelectorAll("[data-showcase-slide]"));
+const showcaseCopies = Array.from(document.querySelectorAll("[data-showcase-copy]"));
+const showcaseButtons = Array.from(document.querySelectorAll("[data-showcase-target]"));
+const showcasePrev = document.querySelector("[data-showcase-prev]");
+const showcaseNext = document.querySelector("[data-showcase-next]");
+
+if (showcaseSection && showcaseSlides.length && showcaseCopies.length && showcaseButtons.length) {
+    const slideIds = showcaseSlides.map((slide) => slide.dataset.showcaseSlide);
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let activeId = (showcaseSlides.find((slide) => slide.classList.contains("is-active")) || showcaseSlides[0]).dataset.showcaseSlide;
+    let showcaseInterval = null;
+
+    function setActiveShowcase(nextId) {
+        activeId = slideIds.includes(nextId) ? nextId : slideIds[0];
+
+        showcaseSlides.forEach((slide) => {
+            const isActive = slide.dataset.showcaseSlide === activeId;
+            slide.classList.toggle("is-active", isActive);
+            slide.setAttribute("aria-hidden", String(!isActive));
+        });
+
+        showcaseCopies.forEach((copy) => {
+            const isActive = copy.dataset.showcaseCopy === activeId;
+            copy.classList.toggle("is-active", isActive);
+            copy.setAttribute("aria-hidden", String(!isActive));
+        });
+
+        showcaseButtons.forEach((button) => {
+            const isActive = button.dataset.showcaseTarget === activeId;
+            button.classList.toggle("is-active", isActive);
+            button.setAttribute("aria-pressed", String(isActive));
+        });
+    }
+
+    function advanceShowcase(step) {
+        const currentIndex = Math.max(0, slideIds.indexOf(activeId));
+        const nextIndex = (currentIndex + step + slideIds.length) % slideIds.length;
+        setActiveShowcase(slideIds[nextIndex]);
+    }
+
+    function stopShowcaseAutoplay() {
+        if (showcaseInterval) {
+            window.clearInterval(showcaseInterval);
+            showcaseInterval = null;
+        }
+    }
+
+    function startShowcaseAutoplay() {
+        stopShowcaseAutoplay();
+
+        if (prefersReducedMotion) {
+            return;
+        }
+
+        showcaseInterval = window.setInterval(() => {
+            advanceShowcase(1);
+        }, 6500);
+    }
+
+    showcaseButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const nextId = button.dataset.showcaseTarget;
+            setActiveShowcase(nextId);
+
+            if (button.closest(".partner-strip")) {
+                showcaseSection.scrollIntoView({
+                    behavior: prefersReducedMotion ? "auto" : "smooth",
+                    block: "start"
+                });
+            }
+        });
+    });
+
+    if (showcasePrev) {
+        showcasePrev.addEventListener("click", () => advanceShowcase(-1));
+    }
+
+    if (showcaseNext) {
+        showcaseNext.addEventListener("click", () => advanceShowcase(1));
+    }
+
+    ["mouseenter", "focusin", "touchstart", "pointerdown"].forEach((eventName) => {
+        showcaseSection.addEventListener(eventName, stopShowcaseAutoplay, { passive: true });
+    });
+
+    ["mouseleave", "focusout", "touchend", "touchcancel", "pointerup", "pointercancel"].forEach((eventName) => {
+        showcaseSection.addEventListener(eventName, startShowcaseAutoplay, { passive: true });
+    });
+
+    setActiveShowcase(activeId);
+    startShowcaseAutoplay();
+}

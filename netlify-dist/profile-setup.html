@@ -35,7 +35,7 @@
             }
         };
     </script>
-    <link rel="stylesheet" href="assets/site.css">
+    <link rel="stylesheet" href="assets/site.css?v=20260406f">
 </head>
 <body class="font-body text-ink">
     <div class="journey-particle journey-particle-one"></div>
@@ -78,17 +78,17 @@
                     <article class="rounded-[1.6rem] border border-white/10 bg-white/10 p-5 backdrop-blur-xl">
                         <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-300">Registered groups</p>
                         <p id="registered-group-count" class="mt-3 font-display text-4xl font-bold text-white">0</p>
-                        <p class="mt-2 text-sm leading-7 text-slate-300">Groups you have set up yourself.</p>
+                        <p class="mt-2 text-sm leading-7 text-slate-300">Groups you created.</p>
                     </article>
                     <article class="rounded-[1.6rem] border border-white/10 bg-white/10 p-5 backdrop-blur-xl">
                         <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-300">Member groups</p>
                         <p id="member-group-count" class="mt-3 font-display text-4xl font-bold text-white">0</p>
-                        <p class="mt-2 text-sm leading-7 text-slate-300">Groups where you already belong as a member.</p>
+                        <p class="mt-2 text-sm leading-7 text-slate-300">Groups you belong to.</p>
                     </article>
                     <article id="selected-group-summary" class="rounded-[1.6rem] border border-white/10 bg-white/10 p-5 backdrop-blur-xl">
                         <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-300">Selected type</p>
                         <p id="selected-group-type-text" class="mt-3 font-display text-2xl font-bold text-white">Choose a type</p>
-                        <p id="selected-group-context-text" class="mt-2 text-sm leading-7 text-slate-300">Use the tabs below to create a new group or join one in this same type.</p>
+                        <p id="selected-group-context-text" class="mt-2 text-sm leading-7 text-slate-300">Create new or join this type.</p>
                     </article>
                 </div>
 
@@ -100,19 +100,19 @@
                                     <p class="text-sm font-bold uppercase tracking-[0.22em] text-brand-700">Step 2</p>
                                     <h2 class="mt-3 font-display text-3xl font-bold text-white">Continue inside this group type</h2>
                                 </div>
-                                <p class="text-sm leading-7 text-slate-300">Create a new group or join an existing one in the selected category. Names can repeat across different types, but not inside the same type.</p>
+                                <p class="text-sm leading-7 text-slate-300">Create or join in this category.</p>
                             </div>
 
                             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
                                 <button id="setup-mode-tab-create" type="button" class="auth-submit sm:flex-1">Create New Group</button>
-                                <button id="setup-mode-tab-join" type="button" class="auth-secondary-button sm:flex-1">Join Existing Group</button>
+                                <button id="setup-mode-tab-join" type="button" class="auth-secondary-button sm:flex-1">Join This Group Type</button>
                             </div>
 
                             <div id="create-group-panel" class="mt-8">
                                 <div class="rounded-[1.6rem] border border-white/10 bg-white/5 p-5">
-                                    <p id="create-panel-kicker" class="text-xs font-bold uppercase tracking-[0.22em] text-brand-300">Create a new group</p>
+                                    <p id="create-panel-kicker" class="text-xs font-bold uppercase tracking-[0.22em] text-brand-300">Create inside this type</p>
                                     <h3 id="create-panel-title" class="mt-3 font-display text-2xl font-bold text-white">Register this group type</h3>
-                                    <p id="create-panel-copy" class="mt-2 text-sm leading-7 text-slate-300">Enter the group name and the person responsible for starting it.</p>
+                                    <p id="create-panel-copy" class="mt-2 text-sm leading-7 text-slate-300">Add the group and lead contact.</p>
                                 </div>
 
                                 <form id="create-group-form" class="mt-6 space-y-5">
@@ -153,6 +153,49 @@
                                         </div>
                                     </div>
 
+                                    <div id="create-chairman-password-panel" class="hidden rounded-[1.35rem] border border-amber-400/30 bg-amber-400/10 p-4">
+                                        <p class="text-sm font-bold uppercase tracking-[0.2em] text-amber-100">Chairman password</p>
+                                        <p class="mt-2 text-sm leading-7 text-amber-50">Set the first chairman password now.</p>
+                                        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                                            <div>
+                                                <label for="create-chairman-password" class="auth-label">New chairman password</label>
+                                                <div class="password-field">
+                                                    <input id="create-chairman-password" name="chairmanPassword" type="password" placeholder="Create a secure password" class="auth-input" autocomplete="new-password">
+                                                    <button type="button" class="password-toggle" data-password-toggle="create-chairman-password" aria-label="Show password" aria-pressed="false">
+                                                        <svg class="password-toggle-icon password-toggle-icon-show" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="M2.04 12.32a1.01 1.01 0 0 1 0-.64C3.42 7.51 7.36 4.5 12 4.5s8.58 3.01 9.96 7.18c.07.21.07.43 0 .64C20.58 16.49 16.64 19.5 12 19.5S3.42 16.49 2.04 12.32Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                        </svg>
+                                                        <svg class="password-toggle-icon password-toggle-icon-hide" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="M3 3l18 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M10.58 10.58A3 3 0 0 0 12 15a2.99 2.99 0 0 0 2.42-1.22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M9.88 5.09A10.94 10.94 0 0 1 12 4.5c4.64 0 8.58 3.01 9.96 7.18.07.21.07.43 0 .64a11.8 11.8 0 0 1-4.27 5.57" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M6.61 6.61A11.83 11.83 0 0 0 2.04 11.68a1.01 1.01 0 0 0 0 .64C3.42 16.49 7.36 19.5 12 19.5c1.38 0 2.69-.27 3.88-.76" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label for="create-chairman-password-confirm" class="auth-label">Confirm password</label>
+                                                <div class="password-field">
+                                                    <input id="create-chairman-password-confirm" name="chairmanPasswordConfirm" type="password" placeholder="Repeat the password" class="auth-input" autocomplete="new-password">
+                                                    <button type="button" class="password-toggle" data-password-toggle="create-chairman-password-confirm" aria-label="Show password" aria-pressed="false">
+                                                        <svg class="password-toggle-icon password-toggle-icon-show" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="M2.04 12.32a1.01 1.01 0 0 1 0-.64C3.42 7.51 7.36 4.5 12 4.5s8.58 3.01 9.96 7.18c.07.21.07.43 0 .64C20.58 16.49 16.64 19.5 12 19.5S3.42 16.49 2.04 12.32Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                        </svg>
+                                                        <svg class="password-toggle-icon password-toggle-icon-hide" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="M3 3l18 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M10.58 10.58A3 3 0 0 0 12 15a2.99 2.99 0 0 0 2.42-1.22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M9.88 5.09A10.94 10.94 0 0 1 12 4.5c4.64 0 8.58 3.01 9.96 7.18.07.21.07.43 0 .64a11.8 11.8 0 0 1-4.27 5.57" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M6.61 6.61A11.83 11.83 0 0 0 2.04 11.68a1.01 1.01 0 0 0 0 .64C3.42 16.49 7.36 19.5 12 19.5c1.38 0 2.69-.27 3.88-.76" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div id="create-feedback" class="auth-feedback" role="status" aria-live="polite">
                                         Enter the group and leader details to continue.
                                     </div>
@@ -165,9 +208,9 @@
 
                             <div id="join-group-panel" class="mt-8 hidden">
                                 <div class="rounded-[1.6rem] border border-white/10 bg-white/5 p-5">
-                                    <p id="join-panel-kicker" class="text-xs font-bold uppercase tracking-[0.22em] text-brand-300">Join an existing group</p>
+                                    <p id="join-panel-kicker" class="text-xs font-bold uppercase tracking-[0.22em] text-brand-300">Join inside this type</p>
                                     <h3 id="join-panel-title" class="mt-3 font-display text-2xl font-bold text-white">Find the group inside this type</h3>
-                                    <p id="join-panel-copy" class="mt-2 text-sm leading-7 text-slate-300">You can only join a group from the selected category on this page.</p>
+                                    <p id="join-panel-copy" class="mt-2 text-sm leading-7 text-slate-300">Join a group in this type only.</p>
                                 </div>
 
                                 <div class="mt-6 space-y-5">
@@ -178,16 +221,16 @@
 
                                     <div class="flex flex-col gap-3 sm:flex-row">
                                         <button id="check-join-group" type="button" class="auth-submit">Check Group</button>
-                                        <button id="clear-join-group" type="button" class="auth-secondary-button">Clear</button>
+                                        <button id="clear-join-group" type="button" class="auth-secondary-button">Clear search</button>
                                     </div>
 
                                     <div id="join-feedback" class="auth-feedback" role="status" aria-live="polite">
-                                        Enter the group name to check whether it exists in the selected group type.
+                                        Search for the exact group name inside the selected group type.
                                     </div>
 
                                     <div id="join-details-panel" class="hidden rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
                                         <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-300">Your details</p>
-                                        <p class="mt-2 text-sm leading-7 text-slate-300">If your details already match an approved member in this group, you will continue straight into the workspace. Otherwise, your request will be sent for approval.</p>
+                                        <p class="mt-2 text-sm leading-7 text-slate-300">Match found? You enter. If not, a request is sent.</p>
                                         <div class="mt-5 grid gap-4">
                                             <div>
                                                 <label for="join-full-name" class="auth-label">Full name</label>
@@ -222,7 +265,21 @@
                                             </div>
                                             <div id="join-chairman-password-panel" class="hidden rounded-[1.35rem] border border-amber-400/30 bg-amber-400/10 p-4">
                                                 <label for="join-chairman-password" class="auth-label">Chairman password</label>
-                                                <input id="join-chairman-password" type="password" placeholder="Enter default chairman password" class="auth-input">
+                                                <div class="password-field">
+                                                    <input id="join-chairman-password" type="password" placeholder="Enter default chairman password" class="auth-input">
+                                                    <button type="button" class="password-toggle" data-password-toggle="join-chairman-password" aria-label="Show password" aria-pressed="false">
+                                                        <svg class="password-toggle-icon password-toggle-icon-show" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="M2.04 12.32a1.01 1.01 0 0 1 0-.64C3.42 7.51 7.36 4.5 12 4.5s8.58 3.01 9.96 7.18c.07.21.07.43 0 .64C20.58 16.49 16.64 19.5 12 19.5S3.42 16.49 2.04 12.32Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                        </svg>
+                                                        <svg class="password-toggle-icon password-toggle-icon-hide" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="M3 3l18 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M10.58 10.58A3 3 0 0 0 12 15a2.99 2.99 0 0 0 2.42-1.22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M9.88 5.09A10.94 10.94 0 0 1 12 4.5c4.64 0 8.58 3.01 9.96 7.18.07.21.07.43 0 .64a11.8 11.8 0 0 1-4.27 5.57" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                            <path d="M6.61 6.61A11.83 11.83 0 0 0 2.04 11.68a1.01 1.01 0 0 0 0 .64C3.42 16.49 7.36 19.5 12 19.5c1.38 0 2.69-.27 3.88-.76" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
                                                 <p class="mt-2 text-xs leading-6 text-amber-100">If this group type has no chairman in this group yet, enter <strong class="text-white">password123</strong>.</p>
                                             </div>
                                             <div>
@@ -269,6 +326,36 @@
 
     <script>
         const reveals = document.querySelectorAll(".reveal");
+        function initializePasswordToggles(scope = document) {
+            scope.querySelectorAll("[data-password-toggle]").forEach((button) => {
+                if (button.dataset.passwordToggleReady === "true") {
+                    return;
+                }
+
+                const input = document.getElementById(button.dataset.passwordToggle);
+
+                if (!input) {
+                    return;
+                }
+
+                const syncPasswordToggle = () => {
+                    const isVisible = input.type === "text";
+                    button.classList.toggle("is-active", isVisible);
+                    button.setAttribute("aria-pressed", String(isVisible));
+                    button.setAttribute("aria-label", isVisible ? "Hide password" : "Show password");
+                };
+
+                button.addEventListener("click", () => {
+                    const isVisible = input.type === "text";
+                    input.type = isVisible ? "password" : "text";
+                    syncPasswordToggle();
+                    input.focus({ preventScroll: true });
+                });
+
+                button.dataset.passwordToggleReady = "true";
+                syncPasswordToggle();
+            });
+        }
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -279,6 +366,7 @@
         }, { threshold: 0.14 });
 
         reveals.forEach((element) => revealObserver.observe(element));
+        initializePasswordToggles();
     </script>
     <script type="module">
         import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -291,112 +379,124 @@
                 label: "SACCO",
                 eyebrow: "Formal savings",
                 headline: "Build or join a disciplined SACCO workspace.",
-                description: "This page is shaped for SACCOs with structured leadership, stronger accountability, and records that need to stay clear from day one.",
+                description: "Structured setup for SACCO records.",
                 introBackground: "radial-gradient(circle at top left, rgba(45, 212, 191, 0.24), transparent 24%), radial-gradient(circle at top right, rgba(34, 197, 94, 0.16), transparent 22%), linear-gradient(145deg, #042f2e 0%, #082f49 45%, #052e16 100%)",
                 showcaseImage: "images/groups/2151463145.jpg",
                 showcaseAlt: "SACCO members reviewing progress together",
                 showcaseKicker: "SACCO structure",
                 showcaseTitle: "Records first",
-                showcaseCopy: "Use this page to register a SACCO or join an existing SACCO without mixing it up with the other group types.",
+                showcaseCopy: "Create or join a SACCO here.",
+                groupPlaceholder: "Baraka SACCO",
+                searchPlaceholder: "Enter existing SACCO name",
+                checkButtonLabel: "Check SACCO",
                 createTitle: "Register a SACCO",
-                createCopy: "Use the SACCO name and the primary leader details to create the new workspace.",
+                createCopy: "Add the SACCO name and lead contact.",
                 joinTitle: "Join an existing SACCO",
-                joinCopy: "Search only inside SACCO groups, then continue with your member details.",
+                joinCopy: "Search SACCOs, then add your details.",
                 pointsTitle: "What makes a SACCO different",
                 points: [
-                    "Formal leadership roles and stronger governance expectations.",
-                    "Clear recurring contributions and more structured records.",
-                    "A good fit for serious savings groups with steady reporting."
+                    "Formal leadership.",
+                    "Clear records.",
+                    "Good for steady reporting."
                 ],
                 tipsTitle: "SACCO setup tips",
                 tips: [
-                    "Use the official SACCO name so members can find the right group.",
-                    "Keep the chairman and treasurer phone numbers up to date from the start.",
-                    "If a SACCO already exists, join it from the Join Existing Group tab instead of creating a duplicate."
+                    "Use the official name.",
+                    "Keep lead contacts correct.",
+                    "Join instead of duplicating."
                 ]
             },
             rosca: {
                 label: "Rotating Savings (Merry-go-round)",
                 eyebrow: "Rotating cycle",
                 headline: "Start or join a Rotating Savings (Merry-go-round) group.",
-                description: "This version is styled for merry-go-round groups where money rotates in turns and the order of payouts matters just as much as the member list.",
+                description: "Built for rotating savings groups.",
                 introBackground: "radial-gradient(circle at top left, rgba(251, 146, 60, 0.28), transparent 24%), radial-gradient(circle at top right, rgba(251, 191, 36, 0.18), transparent 22%), linear-gradient(145deg, #431407 0%, #7c2d12 45%, #1e293b 100%)",
                 showcaseImage: "images/groups/14354.jpg",
                 showcaseAlt: "Members in a rotating savings group",
                 showcaseKicker: "Merry-go-round flow",
                 showcaseTitle: "Contribution turns",
-                showcaseCopy: "Create or join a merry-go-round group where the cycle order and pooled payouts stay easy to follow.",
+                showcaseCopy: "Track turns and payouts here.",
+                groupPlaceholder: "Twende Merry-go-round",
+                searchPlaceholder: "Enter existing merry-go-round name",
+                checkButtonLabel: "Check merry-go-round",
                 createTitle: "Create a merry-go-round group",
-                createCopy: "Register the rotating savings group name and save the contact details of the person leading it.",
+                createCopy: "Add the group name and lead contact.",
                 joinTitle: "Join a merry-go-round group",
-                joinCopy: "Search within Rotating Savings (Merry-go-round) only, then continue with your member details.",
+                joinCopy: "Search this type, then add your details.",
                 pointsTitle: "What makes a merry-go-round different",
                 points: [
-                    "Members contribute in rounds and receive payouts in turns.",
-                    "The name can repeat in another type, but not inside the merry-go-round category.",
-                    "This page is tuned for circular contribution groups and payout rotations."
+                    "Round-based contributions.",
+                    "Turn-based payouts.",
+                    "Type-specific name matching."
                 ],
                 tipsTitle: "Merry-go-round tips",
                 tips: [
-                    "Name the group the same way members already know it in the rotation list.",
-                    "Confirm the right phone number for reminder messages before the first payout cycle.",
-                    "Keep the role list simple so the payout order stays easy to manage."
+                    "Use the name members know.",
+                    "Check reminder phone numbers.",
+                    "Keep roles simple."
                 ]
             },
             table_banking: {
                 label: "Table Banking",
                 eyebrow: "Meeting collections",
                 headline: "Create or join a Table Banking group.",
-                description: "This setup leans into meeting-day collection, in-session lending, and a warmer, practical rhythm for groups that reconcile together around the table.",
+                description: "Built for meeting-day collections.",
                 introBackground: "radial-gradient(circle at top left, rgba(250, 204, 21, 0.26), transparent 24%), radial-gradient(circle at top right, rgba(249, 115, 22, 0.18), transparent 22%), linear-gradient(145deg, #3f2d06 0%, #713f12 45%, #111827 100%)",
                 showcaseImage: "images/groups/15846.jpg",
                 showcaseAlt: "Table banking members together",
                 showcaseKicker: "Meeting-ready",
                 showcaseTitle: "Collections at the table",
-                showcaseCopy: "Register or join the exact Table Banking group you need without confusing it with the other categories.",
+                showcaseCopy: "Find the right Table Banking group fast.",
+                groupPlaceholder: "Friday Table Banking",
+                searchPlaceholder: "Enter existing Table Banking name",
+                checkButtonLabel: "Check Table Banking",
                 createTitle: "Create a Table Banking group",
-                createCopy: "Save the group name and meeting contact details before the first session starts.",
+                createCopy: "Add the group name and meeting contact.",
                 joinTitle: "Join a Table Banking group",
-                joinCopy: "Check the exact Table Banking name, then continue as a member or office bearer.",
+                joinCopy: "Find the name, then join.",
                 pointsTitle: "What makes Table Banking different",
                 points: [
-                    "Built around meeting-day collections and immediate lending decisions.",
-                    "Useful for groups that reconcile face to face after each sitting.",
-                    "Designed for faster review of names, roles, and phone contacts."
+                    "Built for meeting day.",
+                    "Good for face-to-face groups.",
+                    "Fast role and contact review."
                 ],
                 tipsTitle: "Table Banking tips",
                 tips: [
-                    "Use the same group name members say aloud during meetings.",
-                    "Record the main role correctly so reminders and accountability stay clear.",
-                    "If the name already exists in Table Banking, join it instead of creating a copy."
+                    "Use the spoken group name.",
+                    "Set the right lead role.",
+                    "Join instead of copying."
                 ]
             },
             women_group: {
                 label: "Women-led Group",
                 eyebrow: "Women-led community",
                 headline: "Create or join a Women-led Group space with a warmer community feel.",
-                description: "This page uses a softer women-led theme, stronger community cues, and visuals focused on women because the workspace should feel like the group it is built for.",
+                description: "Warm setup for women-led groups.",
                 introBackground: "radial-gradient(circle at top left, rgba(244, 114, 182, 0.28), transparent 24%), radial-gradient(circle at top right, rgba(251, 113, 133, 0.18), transparent 22%), linear-gradient(145deg, #4a044e 0%, #831843 45%, #172554 100%)",
                 showcaseImage: "images/womenof.svg",
                 showcaseAlt: "Women-led group illustration",
                 showcaseKicker: "Women-led focus",
                 showcaseTitle: "Community first",
-                showcaseCopy: "Create or join a women-led group with visuals and guidance that feel closer to the people it serves.",
+                showcaseCopy: "Create or join a women-led group here.",
+                groupPlaceholder: "Umoja Women Group",
+                searchPlaceholder: "Enter existing Women-led Group name",
+                checkButtonLabel: "Check Women-led Group",
                 createTitle: "Create a Women-led Group",
-                createCopy: "Use the group name and the lead member details to open the workspace for this women-led circle.",
+                createCopy: "Add the group name and lead member.",
                 joinTitle: "Join a Women-led Group",
-                joinCopy: "Search inside Women-led Group only, then continue with your details to join the right community.",
+                joinCopy: "Search this type, then join.",
                 pointsTitle: "What makes this women-led page different",
                 points: [
-                    "Women-led visuals and warmer presentation across the page.",
-                    "Great for community groups that value trust, participation, and visibility.",
-                    "The same group name can still be used in another type without clashing here."
+                    "Warmer visuals.",
+                    "Community-first feel.",
+                    "Type-specific name rule."
                 ],
                 tipsTitle: "Women-led Group tips",
                 tips: [
-                    "Use the exact group name members already recognize in the community.",
-                    "Keep the lead contact details accurate so invitations and reminders reach the right person.",
-                    "If the name exists in Women-led Group, join it here instead of creating a second copy."
+                    "Use the known group name.",
+                    "Keep lead contact details right.",
+                    "Join instead of duplicating."
                 ]
             }
         };
@@ -405,17 +505,20 @@
             label: "Selected Group",
             eyebrow: "Group setup",
             headline: "Create a group or join one that already exists.",
-            description: "Choose how you want to continue inside the selected group type.",
+            description: "Choose how to continue.",
             introBackground: "radial-gradient(circle at top left, rgba(59, 130, 246, 0.22), transparent 22%), radial-gradient(circle at top right, rgba(16, 185, 129, 0.18), transparent 24%), linear-gradient(145deg, #050813 0%, #0b1728 50%, #0d4026 100%)",
             showcaseImage: "images/groups/2151463145.jpg",
             showcaseAlt: "Selected group type showcase",
             showcaseKicker: "Selected group",
             showcaseTitle: "Choose a type",
-            showcaseCopy: "The next actions on this page will match the group type you selected.",
+            showcaseCopy: "This page matches your selected type.",
+            groupPlaceholder: "My Chama",
+            searchPlaceholder: "Enter existing group name",
+            checkButtonLabel: "Check Group",
             createTitle: "Create a new group",
-            createCopy: "Enter the group and leader details to continue.",
-            joinTitle: "Join an existing group",
-            joinCopy: "Search for the group name inside the selected type, then continue with your details.",
+            createCopy: "Add group and lead details.",
+            joinTitle: "Join this group type",
+            joinCopy: "Search the group name, then continue.",
             pointsTitle: "What makes this type different",
             points: ["Choose a group type to load tailored guidance."],
             tipsTitle: "Type-specific setup tips",
@@ -428,7 +531,9 @@
             approvedMembers: "chamaApprovedMembers",
             userLinks: "chama_user_group_links",
             pendingGroupType: "chama_pending_group_type",
-            pendingGroupLabel: "chama_pending_group_type_label"
+            pendingGroupLabel: "chama_pending_group_type_label",
+            pendingGroupMode: "chama_pending_group_mode",
+            chairmanPasswordStates: "chama_chairman_password_states"
         };
 
         const DEFAULT_CHAIRMAN_PASSWORD = "password123";
@@ -446,6 +551,8 @@
         const joinModeButton = document.getElementById("setup-mode-tab-join");
         const createPanel = document.getElementById("create-group-panel");
         const joinPanel = document.getElementById("join-group-panel");
+        const createPanelKicker = document.getElementById("create-panel-kicker");
+        const joinPanelKicker = document.getElementById("join-panel-kicker");
         const createPanelTitle = document.getElementById("create-panel-title");
         const createPanelCopy = document.getElementById("create-panel-copy");
         const joinPanelTitle = document.getElementById("join-panel-title");
@@ -454,6 +561,9 @@
         const createOrganizationNameInput = document.getElementById("create-organization-name");
         const createFullNameInput = document.getElementById("create-full-name");
         const createRoleInput = document.getElementById("create-role");
+        const createChairmanPasswordPanel = document.getElementById("create-chairman-password-panel");
+        const createChairmanPasswordInput = document.getElementById("create-chairman-password");
+        const createChairmanPasswordConfirmInput = document.getElementById("create-chairman-password-confirm");
         const createCountryCodeInput = document.getElementById("create-country-code");
         const createPhoneInput = document.getElementById("create-phone-number");
         const createFeedback = document.getElementById("create-feedback");
@@ -518,6 +628,35 @@
             return labels[groupType] || groupType;
         }
 
+        function normalizeRole(role = "") {
+            const normalized = normalizeName(role);
+            const aliases = {
+                chairperson: "chairman"
+            };
+            const resolvedRole = aliases[normalized] || normalized;
+
+            if (["chairman", "treasurer", "member", "secretary"].includes(resolvedRole)) {
+                return resolvedRole;
+            }
+
+            return "";
+        }
+
+        function humanizeRole(role = "") {
+            const labels = {
+                chairman: "Chairman",
+                treasurer: "Treasurer",
+                member: "Member",
+                secretary: "Secretary"
+            };
+
+            return labels[normalizeRole(role)] || "";
+        }
+
+        function normalizeMode(mode = "") {
+            return String(mode || "").trim().toLowerCase() === "join" ? "join" : "create";
+        }
+
         function sameGroupContext(leftName, leftType, rightName, rightType) {
             if (normalizeName(leftName) !== normalizeName(rightName)) {
                 return false;
@@ -539,6 +678,19 @@
         }
 
         function saveJson(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+
+        function loadStoredObject(key) {
+            try {
+                const parsed = JSON.parse(localStorage.getItem(key) || "{}");
+                return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+            } catch (error) {
+                return {};
+            }
+        }
+
+        function saveStoredObject(key, value) {
             localStorage.setItem(key, JSON.stringify(value));
         }
 
@@ -570,9 +722,29 @@
             saveJson(STORAGE_KEYS.userLinks, links);
         }
 
+        function getGroupContextKey(groupContext) {
+            return `${normalizeGroupType(groupContext.groupType)}::${normalizeName(groupContext.name)}`;
+        }
+
+        function saveChairmanPasswordState(groupContext, nextState) {
+            if (!groupContext?.name || !groupContext?.groupType) {
+                return;
+            }
+
+            const states = loadStoredObject(STORAGE_KEYS.chairmanPasswordStates);
+            const stateKey = getGroupContextKey(groupContext);
+            states[stateKey] = {
+                groupName: groupContext.name,
+                groupType: normalizeGroupType(groupContext.groupType),
+                changedAt: nextState?.changedAt || null
+            };
+            saveStoredObject(STORAGE_KEYS.chairmanPasswordStates, states);
+        }
+
         function clearPendingGroupSelection() {
             localStorage.removeItem(STORAGE_KEYS.pendingGroupType);
             localStorage.removeItem(STORAGE_KEYS.pendingGroupLabel);
+            localStorage.removeItem(STORAGE_KEYS.pendingGroupMode);
         }
 
         function setFeedback(target, message, variant = "info") {
@@ -630,7 +802,7 @@
             nextItem.name = group.name;
             nextItem.groupType = group.groupType;
             nextItem.groupLabel = group.groupLabel || humanizeGroupType(group.groupType);
-            nextItem.role = flags.role || nextItem.role || "";
+            nextItem.role = humanizeRole(flags.role) || humanizeRole(nextItem.role) || nextItem.role || "";
             nextItem.registered = Boolean(nextItem.registered || flags.registered);
             nextItem.member = Boolean(nextItem.member || flags.member);
             nextItem.updatedAt = new Date().toISOString();
@@ -666,7 +838,7 @@
             const currentGroupName = (localStorage.getItem("chama_group_name") || "").trim();
             const currentGroupType = normalizeGroupType(localStorage.getItem("chama_group_type") || "");
             const currentGroupLabel = (localStorage.getItem("chama_group_type_label") || "").trim();
-            const currentRole = (localStorage.getItem("chama_profile_role") || "").trim();
+            const currentRole = humanizeRole(localStorage.getItem("chama_profile_role") || "");
 
             if (!currentGroupName || !currentGroupType) {
                 return;
@@ -705,7 +877,11 @@
             || localStorage.getItem("chama_group_type_label")
             || humanizeGroupType(activeGroupType)
         ).trim();
-        let activeMode = "create";
+        let activeMode = normalizeMode(
+            urlParams.get("mode")
+            || localStorage.getItem(STORAGE_KEYS.pendingGroupMode)
+            || "create"
+        );
         let matchedJoinGroup = null;
 
         function getActiveTheme() {
@@ -724,10 +900,16 @@
             selectedGroupContextText.textContent = activeMode === "create"
                 ? `Create a new ${theme.label} and save the lead contact details here.`
                 : `Join an existing ${theme.label} using the exact group name in this same category.`;
+            createPanelKicker.textContent = `Create a ${theme.label}`;
+            joinPanelKicker.textContent = `Join a ${theme.label}`;
             createPanelTitle.textContent = theme.createTitle;
             createPanelCopy.textContent = theme.createCopy;
             joinPanelTitle.textContent = theme.joinTitle;
             joinPanelCopy.textContent = theme.joinCopy;
+            createOrganizationNameInput.placeholder = theme.groupPlaceholder || "My Chama";
+            joinGroupNameInput.placeholder = theme.searchPlaceholder || "Enter existing group name";
+            joinCheckButton.textContent = theme.checkButtonLabel || "Check Group";
+            joinClearButton.textContent = "Clear search";
             showcaseImage.src = theme.showcaseImage;
             showcaseImage.alt = theme.showcaseAlt;
             showcaseKicker.textContent = theme.showcaseKicker;
@@ -742,8 +924,8 @@
         }
 
         function setActiveMode(mode) {
-            activeMode = mode;
-            const isCreate = mode === "create";
+            activeMode = normalizeMode(mode);
+            const isCreate = activeMode === "create";
 
             createPanel.classList.toggle("hidden", !isCreate);
             joinPanel.classList.toggle("hidden", isCreate);
@@ -751,6 +933,7 @@
             joinModeButton.className = isCreate ? "auth-secondary-button sm:flex-1" : "auth-submit sm:flex-1";
 
             applyTheme();
+            localStorage.setItem(STORAGE_KEYS.pendingGroupMode, activeMode);
 
             if (activeGroupType) {
                 const theme = getActiveTheme();
@@ -780,7 +963,7 @@
 
         function prefillFromLocalStorage() {
             const storedFullName = (localStorage.getItem("chama_profile_name") || "").trim();
-            const storedRole = (localStorage.getItem("chama_profile_role") || "").trim();
+            const storedRole = humanizeRole(localStorage.getItem("chama_profile_role") || "");
             const storedPhone = (localStorage.getItem("chama_profile_phone") || "").trim();
 
             if (storedFullName) {
@@ -848,8 +1031,9 @@
             }
 
             if (user.user_metadata?.role) {
-                createRoleInput.value = createRoleInput.value || String(user.user_metadata.role);
-                joinRoleInput.value = joinRoleInput.value || String(user.user_metadata.role);
+                const profileRole = humanizeRole(user.user_metadata.role);
+                createRoleInput.value = createRoleInput.value || profileRole;
+                joinRoleInput.value = joinRoleInput.value || profileRole;
             }
 
             const { data } = await supabase
@@ -864,8 +1048,9 @@
             }
 
             if (data?.role) {
-                createRoleInput.value = createRoleInput.value || data.role;
-                joinRoleInput.value = joinRoleInput.value || data.role;
+                const profileRole = humanizeRole(data.role);
+                createRoleInput.value = createRoleInput.value || profileRole;
+                joinRoleInput.value = joinRoleInput.value || profileRole;
             }
 
             if (data?.phone_number) {
@@ -1036,6 +1221,8 @@
         }
 
         async function submitJoinRequest(group, fullName, phoneNumber, role, referralName) {
+            const displayRole = humanizeRole(role) || role;
+
             if (supabase) {
                 const {
                     data: { user }
@@ -1048,7 +1235,7 @@
                         requester_id: user?.id || null,
                         full_name: fullName,
                         phone_number: phoneNumber,
-                        requested_role: role,
+                        requested_role: displayRole,
                         referral_name: referralName || null,
                         status: "pending"
                     });
@@ -1062,7 +1249,7 @@
                     id: Date.now(),
                     name: fullName,
                     phone: phoneNumber,
-                    role: role,
+                    role: displayRole,
                     referral: referralName,
                     status: "Pending",
                     requestedAt: new Date().toISOString(),
@@ -1086,9 +1273,46 @@
             }
         }
 
+        function toggleCreateChairmanPassword(show) {
+            createChairmanPasswordPanel.classList.toggle("hidden", !show);
+
+            if (!show) {
+                createChairmanPasswordInput.value = "";
+                createChairmanPasswordConfirmInput.value = "";
+            }
+        }
+
         joinRoleInput.addEventListener("change", () => {
             toggleJoinChairmanPassword(joinRoleInput.value.trim().toLowerCase() === "chairman");
         });
+
+        createRoleInput.addEventListener("change", () => {
+            toggleCreateChairmanPassword(normalizeRole(createRoleInput.value) === "chairman");
+        });
+
+        async function setChairmanPassword(groupContext, password) {
+            if (!password) {
+                return new Error("Enter a chairman password before continuing.");
+            }
+
+            if (supabase) {
+                const { error } = await supabase.rpc("change_chairman_password", {
+                    target_group_name: groupContext.name,
+                    target_group_type: groupContext.groupType,
+                    new_password: password
+                });
+
+                if (error) {
+                    return error;
+                }
+            }
+
+            saveChairmanPasswordState(groupContext, {
+                changedAt: new Date().toISOString()
+            });
+
+            return null;
+        }
 
         async function persistProfileDetails(fullName, role, formattedPhoneNumber, groupContext) {
             if (!supabase) {
@@ -1103,6 +1327,18 @@
                 return new Error("Your session has expired. Please sign in again.");
             }
 
+            const normalizedRole = normalizeRole(role);
+
+            if (!normalizedRole) {
+                return new Error("Please choose a valid role before continuing.");
+            }
+
+            const roleCandidates = [...new Set([
+                normalizedRole,
+                humanizeRole(role),
+                String(role || "").trim()
+            ].filter(Boolean))];
+
             const nameParts = fullName.split(/\s+/).filter(Boolean);
             const firstName = nameParts.shift() || "";
             const lastName = nameParts.join(" ");
@@ -1112,22 +1348,41 @@
                 full_name: fullName,
                 first_name: firstName,
                 last_name: lastName,
-                role,
+                role: normalizedRole,
                 phone_number: formattedPhoneNumber,
                 group_name: groupContext.name,
                 group_type: groupContext.groupType
             };
 
-            const { error } = await supabase
-                .from("profiles")
-                .upsert(payload, { onConflict: "id" });
+            let lastError = null;
 
-            return error || null;
+            for (const roleValue of roleCandidates) {
+                const { error } = await supabase
+                    .from("profiles")
+                    .upsert({
+                        ...payload,
+                        role: roleValue
+                    }, { onConflict: "id" });
+
+                if (!error) {
+                    return null;
+                }
+
+                lastError = error;
+
+                if (!String(error.message || "").includes("profiles_role_check")) {
+                    break;
+                }
+            }
+
+            return lastError || null;
         }
 
         function saveCurrentProfileLocally(fullName, role, formattedPhoneNumber, groupContext) {
+            const displayRole = humanizeRole(role) || role;
+
             localStorage.setItem("chama_profile_name", fullName);
-            localStorage.setItem("chama_profile_role", role);
+            localStorage.setItem("chama_profile_role", displayRole);
             localStorage.setItem("chama_profile_phone", formattedPhoneNumber);
             localStorage.setItem("chama_group_name", groupContext.name);
             localStorage.setItem("chama_group_type", groupContext.groupType);
@@ -1147,10 +1402,27 @@
             const role = createRoleInput.value.trim();
             const phoneNumber = createPhoneInput.value.trim();
             const countryCode = createCountryCodeInput.value.trim();
+            const chairmanPassword = createChairmanPasswordInput.value.trim();
+            const chairmanPasswordConfirm = createChairmanPasswordConfirmInput.value.trim();
+            const wantsChairmanRole = normalizeRole(role) === "chairman";
 
             if (!groupName || !fullName || !role || !phoneNumber || !countryCode) {
                 setFeedback(createFeedback, "Please fill in the group name, full name, role, and phone number.", "error");
                 return;
+            }
+
+            if (wantsChairmanRole) {
+                if (!chairmanPassword || chairmanPassword.length < 4) {
+                    setFeedback(createFeedback, "Set a chairman password with at least 4 characters before creating the group.", "error");
+                    createChairmanPasswordInput.focus();
+                    return;
+                }
+
+                if (chairmanPassword !== chairmanPasswordConfirm) {
+                    setFeedback(createFeedback, "The chairman passwords do not match yet.", "error");
+                    createChairmanPasswordConfirmInput.focus();
+                    return;
+                }
             }
 
             const formattedPhoneNumber = formatPhoneNumber(countryCode, phoneNumber);
@@ -1177,6 +1449,21 @@
 
             saveCurrentProfileLocally(fullName, role, formattedPhoneNumber, group);
             updateUserGroupLink(group, { registered: true, member: true, role });
+
+            if (wantsChairmanRole) {
+                const chairmanPasswordError = await setChairmanPassword(group, chairmanPassword);
+
+                if (chairmanPasswordError) {
+                    saveChairmanPasswordState(group, { changedAt: null });
+                    setButtonBusy(createSubmitButton, "Creating...", false);
+                    setFeedback(createFeedback, "Your group was created, but the chairman password still needs to be changed from the dashboard. Redirecting now...", "warning");
+                    window.setTimeout(() => {
+                        window.location.href = "dashboard.html";
+                    }, 900);
+                    return;
+                }
+            }
+
             setButtonBusy(createSubmitButton, "Creating...", false);
             setFeedback(createFeedback, `${group.name} created successfully under ${group.groupLabel}. Redirecting to your dashboard...`, "success");
             window.location.href = "dashboard.html";
@@ -1228,7 +1515,7 @@
             matchedJoinGroup = null;
             toggleJoinDetails(false);
             toggleJoinChairmanPassword(false);
-            setFeedback(joinFeedback, "Enter the group name to check whether it exists in the selected type.", "info");
+            setFeedback(joinFeedback, "Search for the exact group name inside the selected type.", "info");
         });
 
         joinSubmitButton.addEventListener("click", async () => {
@@ -1317,6 +1604,7 @@
 
                         saveCurrentProfileLocally(fullName, role, formattedPhoneNumber, groupContext);
                         updateUserGroupLink(groupContext, { member: true, role });
+                        saveChairmanPasswordState(groupContext, { changedAt: null });
                         setButtonBusy(joinSubmitButton, "Working...", false);
                         setFeedback(joinFeedback, "Chairman password accepted. Redirecting to your dashboard...", "success");
                         window.location.href = "dashboard.html";
@@ -1335,10 +1623,11 @@
 
         prefillFromLocalStorage();
         await prefillProfile();
+        toggleCreateChairmanPassword(normalizeRole(createRoleInput.value) === "chairman");
         bootstrapCurrentGroupLink();
         updateGroupStatusUi();
         applyTheme();
-        setActiveMode("create");
+        setActiveMode(activeMode);
 
         if (!activeGroupType) {
             setFeedback(createFeedback, "Choose a group type first, then come back here to create or join a group.", "warning");

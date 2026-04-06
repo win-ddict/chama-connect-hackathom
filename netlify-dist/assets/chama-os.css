@@ -47,6 +47,97 @@ body {
     -webkit-backdrop-filter: blur(18px);
 }
 
+.chairman-password-card {
+    box-shadow: 0 22px 48px rgba(120, 53, 15, 0.24);
+}
+
+.chairman-password-form {
+    width: min(100%, 32rem);
+}
+
+.chairman-password-input {
+    width: 100%;
+    min-height: 3.1rem;
+    border: 1px solid rgba(251, 191, 36, 0.24);
+    border-radius: 1rem;
+    background: rgba(15, 23, 42, 0.64);
+    padding: 0.85rem 1rem;
+    color: #fff7ed;
+    outline: none;
+    transition:
+        border-color 220ms var(--ease-premium),
+        box-shadow 220ms var(--ease-premium),
+        background-color 220ms var(--ease-premium);
+}
+
+.password-field {
+    position: relative;
+}
+
+.password-field .chairman-password-input {
+    padding-right: 3.55rem;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0.55rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: rgba(254, 215, 170, 0.82);
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition:
+        background-color 220ms var(--ease-premium),
+        color 220ms var(--ease-premium);
+}
+
+.password-toggle:hover,
+.password-toggle:focus-visible,
+.password-toggle.is-active {
+    background: rgba(251, 191, 36, 0.12);
+    color: #fff7ed;
+    outline: none;
+}
+
+.password-toggle-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.password-toggle-icon-hide {
+    display: none;
+}
+
+.password-toggle.is-active .password-toggle-icon-show {
+    display: none;
+}
+
+.password-toggle.is-active .password-toggle-icon-hide {
+    display: block;
+}
+
+.chairman-password-input:focus {
+    border-color: rgba(251, 191, 36, 0.72);
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.16);
+    background: rgba(15, 23, 42, 0.78);
+}
+
+.chairman-password-input::placeholder {
+    color: rgba(254, 215, 170, 0.72);
+}
+
+.chairman-password-feedback {
+    margin: 0;
+    line-height: 1.6;
+}
+
 .glass-topbar {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 9999px;
@@ -154,6 +245,60 @@ body {
 .chat-log {
     background:
         linear-gradient(180deg, rgba(5, 10, 18, 0.96), rgba(7, 14, 24, 0.96));
+}
+
+.chat-modal {
+    padding:
+        max(0.75rem, env(safe-area-inset-top))
+        max(0.75rem, env(safe-area-inset-right))
+        max(0.85rem, env(safe-area-inset-bottom))
+        max(0.75rem, env(safe-area-inset-left));
+}
+
+.chat-modal-shell {
+    width: min(100%, 46rem);
+}
+
+.chat-modal-card {
+    height: min(88dvh, 46rem);
+    background:
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.14), transparent 26%),
+        linear-gradient(180deg, rgba(9, 19, 32, 0.98), rgba(6, 14, 25, 0.98));
+}
+
+.chat-modal-heading {
+    min-width: 0;
+    flex: 1 1 14rem;
+}
+
+.chat-modal-controls {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.chat-log-panel {
+    overscroll-behavior: contain;
+}
+
+.chat-status-bar {
+    flex-wrap: wrap;
+}
+
+.chat-quick-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.chat-compose-row {
+    align-items: flex-end;
+}
+
+#chat-input {
+    min-height: 3.2rem;
+}
+
+#send-chat {
+    min-width: 3.2rem;
+    flex: 0 0 auto;
 }
 
 .chat-bubble {
@@ -498,6 +643,83 @@ body {
 }
 
 @media (max-width: 640px) {
+    .chairman-password-card__layout {
+        gap: 1rem;
+    }
+
+    .chairman-password-form {
+        width: 100%;
+    }
+
+    .chairman-password-input {
+        font-size: 16px;
+    }
+
+    .password-field .chairman-password-input {
+        padding-right: 3.2rem;
+    }
+
+    .password-toggle {
+        width: 2.2rem;
+        height: 2.2rem;
+        right: 0.45rem;
+    }
+
+    .chat-modal {
+        padding:
+            max(0.35rem, env(safe-area-inset-top))
+            max(0.35rem, env(safe-area-inset-right))
+            max(0.5rem, env(safe-area-inset-bottom))
+            max(0.35rem, env(safe-area-inset-left));
+    }
+
+    .chat-modal-shell {
+        width: 100%;
+        max-width: none;
+    }
+
+    .chat-modal-card {
+        height: min(92dvh, 100%);
+        border-radius: 1.45rem;
+    }
+
+    .chat-modal-header {
+        align-items: flex-start;
+        padding: 0.95rem;
+    }
+
+    .chat-modal-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .chat-log {
+        padding: 0.95rem;
+    }
+
+    .chat-modal-footer {
+        padding: 0.95rem;
+    }
+
+    .chat-status-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .chat-compose-row {
+        gap: 0.55rem;
+    }
+
+    .chat-bubble {
+        max-width: 92%;
+        padding: 0.8rem 0.9rem;
+        font-size: 0.93rem;
+    }
+
+    #chat-input {
+        font-size: 16px;
+    }
+
     .member-roster-heading {
         flex-direction: column;
     }
@@ -521,6 +743,21 @@ body {
 
     .member-list-item__status {
         justify-content: flex-start;
+    }
+}
+
+@media (max-width: 420px) {
+    .chat-modal-card {
+        height: min(94dvh, 100%);
+        border-radius: 1.2rem;
+    }
+
+    .chat-modal-controls > button {
+        flex: 1 1 auto;
+    }
+
+    .chat-quick-grid {
+        gap: 0.55rem;
     }
 }
 
